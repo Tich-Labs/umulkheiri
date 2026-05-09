@@ -681,8 +681,117 @@
     background: var(--midnight-bloom);
     color: white;
   }
+
+  /* ── FEEDBACK MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,16,40,0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    padding: 36px;
+    box-shadow: 0 20px 60px rgba(26,16,40,0.3);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+    padding: 4px;
+  }
+  .modal-close:hover { color: var(--text-dark); }
+  .modal-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--deep-night);
+    margin-bottom: 4px;
+  }
+  .modal-box .modal-section-name {
+    font-size: 13px;
+    color: var(--bloom-pink);
+    margin-bottom: 20px;
+  }
+  .modal-box label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .modal-box textarea,
+  .modal-box input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+    background: var(--soft-white);
+    transition: border .2s;
+    box-sizing: border-box;
+  }
+  .modal-box textarea:focus,
+  .modal-box input:focus {
+    outline: none;
+    border-color: var(--bloom-pink);
+  }
+  .modal-box textarea { resize: vertical; min-height: 110px; }
+  .modal-box .form-group { margin-bottom: 16px; }
+  .modal-box .form-row {
+    display: flex;
+    gap: 16px;
+  }
+  .modal-box .form-row .form-group { flex: 1; }
+  .modal-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--deep-night);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .modal-submit:hover { background: var(--midnight-bloom); }
+  .modal-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .modal-success {
+    display: none;
+    text-align: center;
+    padding: 32px 0;
+  }
+  .modal-success .check { font-size: 48px; margin-bottom: 12px; }
+  .modal-success h4 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--garden-teal); }
+  .modal-success p { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+
   @media (max-width: 768px) {
     .feedback-fab { bottom: 16px; right: 16px; padding: 10px 16px; font-size: 12px; }
+    .modal-box { padding: 24px; }
+    .modal-box .form-row { flex-direction: column; gap: 0; }
   }
 </style>
 </head>
@@ -1248,8 +1357,8 @@
 <!-- GENERAL FEEDBACK -->
 <div class="feedback-area">
   <h3>Got Thoughts on the Full Brief?</h3>
-  <p>If you have general feedback that doesn't fit a specific section above, share it here.</p>
-  <a href="https://github.com/Tich-Labs/umulkheiri/issues/new?title=[Design+Brief]+General+Feedback&body=**General+Feedback+on+Design+Brief**%0A%0A" target="_blank" class="feedback-btn">📝 Submit General Feedback</a>
+  <p>Click the button below to share general feedback that doesn't fit a specific section.</p>
+  <button class="feedback-btn" onclick="openFeedback('General Feedback')">📝 Submit General Feedback</button>
 </div>
 
 <div class="doc-footer">
@@ -1257,41 +1366,140 @@
 </div>
 
 <!-- FLOATING FAB -->
-<a href="https://github.com/Tich-Labs/umulkheiri/issues/new?title=[Design+Brief]+General+Feedback&body=**General+Feedback+on+Design+Brief**%0A%0A" target="_blank" class="feedback-fab">
+<button class="feedback-fab" onclick="openFeedback('General Feedback')">
   💬 Feedback
-</a>
+</button>
 
-<!-- FEEDBACK SCRIPT: adds per-section comment buttons -->
+<!-- FEEDBACK MODAL -->
+<div class="modal-overlay" id="feedbackModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Share Your Feedback</h3>
+    <div class="modal-section-name" id="modalSection">Section</div>
+
+    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY">
+      <input type="hidden" name="section" id="formSection">
+      <input type="hidden" name="subject" id="formSubject">
+
+      <div class="form-group">
+        <label for="formFeedback">Your Feedback *</label>
+        <textarea id="formFeedback" name="feedback" required placeholder="What do you think? What works, what could change..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="formName">Your Name</label>
+          <input id="formName" name="name" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="formEmail">Email (for reply)</label>
+          <input id="formEmail" name="email" type="email" placeholder="Optional">
+        </div>
+      </div>
+
+      <button class="modal-submit" type="submit" id="submitBtn">Send Feedback</button>
+    </form>
+
+    <div class="modal-success" id="modalSuccess">
+      <div class="check">✓</div>
+      <h4>Thank You!</h4>
+      <p>Your feedback has been sent. I'll review it and get back to you.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FEEDBACK SCRIPT -->
 <script>
-(function() {
-  var repo = 'Tich-Labs/umulkheiri';
-  var sections = document.querySelectorAll('.section');
-  sections.forEach(function(section) {
-    var label = section.querySelector('.section-label');
-    var title = section.querySelector('.section-title');
-    if (!label || !title) return;
+  var WEB3_KEY = 'YOUR_ACCESS_KEY';
 
-    var header = document.createElement('div');
-    header.className = 'feedback-header';
+  function openFeedback(section) {
+    document.getElementById('modalSection').textContent = section;
+    document.getElementById('formSection').value = section;
+    document.getElementById('formSubject').value = 'Design Brief Feedback: ' + section;
+    document.getElementById('formFeedback').value = '';
+    document.getElementById('formName').value = '';
+    document.getElementById('formEmail').value = '';
+    document.getElementById('modalSuccess').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'block';
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').textContent = 'Send Feedback';
+    document.getElementById('feedbackModal').classList.add('open');
+  }
 
-    var textGroup = document.createElement('div');
-    label.parentNode.insertBefore(textGroup, label);
-    textGroup.appendChild(label);
-    textGroup.appendChild(title);
+  function closeModal() {
+    document.getElementById('feedbackModal').classList.remove('open');
+  }
 
-    header.appendChild(textGroup);
+  function submitFeedback(e) {
+    e.preventDefault();
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
 
-    var sectionName = label.textContent.trim();
-    var btn = document.createElement('a');
-    btn.className = 'feedback-btn';
-    btn.target = '_blank';
-    btn.textContent = '💬 Feedback';
-    btn.href = 'https://github.com/' + repo + '/issues/new?title=[Design+Brief]+' + encodeURIComponent(sectionName) + '&body=**Section:+' + encodeURIComponent(sectionName) + '**%0A%0A';
+    var form = document.getElementById('feedbackForm');
+    var data = new FormData(form);
 
-    header.appendChild(btn);
-    section.insertBefore(header, section.firstChild);
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: data
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        document.getElementById('feedbackForm').style.display = 'none';
+        document.getElementById('modalSuccess').style.display = 'block';
+      } else {
+        alert('Something went wrong. Please try again or email me directly.');
+        btn.disabled = false;
+        btn.textContent = 'Send Feedback';
+      }
+    })
+    .catch(function() {
+      alert('Something went wrong. Please try again or email me directly.');
+      btn.disabled = false;
+      btn.textContent = 'Send Feedback';
+    });
+  }
+
+  // Close modal on overlay click
+  document.getElementById('feedbackModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
   });
-})();
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Inject per-section feedback buttons
+  (function() {
+    var sections = document.querySelectorAll('.section');
+    sections.forEach(function(section) {
+      var label = section.querySelector('.section-label');
+      var title = section.querySelector('.section-title');
+      if (!label || !title) return;
+
+      var header = document.createElement('div');
+      header.className = 'feedback-header';
+
+      var textGroup = document.createElement('div');
+      label.parentNode.insertBefore(textGroup, label);
+      textGroup.appendChild(label);
+      textGroup.appendChild(title);
+
+      header.appendChild(textGroup);
+
+      var sectionName = label.textContent.trim();
+      var btn = document.createElement('button');
+      btn.className = 'feedback-btn';
+      btn.textContent = '💬 Feedback';
+      btn.onclick = function() { openFeedback(sectionName); };
+
+      header.appendChild(btn);
+      section.insertBefore(header, section.firstChild);
+    });
+  })();
 </script>
 
 </body>
