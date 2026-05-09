@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback Dashboard — Umulkheiri Design Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --deep-night: #1a1028;
+    --midnight-bloom: #2e1a47;
+    --bloom-pink: #f47bb4;
+    --bloom-pink-light: #fce4f0;
+    --sunset-gold: #f5a623;
+    --garden-teal: #1d9e75;
+    --garden-teal-light: #e1f5ee;
+    --soft-white: #fdfaf7;
+    --warm-sand: #f5efe6;
+    --text-dark: #1a1028;
+    --text-mid: #4a3860;
+    --text-muted: #8a7a9a;
+    --border-soft: rgba(244, 123, 180, 0.2);
+    --red: #e74c3c;
+    --red-light: #fde8e8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--soft-white);
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+
+  /* ── GATE ── */
+  .gate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--deep-night);
+  }
+  .gate-box {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+  }
+  .gate-box h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--deep-night);
+    margin-bottom: 4px;
+  }
+  .gate-box p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .gate-box input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .gate-box input:focus { outline: none; border-color: var(--bloom-pink); }
+  .gate-box button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--deep-night);
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+  .gate-box button:hover { background: var(--midnight-bloom); }
+  .gate-error {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 8px;
+    display: none;
+  }
+
+  /* ── DASHBOARD ── */
+  .dashboard { display: none; }
+  .dash-header {
+    background: var(--deep-night);
+    color: white;
+    padding: 40px 48px 32px;
+  }
+  .dash-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    margin-bottom: 4px;
+  }
+  .dash-header p { color: rgba(255,255,255,0.6); font-size: 14px; }
+  .dash-stats {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px 24px;
+    flex: 1;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .stat-card.green .stat-num { color: var(--garden-teal); }
+  .stat-card.pink .stat-num { color: var(--bloom-pink); }
+
+  .dash-body { padding: 32px 48px 64px; max-width: 1200px; }
+  .dash-body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--deep-night);
+    margin-bottom: 20px;
+  }
+
+  .section-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .section-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .section-card-header:hover { background: var(--warm-sand); }
+  .section-card-header h3 {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .section-badges {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .badge-like { background: var(--garden-teal-light); color: #0f6e56; }
+  .badge-improve { background: var(--bloom-pink-light); color: #993356; }
+  .badge-count { font-weight: 700; }
+  .badge-toggle {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .section-card-body {
+    display: none;
+    padding: 0 20px 16px;
+  }
+  .section-card-body.open { display: block; }
+
+  .fb-entry {
+    padding: 12px 16px;
+    background: var(--warm-sand);
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .fb-entry:last-child { margin-bottom: 0; }
+  .fb-entry .fb-text {
+    font-size: 14px;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .fb-entry .fb-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .fb-entry .fb-meta .name { color: var(--bloom-pink); }
+
+  .no-fb {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 8px 0;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text-dark); margin-bottom: 6px; }
+
+  @media (max-width: 768px) {
+    .dash-header { padding: 24px 20px; }
+    .dash-stats { flex-direction: column; gap: 8px; }
+    .dash-body { padding: 20px; }
+    .section-card-header { flex-wrap: wrap; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <h1>🔒 Feedback Dashboard</h1>
+    <p>Enter the passcode to view feedback from the design brief.</p>
+    <input type="password" id="passInput" placeholder="Passcode" onkeydown="if(event.key==='Enter')checkPass()">
+    <button onclick="checkPass()">Unlock</button>
+    <div class="gate-error" id="gateError">Incorrect passcode. Try again.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="dash-header">
+    <h1>📊 Feedback Dashboard</h1>
+    <p>Umulkheiri Jalo — Ikigai Alignment Coaching · Design Brief</p>
+    <div class="dash-stats" id="stats"></div>
+  </div>
+  <div class="dash-body" id="body"></div>
+</div>
+
+<script>
+  var PASSCODE = 'umulkheiri2025';
+  var SUPABASE_URL = 'https://srpiijgniyvlzfktaaie.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
+  var supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function checkPass() {
+    if (document.getElementById('passInput').value === PASSCODE) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadDashboard();
+    } else {
+      document.getElementById('gateError').style.display = 'block';
+    }
+  }
+
+  function loadDashboard() {
+    supabase.from('feedback').select('*').order('created_at', { ascending: false }).then(function(res) {
+      if (res.error) { document.getElementById('body').innerHTML = '<p style="color:var(--red)">Error loading feedback.</p>'; return; }
+      render(res.data);
+    });
+  }
+
+  function render(data) {
+    var total = data.length;
+    var likes = data.filter(function(d) { return d.reaction === 'thumbs_up'; }).length;
+    var improves = data.filter(function(d) { return d.reaction === 'could_be_better'; }).length;
+
+    document.getElementById('stats').innerHTML =
+      '<div class="stat-card"><div class="stat-num">' + total + '</div><div class="stat-label">Total Reactions</div></div>' +
+      '<div class="stat-card green"><div class="stat-num">' + likes + '</div><div class="stat-label">👍 Thumbs Up</div></div>' +
+      '<div class="stat-card pink"><div class="stat-num">' + improves + '</div><div class="stat-label">💡 Could Be Better</div></div>';
+
+    var sections = {};
+    var sectionOrder = [
+      '01 — Colour System', '02 — Typography', '03 — Page Structure',
+      '04 — Site Architecture', '05 — Services UI', '06 — Key Features & Functionalities',
+      '07 — UX Flows', '08 — Social Proof', '09 — UI Components',
+      '10 — Inspired By Mystical Journeys', 'General Feedback'
+    ];
+
+    data.forEach(function(d) {
+      var s = d.section || 'Unknown';
+      if (!sections[s]) sections[s] = { likes: 0, feedbacks: [] };
+      if (d.reaction === 'thumbs_up') sections[s].likes++;
+      else if (d.reaction === 'could_be_better') sections[s].feedbacks.push(d);
+    });
+
+    var html = '<h2>Feedback by Section</h2>';
+    var shown = {};
+
+    sectionOrder.forEach(function(name) {
+      if (!sections[name]) {
+        html += renderSection(name, 0, []);
+        return;
+      }
+      shown[name] = true;
+      html += renderSection(name, sections[name].likes, sections[name].feedbacks);
+    });
+
+    // any remaining sections not in order
+    Object.keys(sections).forEach(function(name) {
+      if (!shown[name]) html += renderSection(name, sections[name].likes, sections[name].feedbacks);
+    });
+
+    if (total === 0) {
+      html = '<div class="empty-state"><div class="icon">📭</div><h3>No Feedback Yet</h3><p>Share the design brief with your client and feedback will appear here.</p></div>';
+    }
+
+    document.getElementById('body').innerHTML = html;
+  }
+
+  function renderSection(name, likes, feedbacks) {
+    return '<div class="section-card">' +
+      '<div class="section-card-header" onclick="toggleSection(this)">' +
+        '<h3>' + name + '</h3>' +
+        '<div class="section-badges">' +
+          '<span class="badge badge-like">👍 <span class="badge-count">' + likes + '</span></span>' +
+          '<span class="badge badge-improve">💡 <span class="badge-count">' + feedbacks.length + '</span></span>' +
+          '<span class="badge-toggle">▼</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="section-card-body">' + renderFeedbacks(feedbacks) + '</div>' +
+    '</div>';
+  }
+
+  function renderFeedbacks(list) {
+    if (list.length === 0) return '<div class="no-fb">No improvement feedback yet.</div>';
+    return list.map(function(f) {
+      var meta = new Date(f.created_at).toLocaleString();
+      if (f.name) meta = '<span class="name">' + escapeHtml(f.name) + '</span> · ' + meta;
+      if (f.email && f.name) meta = '<span class="name">' + escapeHtml(f.name) + '</span> · ' + meta;
+      else if (f.email) meta = '<span class="name">' + escapeHtml(f.email) + '</span> · ' + meta;
+      return '<div class="fb-entry"><div class="fb-text">' + escapeHtml(f.feedback || '(no text)') + '</div><div class="fb-meta">' + meta + '</div></div>';
+    }).join('');
+  }
+
+  function toggleSection(header) {
+    var body = header.nextElementSibling;
+    body.classList.toggle('open');
+    var toggle = header.querySelector('.badge-toggle');
+    toggle.textContent = body.classList.contains('open') ? '▲' : '▼';
+  }
+
+  function escapeHtml(s) {
+    if (!s) return '';
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  // auto-login with passcode in URL hash
+  if (window.location.hash && window.location.hash.length > 1) {
+    var hashPass = decodeURIComponent(window.location.hash.slice(1));
+    document.getElementById('passInput').value = hashPass;
+    checkPass();
+  }
+</script>
+</body>
+</html>

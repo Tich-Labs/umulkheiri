@@ -597,35 +597,38 @@
   .doc-footer strong { color: var(--bloom-pink); }
 
   /* ── FEEDBACK ── */
-  .feedback-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-decoration: none;
-    padding: 4px 12px;
-    border: 1px solid var(--border-soft);
-    border-radius: 20px;
-    transition: all .2s;
-    cursor: pointer;
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .feedback-btn:hover {
-    color: var(--bloom-pink);
-    border-color: var(--bloom-pink);
-    background: var(--bloom-pink-light);
-  }
   .feedback-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 8px;
     margin-bottom: 10px;
   }
+  .feedback-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fb-like, .fb-improve {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    cursor: pointer;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    transition: all .25s;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .fb-like:hover { color: var(--garden-teal); border-color: var(--garden-teal); background: var(--garden-teal-light); }
+  .fb-like.liked { color: var(--garden-teal); border-color: var(--garden-teal); background: var(--garden-teal-light); cursor: default; }
+  .fb-improve:hover { color: var(--bloom-pink); border-color: var(--bloom-pink); background: var(--bloom-pink-light); }
   .feedback-fab {
     position: fixed;
     bottom: 32px;
@@ -669,7 +672,7 @@
     color: var(--text-muted);
     margin-bottom: 24px;
   }
-  .feedback-area .feedback-btn {
+  .feedback-area .fb-improve {
     font-size: 14px;
     padding: 10px 24px;
     border-radius: 8px;
@@ -677,9 +680,35 @@
     background: var(--deep-night);
     border: none;
   }
-  .feedback-area .feedback-btn:hover {
+  .feedback-area .fb-improve:hover {
     background: var(--midnight-bloom);
     color: white;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 90px;
+    right: 32px;
+    z-index: 3000;
+    background: var(--garden-teal);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 20px rgba(29,158,117,0.3);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all .3s ease;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .feedback-counter {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-left: 2px;
   }
 
   /* ── FEEDBACK MODAL ── */
@@ -727,6 +756,12 @@
   .modal-box .modal-section-name {
     font-size: 13px;
     color: var(--bloom-pink);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .modal-box .modal-sub {
+    font-size: 13px;
+    color: var(--text-muted);
     margin-bottom: 20px;
   }
   .modal-box label {
@@ -1359,7 +1394,7 @@
 <div class="feedback-area">
   <h3>Got Thoughts on the Full Brief?</h3>
   <p>Click the button below to share general feedback that doesn't fit a specific section.</p>
-  <button class="feedback-btn" onclick="openFeedback('General Feedback')">📝 Submit General Feedback</button>
+  <button class="fb-improve" onclick="openModal('General Feedback')">💡 Share Feedback</button>
 </div>
 
 <div class="doc-footer">
@@ -1367,7 +1402,7 @@
 </div>
 
 <!-- FLOATING FAB -->
-<button class="feedback-fab" onclick="openFeedback('General Feedback')">
+<button class="feedback-fab" onclick="openModal('General Feedback')">
   💬 Feedback
 </button>
 
@@ -1375,8 +1410,9 @@
 <div class="modal-overlay" id="feedbackModal">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3>Share Your Feedback</h3>
+    <h3>Help Me Improve This</h3>
     <div class="modal-section-name" id="modalSection">Section</div>
+    <p class="modal-sub">What could be better about this section?</p>
 
     <form id="feedbackForm" onsubmit="submitFeedback(event)">
       <input type="hidden" name="section" id="formSection">
@@ -1415,10 +1451,28 @@
   var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
   var supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  function openFeedback(section) {
+  // ── Thumbs Up ──
+  function thumbsUp(section, btn) {
+    if (btn.classList.contains('liked')) return;
+
+    supabase.from('feedback').insert({
+      section: section,
+      reaction: 'thumbs_up',
+      feedback: null,
+      name: null,
+      email: null
+    }).then(function(result) {
+      if (!result.error) {
+        btn.classList.add('liked');
+        showToast('👍 Got it! Thanks for the love on ' + section);
+      }
+    });
+  }
+
+  // ── Could Be Better (opens modal) ──
+  function openModal(section) {
     document.getElementById('modalSection').textContent = section;
     document.getElementById('formSection').value = section;
-    document.getElementById('formSubject').value = 'Design Brief Feedback: ' + section;
     document.getElementById('formFeedback').value = '';
     document.getElementById('formName').value = '';
     document.getElementById('formEmail').value = '';
@@ -1433,6 +1487,7 @@
     document.getElementById('feedbackModal').classList.remove('open');
   }
 
+  // ── Submit Modal Form ──
   function submitFeedback(e) {
     e.preventDefault();
     var btn = document.getElementById('submitBtn');
@@ -1441,6 +1496,7 @@
 
     supabase.from('feedback').insert({
       section: document.getElementById('formSection').value,
+      reaction: 'could_be_better',
       feedback: document.getElementById('formFeedback').value,
       name: document.getElementById('formName').value || null,
       email: document.getElementById('formEmail').value || null
@@ -1452,21 +1508,30 @@
       } else {
         document.getElementById('feedbackForm').style.display = 'none';
         document.getElementById('modalSuccess').style.display = 'block';
+        showToast('💡 Thanks! Your feedback on ' + document.getElementById('formSection').value + ' has been noted.');
       }
     });
   }
 
-  // Close modal on overlay click
+  // ── Toast Notification ──
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._hide);
+    t._hide = setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
+
+  // ── Close modal on overlay click ──
   document.getElementById('feedbackModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
 
-  // Close modal on Escape key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeModal();
   });
 
-  // Inject per-section feedback buttons
+  // ── Inject per-section feedback buttons ──
   (function() {
     var sections = document.querySelectorAll('.section');
     sections.forEach(function(section) {
@@ -1484,17 +1549,31 @@
 
       header.appendChild(textGroup);
 
-      var sectionName = label.textContent.trim();
-      var btn = document.createElement('button');
-      btn.className = 'feedback-btn';
-      btn.textContent = '💬 Feedback';
-      btn.onclick = function() { openFeedback(sectionName); };
+      var actions = document.createElement('div');
+      actions.className = 'feedback-actions';
 
-      header.appendChild(btn);
+      var sectionName = label.textContent.trim();
+
+      var likeBtn = document.createElement('button');
+      likeBtn.className = 'fb-like';
+      likeBtn.innerHTML = '👍';
+      likeBtn.onclick = function() { thumbsUp(sectionName, likeBtn); };
+
+      var improveBtn = document.createElement('button');
+      improveBtn.className = 'fb-improve';
+      improveBtn.textContent = '💡 Could Be Better';
+      improveBtn.onclick = function() { openModal(sectionName); };
+
+      actions.appendChild(likeBtn);
+      actions.appendChild(improveBtn);
+      header.appendChild(actions);
       section.insertBefore(header, section.firstChild);
     });
   })();
 </script>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 </body>
 </html>
