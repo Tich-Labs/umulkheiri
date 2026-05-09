@@ -1449,13 +1449,13 @@
 <script>
   var SUPABASE_URL = 'https://srpiijgniyvlzfktaaie.supabase.co';
   var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
-  var supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   // ── Thumbs Up ──
   function thumbsUp(section, btn) {
     if (btn.classList.contains('liked')) return;
 
-    supabase.from('feedback').insert({
+    sb.from('feedback').insert({
       section: section,
       reaction: 'thumbs_up',
       feedback: null,
@@ -1494,7 +1494,7 @@
     btn.disabled = true;
     btn.textContent = 'Sending...';
 
-    supabase.from('feedback').insert({
+    sb.from('feedback').insert({
       section: document.getElementById('formSection').value,
       reaction: 'could_be_better',
       feedback: document.getElementById('formFeedback').value,
