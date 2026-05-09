@@ -255,7 +255,7 @@
   var PASSCODE = 'umulkheiri2025';
   var SUPABASE_URL = 'https://srpiijgniyvlzfktaaie.supabase.co';
   var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
-  var supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   function checkPass() {
     if (document.getElementById('passInput').value === PASSCODE) {
@@ -268,7 +268,7 @@
   }
 
   function loadDashboard() {
-    supabase.from('feedback').select('*').order('created_at', { ascending: false }).then(function(res) {
+    sb.from('feedback').select('*').order('created_at', { ascending: false }).then(function(res) {
       if (res.error) { document.getElementById('body').innerHTML = '<p style="color:var(--red)">Error loading feedback.</p>'; return; }
       render(res.data);
     });
