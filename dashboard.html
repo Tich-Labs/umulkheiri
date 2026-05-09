@@ -67,10 +67,14 @@
     border-radius: 8px;
     font-size: 14px;
     font-family: 'DM Sans', sans-serif;
-    margin-bottom: 12px;
-    text-align: center;
+    margin-bottom: 10px;
+    box-sizing: border-box;
   }
-  .gate-box input:focus { outline: none; border-color: var(--bloom-pink); }
+  .gate-box input:focus {
+    border-color: var(--bloom-pink);
+    outline: 2px solid var(--bloom-pink-dark);
+    outline-offset: 1px;
+  }
   .gate-box button {
     width: 100%;
     padding: 12px;
@@ -230,41 +234,90 @@
 </head>
 <body>
 
-<!-- GATE -->
+<!-- LOGIN -->
 <div class="gate" id="gate">
-  <div class="gate-box">
-    <h1>🔒 Feedback Dashboard</h1>
-    <p>Enter the passcode to view feedback from the design brief.</p>
-    <input type="password" id="passInput" placeholder="Passcode" onkeydown="if(event.key==='Enter')checkPass()">
-    <button onclick="checkPass()">Unlock</button>
-    <div class="gate-error" id="gateError">Incorrect passcode. Try again.</div>
+  <div class="gate-box" id="gateBox">
+    <div id="gateLoading" style="text-align:center;padding:20px 0">
+      <p style="color:var(--text-muted)">Checking authentication...</p>
+    </div>
+    <div id="gateForm" style="display:none">
+      <h1>🔒 Feedback Dashboard</h1>
+      <p>Sign in with your admin account to view feedback.</p>
+      <form id="loginForm" onsubmit="signIn(event)">
+        <input type="email" id="emailInput" placeholder="Email" required>
+        <input type="password" id="passInput" placeholder="Password" required>
+        <button type="submit" id="loginBtn">Sign In</button>
+      </form>
+      <div class="gate-error" id="gateError" style="display:none">Incorrect email or password.</div>
+    </div>
   </div>
 </div>
 
 <!-- DASHBOARD -->
 <div class="dashboard" id="dashboard">
   <div class="dash-header">
-    <h1>📊 Feedback Dashboard</h1>
-    <p>Umulkheiri Jalo — Ikigai Alignment Coaching · Design Brief</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <h1>📊 Feedback Dashboard</h1>
+        <p>Umulkheiri Jalo — Ikigai Alignment Coaching · Design Brief</p>
+      </div>
+      <button onclick="signOut()" style="background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px 16px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">Sign Out</button>
+    </div>
     <div class="dash-stats" id="stats"></div>
   </div>
   <div class="dash-body" id="body"></div>
 </div>
 
 <script>
-  var PASSCODE = 'umulkheiri2025';
   var SUPABASE_URL = 'https://srpiijgniyvlzfktaaie.supabase.co';
   var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
   var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  function checkPass() {
-    if (document.getElementById('passInput').value === PASSCODE) {
-      document.getElementById('gate').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      loadDashboard();
+  sb.auth.getSession().then(function(res) {
+    if (res.data.session) {
+      showDashboard();
     } else {
-      document.getElementById('gateError').style.display = 'block';
+      document.getElementById('gateLoading').style.display = 'none';
+      document.getElementById('gateForm').style.display = 'block';
     }
+  });
+
+  function signIn(e) {
+    e.preventDefault();
+    var btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+
+    sb.auth.signInWithPassword({
+      email: document.getElementById('emailInput').value,
+      password: document.getElementById('passInput').value
+    }).then(function(res) {
+      if (res.error) {
+        document.getElementById('gateError').style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      } else {
+        showDashboard();
+      }
+    });
+  }
+
+  function signOut() {
+    sb.auth.signOut().then(function() {
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('gateLoading').style.display = 'none';
+      document.getElementById('gateForm').style.display = 'block';
+      document.getElementById('loginForm').reset();
+      document.getElementById('loginBtn').disabled = false;
+      document.getElementById('loginBtn').textContent = 'Sign In';
+      document.getElementById('gate').style.display = 'flex';
+    });
+  }
+
+  function showDashboard() {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadDashboard();
   }
 
   function loadDashboard() {
