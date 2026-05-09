@@ -595,6 +595,95 @@
     font-size: 12px;
   }
   .doc-footer strong { color: var(--bloom-pink); }
+
+  /* ── FEEDBACK ── */
+  .feedback-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 4px 12px;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    transition: all .2s;
+    cursor: pointer;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .feedback-btn:hover {
+    color: var(--bloom-pink);
+    border-color: var(--bloom-pink);
+    background: var(--bloom-pink-light);
+  }
+  .feedback-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .feedback-fab {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--deep-night);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(26,16,40,0.25);
+    transition: all .2s;
+  }
+  .feedback-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(26,16,40,0.35);
+    background: var(--midnight-bloom);
+  }
+  .feedback-area {
+    background: var(--warm-sand);
+    padding: 48px 60px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .feedback-area h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--deep-night);
+    margin-bottom: 8px;
+  }
+  .feedback-area p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .feedback-area .feedback-btn {
+    font-size: 14px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    color: white;
+    background: var(--deep-night);
+    border: none;
+  }
+  .feedback-area .feedback-btn:hover {
+    background: var(--midnight-bloom);
+    color: white;
+  }
+  @media (max-width: 768px) {
+    .feedback-fab { bottom: 16px; right: 16px; padding: 10px 16px; font-size: 12px; }
+  }
 </style>
 </head>
 <body>
@@ -1156,9 +1245,54 @@
   </div>
 </div>
 
+<!-- GENERAL FEEDBACK -->
+<div class="feedback-area">
+  <h3>Got Thoughts on the Full Brief?</h3>
+  <p>If you have general feedback that doesn't fit a specific section above, share it here.</p>
+  <a href="https://github.com/Tich-Labs/umulkheiri/issues/new?title=[Design+Brief]+General+Feedback&body=**General+Feedback+on+Design+Brief**%0A%0A" target="_blank" class="feedback-btn">📝 Submit General Feedback</a>
+</div>
+
 <div class="doc-footer">
   <strong>Umulkheiri Jalo · Ikigai Alignment Coaching</strong> &nbsp;|&nbsp; Website Design Brief · May 2025 &nbsp;|&nbsp; Certified Ikigai Coach with Distinction · ID45632-28225
 </div>
+
+<!-- FLOATING FAB -->
+<a href="https://github.com/Tich-Labs/umulkheiri/issues/new?title=[Design+Brief]+General+Feedback&body=**General+Feedback+on+Design+Brief**%0A%0A" target="_blank" class="feedback-fab">
+  💬 Feedback
+</a>
+
+<!-- FEEDBACK SCRIPT: adds per-section comment buttons -->
+<script>
+(function() {
+  var repo = 'Tich-Labs/umulkheiri';
+  var sections = document.querySelectorAll('.section');
+  sections.forEach(function(section) {
+    var label = section.querySelector('.section-label');
+    var title = section.querySelector('.section-title');
+    if (!label || !title) return;
+
+    var header = document.createElement('div');
+    header.className = 'feedback-header';
+
+    var textGroup = document.createElement('div');
+    label.parentNode.insertBefore(textGroup, label);
+    textGroup.appendChild(label);
+    textGroup.appendChild(title);
+
+    header.appendChild(textGroup);
+
+    var sectionName = label.textContent.trim();
+    var btn = document.createElement('a');
+    btn.className = 'feedback-btn';
+    btn.target = '_blank';
+    btn.textContent = '💬 Feedback';
+    btn.href = 'https://github.com/' + repo + '/issues/new?title=[Design+Brief]+' + encodeURIComponent(sectionName) + '&body=**Section:+' + encodeURIComponent(sectionName) + '**%0A%0A';
+
+    header.appendChild(btn);
+    section.insertBefore(header, section.firstChild);
+  });
+})();
+</script>
 
 </body>
 </html>
