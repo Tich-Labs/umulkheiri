@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umulkheiri Jalo — Ikigai Alignment Coaching | Website Design Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep-night: #1a1028;
+    --midnight-bloom: #2e1a47;
+    --bloom-pink: #f47bb4;
+    --bloom-pink-light: #fce4f0;
+    --sunset-gold: #f5a623;
+    --garden-teal: #1d9e75;
+    --garden-teal-light: #e1f5ee;
+    --soft-white: #fdfaf7;
+    --warm-sand: #f5efe6;
+    --text-dark: #1a1028;
+    --text-mid: #4a3860;
+    --text-muted: #8a7a9a;
+    --border-soft: rgba(244, 123, 180, 0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--soft-white);
+    color: var(--text-dark);
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--deep-night);
+    color: white;
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244,123,180,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 40px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(29,158,117,0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(244,123,180,0.18);
+    border: 1px solid rgba(244,123,180,0.35);
+    color: var(--bloom-pink);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    color: white;
+  }
+  .cover h1 em { color: var(--bloom-pink); font-style: italic; }
+  .cover-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+  .cover-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .cover-tag {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 64px 60px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .section:nth-child(even) { background: var(--warm-sand); }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bloom-pink);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--deep-night);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin-bottom: 40px;
+  }
+
+  /* ── COLOUR PALETTE ── */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.07);
+  }
+  .swatch-color {
+    height: 72px;
+  }
+  .swatch-info {
+    padding: 10px 12px;
+    background: white;
+  }
+  .swatch-name { font-size: 12px; font-weight: 500; color: var(--text-dark); }
+  .swatch-hex { font-size: 10px; color: var(--text-muted); font-family: monospace; }
+  .swatch-role { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── TYPOGRAPHY ── */
+  .type-samples { display: flex; flex-direction: column; gap: 24px; }
+  .type-row {
+    padding: 20px 24px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .type-meta { font-size: 11px; color: var(--text-muted); min-width: 140px; }
+  .type-sample-h1 { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 600; color: var(--deep-night); }
+  .type-sample-h2 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; font-style: italic; color: var(--midnight-bloom); }
+  .type-sample-h3 { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 500; color: var(--deep-night); letter-spacing: 0.5px; }
+  .type-sample-body { font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--text-mid); }
+  .type-sample-caption { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--bloom-pink); font-weight: 500; }
+
+  /* ── SITE STRUCTURE ── */
+  .site-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .page-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 20px;
+    position: relative;
+  }
+  .page-card.primary { border-left: 3px solid var(--bloom-pink); }
+  .page-card.secondary { border-left: 3px solid var(--garden-teal); }
+  .page-card.tertiary { border-left: 3px solid var(--sunset-gold); }
+  .page-num {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .page-name {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+  .page-items { list-style: none; }
+  .page-items li {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 3px 0;
+    padding-left: 12px;
+    position: relative;
+  }
+  .page-items li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--bloom-pink);
+    font-size: 10px;
+    top: 4px;
+  }
+
+  /* ── FEATURES GRID ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .feature-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .icon-pink { background: var(--bloom-pink-light); }
+  .icon-teal { background: var(--garden-teal-light); }
+  .icon-gold { background: #fef3dc; }
+  .icon-midnight { background: rgba(46,26,71,0.08); }
+  .feature-title { font-weight: 500; font-size: 15px; color: var(--text-dark); margin-bottom: 8px; }
+  .feature-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .feature-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .ftag {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.08);
+    color: var(--text-muted);
+  }
+
+  /* ── HERO MOCKUP ── */
+  .hero-mockup {
+    background: var(--deep-night);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    padding: 60px 48px 48px;
+    position: relative;
+    min-height: 320px;
+  }
+  .hero-mockup::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(244,123,180,0.08) 100%);
+  }
+  .hero-nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: white;
+    font-weight: 600;
+    margin-right: auto;
+  }
+  .hero-navlink { font-size: 11px; color: rgba(255,255,255,0.5); text-decoration: none; }
+  .hero-cta-nav {
+    background: var(--bloom-pink);
+    color: white;
+    font-size: 11px;
+    padding: 7px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+  }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.2;
+    max-width: 540px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-headline em { color: var(--bloom-pink); font-style: italic; }
+  .hero-sub-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    max-width: 420px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-btn-primary {
+    background: var(--bloom-pink);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+  }
+  .hero-btn-secondary {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    text-decoration: none;
+  }
+  .hero-pills {
+    display: flex;
+    gap: 10px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+  .hero-pill span { color: var(--bloom-pink); margin-right: 5px; }
+
+  /* ── SERVICES MOCKUP ── */
+  .services-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .service-card-mock {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card-mock.featured {
+    background: var(--deep-night);
+    color: white;
+  }
+  .service-badge {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .badge-pink { background: var(--bloom-pink-light); color: #993356; }
+  .badge-teal { background: var(--garden-teal-light); color: #0f6e56; }
+  .badge-gold { background: #fef3dc; color: #854f0b; }
+  .badge-night { background: rgba(244,123,180,0.15); color: var(--bloom-pink); }
+  .mock-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .mock-price-label { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
+  .mock-price-label.light { color: rgba(255,255,255,0.5); }
+  .mock-service-name { font-weight: 500; font-size: 13px; margin-bottom: 8px; }
+  .mock-service-name.light { color: white; }
+  .mock-service-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  .mock-service-desc.light { color: rgba(255,255,255,0.55); }
+  .mock-btn {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    padding: 9px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+  .mock-btn-pink { background: var(--bloom-pink); color: white; }
+  .mock-btn-outline { border: 1px solid rgba(255,255,255,0.25); color: white; background: transparent; }
+  .mock-btn-teal { background: var(--garden-teal); color: white; }
+  .mock-btn-ghost { border: 1px solid rgba(0,0,0,0.1); color: var(--text-mid); background: transparent; }
+
+  /* ── UX FLOWS ── */
+  .flow-steps {
+    display: flex;
+    gap: 0;
+    position: relative;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 140px;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 20px 16px;
+    position: relative;
+  }
+  .flow-step:first-child { border-radius: 12px 0 0 12px; }
+  .flow-step:last-child { border-radius: 0 12px 12px 0; }
+  .flow-step-num {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--bloom-pink);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .flow-step-title { font-weight: 500; font-size: 13px; color: var(--text-dark); margin-bottom: 4px; }
+  .flow-step-desc { font-size: 11px; color: var(--text-muted); }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--bloom-pink);
+    font-size: 16px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* ── DESIGN TOKENS ── */
+  .tokens-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .token-group {
+    background: white;
+    border-radius: 12px;
+    padding: 20px 24px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .token-group h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--bloom-pink);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .token-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    font-size: 12px;
+  }
+  .token-row:last-child { border-bottom: none; }
+  .token-name { color: var(--text-muted); }
+  .token-value { font-weight: 500; color: var(--text-dark); font-family: monospace; font-size: 11px; }
+
+  /* ── COMPONENTS ── */
+  .component-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .comp-group {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .comp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 14px; font-weight: 500; }
+  .btn-demo {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary-demo { background: var(--bloom-pink); color: white; }
+  .btn-secondary-demo { background: var(--deep-night); color: white; }
+  .btn-ghost-demo { background: transparent; border: 1px solid var(--bloom-pink); color: var(--bloom-pink); }
+  .btn-teal-demo { background: var(--garden-teal); color: white; }
+  .input-demo {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    outline: none;
+  }
+  .select-demo {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: white;
+    outline: none;
+  }
+  .tag-demo { display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 20px; margin: 2px; }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-mock {
+    background: var(--deep-night);
+    border-radius: 16px;
+    padding: 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonial-mock::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 160px;
+    color: rgba(244,123,180,0.12);
+    position: absolute;
+    top: -20px;
+    left: 30px;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: white;
+    max-width: 580px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    line-height: 1.55;
+  }
+  .testimonial-source { font-size: 13px; color: rgba(255,255,255,0.45); position: relative; z-index: 1; }
+  .testimonial-source strong { color: var(--bloom-pink); }
+
+  /* ── SPACING ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 700px) {
+    .two-col, .tokens-grid { grid-template-columns: 1fr; }
+    .section { padding: 48px 24px; }
+    .cover { padding: 48px 24px 40px; }
+    .cover h1 { font-size: 32px; }
+    .hero-headline { font-size: 26px; }
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    background: var(--deep-night);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 32px 60px;
+    font-size: 12px;
+  }
+  .doc-footer strong { color: var(--bloom-pink); }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">Website Design Brief · 2025</div>
+  <h1>Your Sacred Garden<br><em>Awaits</em></h1>
+  <p class="cover-sub">Website UI/UX Design Outline for Umulkheiri Jalo — Certified Ikigai Alignment Coach integrating Ikigai + Ubuntu + Kihooto into purpose-led transformation.</p>
+  <div class="cover-tags">
+    <span class="cover-tag">🌸 Ikigai Alignment Coaching</span>
+    <span class="cover-tag">🌍 Ubuntu Philosophy</span>
+    <span class="cover-tag">⚖️ Kihooto Justice</span>
+    <span class="cover-tag">✦ Purpose Discovery</span>
+    <span class="cover-tag">👑 Feminine Leadership</span>
+    <span class="cover-tag">🌿 Sacred Garden Metaphor</span>
+  </div>
+</div>
+
+<!-- COLOUR PALETTE -->
+<div class="section">
+  <div class="section-label">01 — Colour System</div>
+  <h2 class="section-title">The Garden Palette</h2>
+  <p class="section-desc">Drawn directly from the client's slides: deep midnight navy as foundation, bloom pink as the signature accent, earth teal for nature and growth, and warm gold for luminosity.</p>
+  <div class="palette-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1a1028;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Deep Night</div>
+        <div class="swatch-hex">#1a1028</div>
+        <div class="swatch-role">Primary BG · Hero</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#2e1a47;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Midnight Bloom</div>
+        <div class="swatch-hex">#2e1a47</div>
+        <div class="swatch-role">Secondary Dark</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#f47bb4;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Bloom Pink</div>
+        <div class="swatch-hex">#f47bb4</div>
+        <div class="swatch-role">Primary Accent · CTAs</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#fce4f0;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Blush Light</div>
+        <div class="swatch-hex">#fce4f0</div>
+        <div class="swatch-role">Soft highlights</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1d9e75;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Garden Teal</div>
+        <div class="swatch-hex">#1d9e75</div>
+        <div class="swatch-role">Growth · Ubuntu</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#e1f5ee;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Jade Mist</div>
+        <div class="swatch-hex">#e1f5ee</div>
+        <div class="swatch-role">Teal light fill</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#f5a623;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Sunset Gold</div>
+        <div class="swatch-hex">#f5a623</div>
+        <div class="swatch-role">Livelihood · Energy</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#fdfaf7;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Soft White</div>
+        <div class="swatch-hex">#fdfaf7</div>
+        <div class="swatch-role">Light page BG</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#f5efe6;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Warm Sand</div>
+        <div class="swatch-hex">#f5efe6</div>
+        <div class="swatch-role">Alt section BG</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="section">
+  <div class="section-label">02 — Typography</div>
+  <h2 class="section-title">Voice in Type</h2>
+  <p class="section-desc">Playfair Display for sacred, soulful headlines — echoing the warmth of the slides. DM Sans for accessible, modern body copy.</p>
+  <div class="type-samples">
+    <div class="type-row">
+      <span class="type-meta">H1 · Playfair 600 · 42px</span>
+      <span class="type-sample-h1">Your Sacred Garden</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">H2 · Playfair Italic 400 · 28px</span>
+      <span class="type-sample-h2">Align with your Ikigai</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">H3 · DM Sans 500 · 18px</span>
+      <span class="type-sample-h3">Purpose Discovery & Feminine Leadership</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">Body · DM Sans 400 · 16px</span>
+      <span class="type-sample-body">I don't just help you find purpose — I help you design a life that feels aligned, abundant, and alive.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">Caption · DM Sans 500 · 11px UC</span>
+      <span class="type-sample-caption">Ikigai · Ubuntu · Kihooto</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO MOCKUP -->
+<div class="section">
+  <div class="section-label">03 — Page Structure</div>
+  <h2 class="section-title">Hero Section Concept</h2>
+  <p class="section-desc">Dark, immersive entry with the coach's name, guiding metaphor, and immediate calls-to-action. Mirrors the deep-night brand from slides.</p>
+
+  <div class="hero-mockup">
+    <nav class="hero-nav">
+      <span class="hero-logo">Umulkheiri Jalo</span>
+      <a href="#" class="hero-navlink">About</a>
+      <a href="#" class="hero-navlink">Services</a>
+      <a href="#" class="hero-navlink">Philosophy</a>
+      <a href="#" class="hero-navlink">Blog</a>
+      <a href="#" class="hero-navlink">Contact</a>
+      <a href="#" class="hero-cta-nav">Book a Session</a>
+    </nav>
+    <h1 class="hero-headline">Your Sacred Garden<br>Awaits — <em>Align</em> with<br>your Ikigai</h1>
+    <p class="hero-sub-text">Certified Ikigai Alignment Coach blending Japanese purpose philosophy, Ubuntu belonging, and Kihooto justice into your transformation.</p>
+    <div class="hero-btns">
+      <a href="#" class="hero-btn-primary">Begin Your Journey</a>
+      <a href="#" class="hero-btn-secondary">Explore Services</a>
+    </div>
+    <div class="hero-pills">
+      <span class="hero-pill"><span>✦</span>Purpose Discovery</span>
+      <span class="hero-pill"><span>🌿</span>Feminine Leadership</span>
+      <span class="hero-pill"><span>⚖️</span>Authentic Life Design</span>
+      <span class="hero-pill"><span>🌍</span>Ubuntu & Community</span>
+    </div>
+  </div>
+</div>
+
+<!-- SITE MAP -->
+<div class="section">
+  <div class="section-label">04 — Site Architecture</div>
+  <h2 class="section-title">Pages & Navigation</h2>
+  <p class="section-desc">Seven core pages modelled on the Mystical Journeys structure, adapted to the Ikigai + Ubuntu + Kihooto philosophy.</p>
+  <div class="site-map">
+    <div class="page-card primary">
+      <div class="page-num">Page 01</div>
+      <div class="page-name">Home</div>
+      <ul class="page-items">
+        <li>Hero — Sacred Garden headline</li>
+        <li>Coach intro snippet</li>
+        <li>3 pillars (Ikigai / Ubuntu / Kihooto)</li>
+        <li>Featured packages teaser</li>
+        <li>Testimonial highlight</li>
+        <li>Blog preview</li>
+        <li>CTA strip</li>
+      </ul>
+    </div>
+    <div class="page-card primary">
+      <div class="page-num">Page 02</div>
+      <div class="page-name">About Umulkheiri</div>
+      <ul class="page-items">
+        <li>Story & philosophy</li>
+        <li>Ikigai + Ubuntu + Kihooto framework</li>
+        <li>Credentials & certification</li>
+        <li>Why it works section</li>
+        <li>Values visual diagram</li>
+      </ul>
+    </div>
+    <div class="page-card secondary">
+      <div class="page-num">Page 03</div>
+      <div class="page-name">Services / Packages</div>
+      <ul class="page-items">
+        <li>Individual coaching packages</li>
+        <li>Group & corporate offerings</li>
+        <li>Add-ons & extras</li>
+        <li>Pricing cards with booking CTA</li>
+        <li>Signature Promise statement</li>
+      </ul>
+    </div>
+    <div class="page-card secondary">
+      <div class="page-num">Page 04</div>
+      <div class="page-name">Philosophy</div>
+      <ul class="page-items">
+        <li>Inner Garden metaphor explained</li>
+        <li>4 elements: Passion / Skills / Service / Livelihood</li>
+        <li>Ubuntu — "I am because we are"</li>
+        <li>Kihooto — Justice & right action</li>
+        <li>The Triangle of Wholeness</li>
+      </ul>
+    </div>
+    <div class="page-card tertiary">
+      <div class="page-num">Page 05</div>
+      <div class="page-name">The Ikigai Journal</div>
+      <ul class="page-items">
+        <li>Blog / wisdom writings</li>
+        <li>Category filter tags</li>
+        <li>Featured post hero</li>
+        <li>Newsletter signup</li>
+      </ul>
+    </div>
+    <div class="page-card tertiary">
+      <div class="page-num">Page 06</div>
+      <div class="page-name">Community / Circles</div>
+      <ul class="page-items">
+        <li>Ikigai Alignment Circles info</li>
+        <li>Women's program details</li>
+        <li>ALX alumni / youth programs</li>
+        <li>Group booking flow</li>
+      </ul>
+    </div>
+    <div class="page-card primary">
+      <div class="page-num">Page 07</div>
+      <div class="page-name">Book & Contact</div>
+      <ul class="page-items">
+        <li>Discovery session booking widget</li>
+        <li>Session type selector</li>
+        <li>M-Pesa / PayPal info</li>
+        <li>Contact form</li>
+        <li>FAQ accordion</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES MOCKUP -->
+<div class="section">
+  <div class="section-label">05 — Services UI</div>
+  <h2 class="section-title">Pricing Cards Concept</h2>
+  <p class="section-desc">Clean cards matching the rate card offering — individual packages, group, and VIP, with the transformation path as the featured (midnight) card.</p>
+
+  <div class="services-row">
+    <div class="service-card-mock">
+      <span class="service-badge badge-pink">Discovery</span>
+      <div class="mock-price">$50</div>
+      <div class="mock-price-label">Waived · Currently Free</div>
+      <div class="mock-service-name">Ikigai Discovery Session</div>
+      <div class="mock-service-desc">30 min deep dive into life purpose, core values & next direction. Perfect for clarity seekers.</div>
+      <button class="mock-btn mock-btn-ghost">Book Free Session</button>
+    </div>
+    <div class="service-card-mock">
+      <span class="service-badge badge-teal">Journey</span>
+      <div class="mock-price">$555</div>
+      <div class="mock-price-label">5 sessions · 90 mins each</div>
+      <div class="mock-service-name">Ikigai Alignment Journey</div>
+      <div class="mock-service-desc">Purpose alignment, goal clarity & lifestyle design. Worksheets & follow-up included.</div>
+      <button class="mock-btn mock-btn-teal">Start Journey</button>
+    </div>
+    <div class="service-card-mock featured">
+      <span class="service-badge badge-night">★ Transformation</span>
+      <div class="mock-price" style="color:white;">$1,000</div>
+      <div class="mock-price-label light">12 sessions · 1 hr each</div>
+      <div class="mock-service-name light">Ikigai Transformation Path</div>
+      <div class="mock-service-desc light">Full integration of purpose, mindset, habits & embodiment practices. Includes custom toolkit.</div>
+      <button class="mock-btn mock-btn-pink">Begin Transformation</button>
+    </div>
+    <div class="service-card-mock">
+      <span class="service-badge badge-gold">VIP Day</span>
+      <div class="mock-price">$400</div>
+      <div class="mock-price-label">1 Full Day · 4 Hours</div>
+      <div class="mock-service-name">Ikigai Intensive VIP Day</div>
+      <div class="mock-service-desc">Private immersion — vision mapping, energy work & strategy for your next life chapter.</div>
+      <button class="mock-btn mock-btn-ghost">Reserve Your Day</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-label">06 — Key Features & Functionalities</div>
+  <h2 class="section-title">What the Website Does</h2>
+  <p class="section-desc">Every feature is designed to convert visitors into clients, build trust through philosophy, and make booking frictionless.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon icon-pink">🌸</div>
+      <div class="feature-title">Ikigai Venn Diagram — Interactive</div>
+      <div class="feature-desc">Animated SVG diagram showing the 4 elements of the inner garden (Passion / Skills / Service / Livelihood) with hover tooltips explaining each quadrant.</div>
+      <div class="feature-tags">
+        <span class="ftag">SVG Animation</span><span class="ftag">Interactive</span><span class="ftag">Philosophy Page</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-teal">📅</div>
+      <div class="feature-title">Session Booking Widget</div>
+      <div class="feature-desc">Integrated Calendly or Cal.com embed for scheduling Discovery, Journey, and VIP sessions. Auto-sends confirmation with session prep guide.</div>
+      <div class="feature-tags">
+        <span class="ftag">Calendly Embed</span><span class="ftag">Auto-email</span><span class="ftag">Booking Page</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-gold">✦</div>
+      <div class="feature-title">Ikigai Self-Assessment Quiz</div>
+      <div class="feature-desc">A short 6–8 question quiz that reveals which element of the user's inner garden needs the most tending — leads into a personalised coaching recommendation.</div>
+      <div class="feature-tags">
+        <span class="ftag">Lead Magnet</span><span class="ftag">Email Capture</span><span class="ftag">Home / Philosophy</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-midnight">🌍</div>
+      <div class="feature-title">Philosophy Scroll Story</div>
+      <div class="feature-desc">Scroll-triggered narrative that unfolds the Ikigai + Ubuntu + Kihooto triangle as the user reads down — each concept revealed with animated entrance.</div>
+      <div class="feature-tags">
+        <span class="ftag">Scroll Animation</span><span class="ftag">Storytelling</span><span class="ftag">About / Philosophy</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-pink">💬</div>
+      <div class="feature-title">Testimonials Carousel</div>
+      <div class="feature-desc">Rotating client testimonials on the dark brand background — name, location, and coaching package included for specificity and trust.</div>
+      <div class="feature-tags">
+        <span class="ftag">Social Proof</span><span class="ftag">Auto-rotate</span><span class="ftag">Home</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-teal">📝</div>
+      <div class="feature-title">The Ikigai Journal (Blog)</div>
+      <div class="feature-desc">Filterable blog by topic (Purpose, Ubuntu, Leadership, Mindset). Newsletter opt-in strips within posts. SEO-optimised for organic discovery.</div>
+      <div class="feature-tags">
+        <span class="ftag">Blog CMS</span><span class="ftag">Newsletter</span><span class="ftag">SEO</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-gold">💳</div>
+      <div class="feature-title">Multi-Currency Payment</div>
+      <div class="feature-desc">PayPal, M-Pesa, and Bank Transfer supported. 50% deposit flow. Sliding scale option for students visible on booking page.</div>
+      <div class="feature-tags">
+        <span class="ftag">PayPal</span><span class="ftag">M-Pesa</span><span class="ftag">Deposit Flow</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-midnight">🎤</div>
+      <div class="feature-title">Speaking & Corporate Enquiry Form</div>
+      <div class="feature-desc">Dedicated form for keynote and corporate masterclass bookings. Selectable duration (30–60 min) and organisation type. Starts at $555 / $600.</div>
+      <div class="feature-tags">
+        <span class="ftag">B2B Lead Form</span><span class="ftag">Services Page</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-pink">🌿</div>
+      <div class="feature-title">Credentials Trust Strip</div>
+      <div class="feature-desc">Certified Excellence / IPHM / IAOTH / CMA badge bar displayed prominently near the hero and on the About page to establish professional authority.</div>
+      <div class="feature-tags">
+        <span class="ftag">Trust Signals</span><span class="ftag">Accreditation</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-teal">📦</div>
+      <div class="feature-title">Downloadable Ikigai Toolkit Upsell</div>
+      <div class="feature-desc">$75 PDF toolkit available as a standalone add-on — Gumroad or PayPal payment with automatic file delivery. Featured as an add-on in services.</div>
+      <div class="feature-tags">
+        <span class="ftag">Digital Product</span><span class="ftag">Add-On</span><span class="ftag">$75</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-gold">🔔</div>
+      <div class="feature-title">Email List / Newsletter</div>
+      <div class="feature-desc">Mailchimp or ConvertKit integration. Opt-in via quiz completion, blog sidebar, and footer. Subscribers receive a welcome guide to the Inner Garden philosophy.</div>
+      <div class="feature-tags">
+        <span class="ftag">Email Marketing</span><span class="ftag">Lead Nurture</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-midnight">📱</div>
+      <div class="feature-title">Mobile-First Responsive Design</div>
+      <div class="feature-desc">All pages optimised for mobile with collapsible nav, touch-friendly booking flow, and readable typography at all screen sizes.</div>
+      <div class="feature-tags">
+        <span class="ftag">Mobile-first</span><span class="ftag">Accessible</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UX FLOW -->
+<div class="section">
+  <div class="section-label">07 — UX Flows</div>
+  <h2 class="section-title">Core User Journeys</h2>
+  <p class="section-desc">Two primary flows designed to convert: the self-discovery seeker and the corporate/community buyer.</p>
+
+  <p style="font-size:13px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow A — Individual Client</p>
+  <div class="flow-steps" style="margin-bottom:28px;">
+    <div class="flow-step">
+      <div class="flow-step-num">01</div>
+      <div class="flow-step-title">Lands on Home</div>
+      <div class="flow-step-desc">Hero resonates. Reads philosophy pills.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">02</div>
+      <div class="flow-step-title">Takes Quiz</div>
+      <div class="flow-step-desc">Identifies which garden element needs tending.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">03</div>
+      <div class="flow-step-title">Gets Result</div>
+      <div class="flow-step-desc">Personalised package recommendation shown.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">04</div>
+      <div class="flow-step-title">Books Session</div>
+      <div class="flow-step-desc">Free Discovery or chosen package. 50% deposit.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">05</div>
+      <div class="flow-step-title">Confirmation</div>
+      <div class="flow-step-desc">Welcome email + prep guide sent automatically.</div>
+    </div>
+  </div>
+
+  <p style="font-size:13px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow B — Corporate / Group Buyer</p>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-step-num">01</div>
+      <div class="flow-step-title">Finds Site</div>
+      <div class="flow-step-desc">Via LinkedIn, referral, or search.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">02</div>
+      <div class="flow-step-title">Reads Services</div>
+      <div class="flow-step-desc">Masterclass, workshop, retreat options clear.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">03</div>
+      <div class="flow-step-title">Sees Credentials</div>
+      <div class="flow-step-desc">IPHM / IAOTH badges + philosophy depth.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">04</div>
+      <div class="flow-step-title">Submits Enquiry</div>
+      <div class="flow-step-desc">Corporate form with org details & date.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">05</div>
+      <div class="flow-step-title">Proposal Sent</div>
+      <div class="flow-step-desc">Custom scope + booking confirmed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL MOCKUP -->
+<div class="section">
+  <div class="section-label">08 — Social Proof</div>
+  <h2 class="section-title">Testimonial Design</h2>
+  <p class="section-desc">Dark brand immersive background with large italic quote — mirrors the deep-night brand personality from the slides.</p>
+  <div class="testimonial-mock">
+    <p class="testimonial-text">Working with Umulkheiri didn't just bring clarity — it brought me home to myself. The weaving of Ikigai, Ubuntu, and Kihooto created a compass I carry with me every single day.</p>
+    <div class="testimonial-source"><strong>Client, Nairobi</strong> · Ikigai Transformation Path</div>
+  </div>
+</div>
+
+<!-- COMPONENTS -->
+<div class="section">
+  <div class="section-label">09 — UI Components</div>
+  <h2 class="section-title">Component Library</h2>
+  <p class="section-desc">Consistent components used across all pages — buttons, inputs, and badges all follow the garden palette.</p>
+  <div class="component-showcase">
+    <div class="comp-group">
+      <div class="comp-label">Buttons</div>
+      <button class="btn-demo btn-primary-demo">Begin Your Journey</button>
+      <button class="btn-demo btn-secondary-demo">Explore Philosophy</button>
+      <button class="btn-demo btn-ghost-demo">Learn More</button>
+      <button class="btn-demo btn-teal-demo">Book Group Circle</button>
+    </div>
+    <div class="comp-group">
+      <div class="comp-label">Form Inputs</div>
+      <input class="input-demo" type="text" placeholder="Your full name" readonly>
+      <input class="input-demo" type="email" placeholder="Your email address" readonly>
+      <select class="select-demo">
+        <option>Select a coaching package</option>
+        <option>Ikigai Discovery Session</option>
+        <option>Alignment Journey ($555)</option>
+        <option>Transformation Path ($1,000)</option>
+        <option>VIP Intensive Day ($400)</option>
+      </select>
+    </div>
+    <div class="comp-group">
+      <div class="comp-label">Tags & Badges</div>
+      <span class="tag-demo" style="background:var(--bloom-pink-light);color:#993356;">Purpose</span>
+      <span class="tag-demo" style="background:var(--garden-teal-light);color:#0f6e56;">Ubuntu</span>
+      <span class="tag-demo" style="background:#fef3dc;color:#854f0b;">Livelihood</span>
+      <span class="tag-demo" style="background:rgba(46,26,71,0.08);color:#2e1a47;">Kihooto</span>
+      <span class="tag-demo" style="background:var(--deep-night);color:var(--bloom-pink);">★ Certified</span>
+      <br><br>
+      <div style="background:var(--bloom-pink-light);border-radius:8px;padding:12px;font-size:12px;color:#993356;border-left:3px solid var(--bloom-pink);">
+        <strong>Signature Promise</strong><br>I don't just help you find purpose — I help you design a life that feels aligned, abundant, and alive.
+      </div>
+    </div>
+    <div class="comp-group">
+      <div class="comp-label">Design Tokens</div>
+      <div class="token-row"><span class="token-name">Border Radius</span><span class="token-value">8px / 14px</span></div>
+      <div class="token-row"><span class="token-name">Body Font Size</span><span class="token-value">16px</span></div>
+      <div class="token-row"><span class="token-name">H1 Display Size</span><span class="token-value">52px</span></div>
+      <div class="token-row"><span class="token-name">Line Height</span><span class="token-value">1.7</span></div>
+      <div class="token-row"><span class="token-name">Section Padding</span><span class="token-value">80px 60px</span></div>
+      <div class="token-row"><span class="token-name">Card Shadow</span><span class="token-value">none / border</span></div>
+      <div class="token-row"><span class="token-name">Card Border</span><span class="token-value">1px solid rgba(0,0,0,0.06)</span></div>
+      <div class="token-row"><span class="token-name">CTA Radius</span><span class="token-value">8px / pill 20px</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- INSPIRATION COMPARISON -->
+<div class="section">
+  <div class="section-label">10 — Inspired By Mystical Journeys</div>
+  <h2 class="section-title">What We've Kept & Elevated</h2>
+  <p class="section-desc">Drawing the best structural patterns from mystical-journeys.online, infused with the deep-night + bloom-pink palette from the client's own slides.</p>
+
+  <div class="two-col">
+    <div>
+      <div class="token-group" style="margin-bottom:16px;">
+        <h4>Borrowed from Mystical Journeys</h4>
+        <div class="token-row"><span class="token-name">Coach personality hero section</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Soul Coaching Packages layout</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Blog / journal as wisdom space</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Testimonial pullquote style</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Private community / inner circle</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Corporate / intuitive coaching page</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="token-group">
+        <h4>Uniquely Umulkheiri's Own</h4>
+        <div class="token-row"><span class="token-name">Deep Night + Bloom Pink palette</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Sacred Garden metaphor woven throughout</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Ubuntu / Kihooto philosophy section</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Ikigai Triangle interactive diagram</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">M-Pesa payment integration</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Self-assessment quiz + lead nurture</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Nairobi / African diaspora context</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <strong>Umulkheiri Jalo · Ikigai Alignment Coaching</strong> &nbsp;|&nbsp; Website Design Brief · May 2025 &nbsp;|&nbsp; Certified Ikigai Coach with Distinction · ID45632-28225
+</div>
+
+</body>
+</html>
