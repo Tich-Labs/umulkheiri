@@ -1520,7 +1520,8 @@
       reaction: 'thumbs_up',
       feedback: null,
       name: null,
-      email: null
+      email: null,
+      source: 'umu'
     }).then(function(result) {
       if (!result.error) {
         btn.classList.add('liked');
@@ -1559,7 +1560,8 @@
       reaction: 'could_be_better',
       feedback: document.getElementById('formFeedback').value,
       name: document.getElementById('formName').value || null,
-      email: document.getElementById('formEmail').value || null
+      email: document.getElementById('formEmail').value || null,
+      source: 'umu'
     }).then(function(result) {
       if (result.error) {
         alert('Something went wrong. Please try again.');
