@@ -5,37 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Umulkheiri Jalo — Ikigai Alignment Coaching | Website Design Brief</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@400;700&family=Sankofa+Display:wght@400;700&family=Questrial:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --deep-night: #1a1028;
-    --midnight-bloom: #2e1a47;
-    --bloom-pink: #f47bb4;
-    --bloom-pink-light: #fce4f0;
-    --sunset-gold: #f5a623;
-    --garden-teal: #1d9e75;
-    --garden-teal-light: #e1f5ee;
-    --soft-white: #fdfaf7;
-    --warm-sand: #f5efe6;
-    --text-dark: #1a1028;
-    --text-mid: #4a3860;
-    --text-muted: #6b5b7a;
-    --bloom-pink-dark: #b83e7a;
-    --border-soft: rgba(244, 123, 180, 0.2);
+    /* ── SPICE PALETTE (5 colours only) ── */
+    --espresso:        #1E1208;   /* deepest dark — hero BG, footer */
+    --cinnamon:        #8B4513;   /* warm brown — secondary dark, headings, labels */
+    --saffron:         #D4860A;   /* amber orange — primary accent, CTAs */
+    --pine:            #4A5E35;   /* forest green — nature/growth accent */
+    --sand:            #D4AA78;   /* sand beige — warm highlight, badges */
+
+    /* ── NEUTRALS ONLY ── */
+    --white:           #FFFFFF;
+    --gray-lightest:   #F7F4F0;   /* page BG */
+    --gray-light:      #EDE8E1;   /* alt section BG, card borders */
+    --gray-mid:        #C4BAB0;   /* muted text, dividers */
+    --gray-text:       #5C4F42;   /* body text on light BG */
+
+    /* ── DERIVED (tints — white opacity over palette) ── */
+    --saffron-tint:    rgba(212,134,10,0.10);
+    --pine-tint:       rgba(74,94,53,0.10);
+    --sand-tint:       rgba(212,170,120,0.18);
+    --espresso-tint:   rgba(30,18,8,0.06);
+
+    --soft-white:      var(--gray-lightest);
+    --warm-sand:       var(--gray-light);
+    --text-dark:       var(--espresso);
+    --text-mid:        var(--gray-text);
+    --text-muted:      var(--gray-mid);
+    --border-soft:     rgba(212,134,10,0.20);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
+
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--soft-white);
-    color: var(--text-dark);
+    font-family: 'Questrial', sans-serif;
+    background: var(--gray-lightest);
+    color: var(--espresso);
     line-height: 1.7;
   }
 
   /* ── COVER ── */
   .cover {
-    background: var(--deep-night);
+    background: var(--espresso);
     color: white;
     padding: 80px 60px 60px;
     position: relative;
@@ -47,7 +59,7 @@
     top: -80px; right: -80px;
     width: 400px; height: 400px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(244,123,180,0.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(212,134,10,0.15) 0%, transparent 70%);
     pointer-events: none;
   }
   .cover::after {
@@ -56,14 +68,14 @@
     bottom: -60px; left: 40px;
     width: 280px; height: 280px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(29,158,117,0.14) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(74,94,53,0.12) 0%, transparent 70%);
     pointer-events: none;
   }
   .cover-badge {
     display: inline-block;
-    background: rgba(244,123,180,0.18);
-    border: 1px solid rgba(244,123,180,0.35);
-    color: var(--bloom-pink);
+    background: rgba(212,134,10,0.18);
+    border: 1px solid rgba(212,134,10,0.35);
+    color: var(--saffron);
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -72,14 +84,14 @@
     margin-bottom: 32px;
   }
   .cover h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Ojuju', cursive;
     font-size: 52px;
     font-weight: 600;
     line-height: 1.15;
     margin-bottom: 12px;
     color: white;
   }
-  .cover h1 em { color: var(--bloom-pink); font-style: italic; }
+  .cover h1 em { color: var(--saffron); font-style: italic; }
   .cover-sub {
     font-size: 16px;
     color: rgba(255,255,255,0.55);
@@ -94,7 +106,7 @@
   .cover-tag {
     background: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.70);
     font-size: 12px;
     padding: 5px 14px;
     border-radius: 20px;
@@ -103,29 +115,30 @@
   /* ── SECTIONS ── */
   .section {
     padding: 64px 60px;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--white);
   }
-  .section:nth-child(even) { background: var(--warm-sand); }
+  .section:nth-child(even) { background: var(--gray-lightest); }
 
   .section-label {
     font-size: 11px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--bloom-pink-dark);
+    color: var(--cinnamon);
     font-weight: 500;
     margin-bottom: 10px;
   }
   .section-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Questrial', sans-serif;
     font-size: 34px;
     font-weight: 600;
-    color: var(--deep-night);
+    color: var(--espresso);
     margin-bottom: 10px;
     line-height: 1.2;
   }
   .section-desc {
     font-size: 16px;
-    color: var(--text-muted);
+    color: var(--gray-text);
     max-width: 700px;
     margin-bottom: 40px;
   }
@@ -140,37 +153,35 @@
   .swatch {
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.07);
+    border: 1px solid var(--gray-light);
   }
-  .swatch-color {
-    height: 72px;
-  }
+  .swatch-color { height: 72px; }
   .swatch-info {
     padding: 10px 12px;
-    background: white;
+    background: var(--white);
   }
-  .swatch-name { font-size: 12px; font-weight: 500; color: var(--text-dark); }
-  .swatch-hex { font-size: 10px; color: var(--text-muted); font-family: monospace; }
-  .swatch-role { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .swatch-name { font-size: 12px; font-weight: 500; color: var(--espresso); }
+  .swatch-hex { font-size: 10px; color: var(--gray-text); font-family: monospace; }
+  .swatch-role { font-size: 10px; color: var(--gray-mid); margin-top: 2px; }
 
   /* ── TYPOGRAPHY ── */
   .type-samples { display: flex; flex-direction: column; gap: 24px; }
   .type-row {
     padding: 20px 24px;
-    background: white;
+    background: var(--white);
     border-radius: 12px;
-    border: 1px solid rgba(0,0,0,0.06);
+    border: 1px solid var(--gray-light);
     display: flex;
     align-items: baseline;
     gap: 24px;
     flex-wrap: wrap;
   }
-  .type-meta { font-size: 11px; color: var(--text-muted); min-width: 140px; }
-  .type-sample-h1 { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 600; color: var(--deep-night); }
-  .type-sample-h2 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; font-style: italic; color: var(--midnight-bloom); }
-  .type-sample-h3 { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 500; color: var(--deep-night); letter-spacing: 0.5px; }
-  .type-sample-body { font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--text-mid); }
-  .type-sample-caption { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--bloom-pink); font-weight: 500; }
+  .type-meta { font-size: 11px; color: var(--gray-mid); min-width: 140px; }
+  .type-sample-h1 { font-family: 'Ojuju', cursive; font-size: 42px; font-weight: 600; color: var(--espresso); }
+  .type-sample-h2 { font-family: 'Questrial', sans-serif; font-size: 28px; font-weight: 600; font-style: normal; color: var(--cinnamon); }
+  .type-sample-h3 { font-family: 'Questrial', sans-serif; font-size: 18px; font-weight: 500; color: var(--espresso); letter-spacing: 0.5px; }
+  .type-sample-body { font-family: 'Questrial', sans-serif; font-size: 16px; color: var(--gray-text); }
+  .type-sample-caption { font-family: 'Questrial', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--saffron); font-weight: 500; }
 
   /* ── SITE STRUCTURE ── */
   .site-map {
@@ -179,41 +190,28 @@
     gap: 16px;
   }
   .page-card {
-    background: white;
+    background: var(--white);
     border-radius: 12px;
-    border: 1px solid rgba(0,0,0,0.06);
+    border: 1px solid var(--gray-light);
     padding: 20px;
-    position: relative;
   }
-  .page-card.primary { border-left: 3px solid var(--bloom-pink); }
-  .page-card.secondary { border-left: 3px solid var(--garden-teal); }
-  .page-card.tertiary { border-left: 3px solid var(--sunset-gold); }
-  .page-num {
-    font-size: 10px;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .page-name {
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--text-dark);
-    margin-bottom: 8px;
-  }
+  .page-card.primary  { border-left: 3px solid var(--saffron); }
+  .page-card.secondary { border-left: 3px solid var(--pine); }
+  .page-card.tertiary  { border-left: 3px solid var(--cinnamon); }
+  .page-num { font-size: 10px; color: var(--gray-mid); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .page-name { font-weight: 500; font-size: 14px; color: var(--espresso); margin-bottom: 8px; }
   .page-items { list-style: none; }
   .page-items li {
     font-size: 14px;
-    color: var(--text-muted);
-    padding: 3px 0;
-    padding-left: 12px;
+    color: var(--gray-text);
+    padding: 3px 0 3px 12px;
     position: relative;
   }
   .page-items li::before {
     content: '→';
     position: absolute;
     left: 0;
-    color: var(--bloom-pink);
+    color: var(--saffron);
     font-size: 10px;
     top: 4px;
   }
@@ -225,39 +223,35 @@
     gap: 20px;
   }
   .feature-card {
-    background: white;
+    background: var(--white);
     border-radius: 14px;
     padding: 24px;
-    border: 1px solid rgba(0,0,0,0.06);
+    border: 1px solid var(--gray-light);
   }
   .feature-icon {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     font-size: 22px;
     margin-bottom: 16px;
   }
-  .icon-pink { background: var(--bloom-pink-light); }
-  .icon-teal { background: var(--garden-teal-light); }
-  .icon-gold { background: #fef3dc; }
-  .icon-midnight { background: rgba(46,26,71,0.08); }
-  .feature-title { font-weight: 500; font-size: 15px; color: var(--text-dark); margin-bottom: 8px; }
-  .feature-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-  .feature-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .icon-saffron  { background: var(--saffron-tint); }
+  .icon-pine     { background: var(--pine-tint); }
+  .icon-sand     { background: var(--sand-tint); }
+  .icon-espresso { background: var(--espresso-tint); }
+  .feature-title { font-weight: 500; font-size: 15px; color: var(--espresso); margin-bottom: 8px; }
+  .feature-desc  { font-size: 14px; color: var(--gray-text); line-height: 1.6; }
+  .feature-tags  { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   .ftag {
-    font-size: 10px;
-    padding: 3px 10px;
+    font-size: 10px; padding: 3px 10px;
     border-radius: 20px;
-    border: 1px solid rgba(0,0,0,0.08);
-    color: var(--text-muted);
+    border: 1px solid var(--gray-light);
+    color: var(--gray-text);
   }
 
   /* ── HERO MOCKUP ── */
   .hero-mockup {
-    background: var(--deep-night);
+    background: var(--espresso);
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 32px;
@@ -269,227 +263,141 @@
     content: '';
     position: absolute;
     top: 0; right: 0;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(135deg, transparent 40%, rgba(244,123,180,0.08) 100%);
+    width: 60%; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(212,134,10,0.07) 100%);
   }
   .hero-nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    margin-bottom: 48px;
-    position: relative;
-    z-index: 1;
+    display: flex; gap: 20px; align-items: center;
+    margin-bottom: 48px; position: relative; z-index: 1;
   }
-  .hero-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
-    color: white;
-    font-weight: 600;
-    margin-right: auto;
-  }
+  .hero-logo { font-family: 'Ojuju', cursive; font-size: 15px; color: white; font-weight: 600; margin-right: auto; }
   .hero-navlink { font-size: 11px; color: rgba(255,255,255,0.5); text-decoration: none; }
   .hero-cta-nav {
-    background: var(--bloom-pink);
-    color: white;
-    font-size: 11px;
-    padding: 7px 16px;
-    border-radius: 20px;
-    text-decoration: none;
+    background: var(--saffron); color: white;
+    font-size: 11px; padding: 7px 16px; border-radius: 20px; text-decoration: none;
   }
   .hero-headline {
-    font-family: 'Playfair Display', serif;
-    font-size: 38px;
-    font-weight: 600;
-    color: white;
-    line-height: 1.2;
-    max-width: 540px;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
+    font-family: 'Ojuju', cursive;
+    font-size: 38px; font-weight: 600; color: white;
+    line-height: 1.2; max-width: 540px; margin-bottom: 16px;
+    position: relative; z-index: 1;
   }
-  .hero-headline em { color: var(--bloom-pink); font-style: italic; }
+  .hero-headline em { color: var(--saffron); font-style: italic; }
   .hero-sub-text {
-    font-size: 14px;
-    color: rgba(255,255,255,0.55);
-    max-width: 420px;
-    margin-bottom: 28px;
-    position: relative;
-    z-index: 1;
+    font-size: 14px; color: rgba(255,255,255,0.55);
+    max-width: 420px; margin-bottom: 28px;
+    position: relative; z-index: 1;
   }
-  .hero-btns {
-    display: flex;
-    gap: 12px;
-    position: relative;
-    z-index: 1;
-  }
+  .hero-btns { display: flex; gap: 12px; position: relative; z-index: 1; }
   .hero-btn-primary {
-    background: var(--bloom-pink);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    border: none;
+    background: var(--saffron); color: white;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 13px; font-weight: 500; text-decoration: none; border: none;
   }
   .hero-btn-secondary {
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.2);
     color: rgba(255,255,255,0.8);
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 13px;
-    text-decoration: none;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 13px; text-decoration: none;
   }
   .hero-pills {
-    display: flex;
-    gap: 10px;
-    margin-top: 36px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
+    display: flex; gap: 10px; margin-top: 36px; flex-wrap: wrap;
+    position: relative; z-index: 1;
   }
   .hero-pill {
     background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.10);
     color: rgba(255,255,255,0.6);
-    font-size: 11px;
-    padding: 5px 14px;
-    border-radius: 20px;
+    font-size: 11px; padding: 5px 14px; border-radius: 20px;
   }
-  .hero-pill span { color: var(--bloom-pink); margin-right: 5px; }
+  .hero-pill span { color: var(--saffron); margin-right: 5px; }
 
   /* ── SERVICES MOCKUP ── */
   .services-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 14px;
-    margin-bottom: 24px;
+    gap: 14px; margin-bottom: 24px;
   }
   .service-card-mock {
-    background: white;
-    border-radius: 14px;
-    padding: 20px;
-    border: 1px solid rgba(0,0,0,0.06);
-    position: relative;
-    overflow: hidden;
+    background: var(--white);
+    border-radius: 14px; padding: 20px;
+    border: 1px solid var(--gray-light);
+    position: relative; overflow: hidden;
   }
   .service-card-mock.featured {
-    background: var(--deep-night);
-    color: white;
+    background: var(--espresso); color: white;
   }
   .service-badge {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 12px;
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 1.5px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+    display: inline-block; margin-bottom: 12px;
   }
-  .badge-pink { background: var(--bloom-pink-light); color: #993356; }
-  .badge-teal { background: var(--garden-teal-light); color: #0f6e56; }
-  .badge-gold { background: #fef3dc; color: #854f0b; }
-  .badge-night { background: rgba(244,123,180,0.15); color: var(--bloom-pink); }
+  .badge-saffron { background: var(--saffron-tint); color: #7A4A00; }
+  .badge-pine    { background: var(--pine-tint);    color: #2A3C1A; }
+  .badge-sand    { background: var(--sand-tint);    color: #6B4A1A; }
+  .badge-night   { background: rgba(212,134,10,0.15); color: var(--saffron); }
   .mock-price {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 4px;
+    font-family: 'Ojuju', cursive;
+    font-size: 26px; font-weight: 600; margin-bottom: 4px;
   }
-  .mock-price-label { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
+  .mock-price-label { font-size: 11px; color: var(--gray-text); margin-bottom: 12px; }
   .mock-price-label.light { color: rgba(255,255,255,0.5); }
   .mock-service-name { font-weight: 500; font-size: 13px; margin-bottom: 8px; }
   .mock-service-name.light { color: white; }
-  .mock-service-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  .mock-service-desc { font-size: 11px; color: var(--gray-text); line-height: 1.5; }
   .mock-service-desc.light { color: rgba(255,255,255,0.55); }
   .mock-btn {
-    display: block;
-    text-align: center;
-    margin-top: 16px;
-    padding: 9px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 500;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
+    display: block; text-align: center;
+    margin-top: 16px; padding: 9px;
+    border-radius: 8px; font-size: 11px; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
   }
-  .mock-btn-pink { background: var(--bloom-pink); color: white; }
+  .mock-btn-saffron { background: var(--saffron); color: white; }
   .mock-btn-outline { border: 1px solid rgba(255,255,255,0.25); color: white; background: transparent; }
-  .mock-btn-teal { background: var(--garden-teal); color: white; }
-  .mock-btn-ghost { border: 1px solid rgba(0,0,0,0.1); color: var(--text-mid); background: transparent; }
+  .mock-btn-pine    { background: var(--pine); color: white; }
+  .mock-btn-ghost   { border: 1px solid var(--gray-light); color: var(--gray-text); background: transparent; }
 
   /* ── UX FLOWS ── */
   .flow-steps {
-    display: flex;
-    gap: 0;
-    position: relative;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-    gap: 2px;
+    display: flex; position: relative;
+    margin-bottom: 40px; flex-wrap: wrap; gap: 2px;
   }
   .flow-step {
-    flex: 1;
-    min-width: 140px;
-    background: white;
-    border: 1px solid rgba(0,0,0,0.06);
+    flex: 1; min-width: 140px;
+    background: var(--white);
+    border: 1px solid var(--gray-light);
     padding: 20px 16px;
-    position: relative;
   }
   .flow-step:first-child { border-radius: 12px 0 0 12px; }
-  .flow-step:last-child { border-radius: 0 12px 12px 0; }
-  .flow-step-num {
-    font-size: 10px;
-    letter-spacing: 1px;
-    color: var(--bloom-pink);
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-  .flow-step-title { font-weight: 500; font-size: 13px; color: var(--text-dark); margin-bottom: 4px; }
-  .flow-step-desc { font-size: 11px; color: var(--text-muted); }
-  .flow-arrow {
-    display: flex;
-    align-items: center;
-    color: var(--bloom-pink);
-    font-size: 16px;
-    padding: 0 4px;
-    flex-shrink: 0;
-  }
+  .flow-step:last-child  { border-radius: 0 12px 12px 0; }
+  .flow-step-num   { font-size: 10px; letter-spacing: 1px; color: var(--saffron); font-weight: 600; margin-bottom: 6px; }
+  .flow-step-title { font-weight: 500; font-size: 13px; color: var(--espresso); margin-bottom: 4px; }
+  .flow-step-desc  { font-size: 11px; color: var(--gray-text); }
+  .flow-arrow { display: flex; align-items: center; color: var(--saffron); font-size: 16px; padding: 0 4px; flex-shrink: 0; }
 
   /* ── DESIGN TOKENS ── */
-  .tokens-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
+  .tokens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .token-group {
-    background: white;
-    border-radius: 12px;
-    padding: 20px 24px;
-    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--white);
+    border-radius: 12px; padding: 20px 24px;
+    border: 1px solid var(--gray-light);
   }
   .token-group h4 {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--bloom-pink);
-    font-weight: 600;
-    margin-bottom: 16px;
+    font-size: 12px; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--saffron);
+    font-weight: 600; margin-bottom: 16px;
   }
   .token-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.04);
+    border-bottom: 1px solid var(--gray-lightest);
     font-size: 12px;
   }
   .token-row:last-child { border-bottom: none; }
-  .token-name { color: var(--text-muted); }
-  .token-value { font-weight: 500; color: var(--text-dark); font-family: monospace; font-size: 11px; }
+  .token-name  { color: var(--gray-text); }
+  .token-value { font-weight: 500; color: var(--espresso); font-family: monospace; font-size: 11px; }
 
   /* ── COMPONENTS ── */
   .component-showcase {
@@ -498,84 +406,59 @@
     gap: 16px;
   }
   .comp-group {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--white);
+    border-radius: 12px; padding: 20px;
+    border: 1px solid var(--gray-light);
   }
-  .comp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 14px; font-weight: 500; }
+  .comp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-mid); margin-bottom: 14px; font-weight: 500; }
   .btn-demo {
-    display: block;
-    width: 100%;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    text-align: center;
-    margin-bottom: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
+    display: block; width: 100%; padding: 10px 16px;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    text-align: center; margin-bottom: 8px; border: none;
+    cursor: pointer; font-family: 'Questrial', sans-serif;
   }
-  .btn-primary-demo { background: var(--bloom-pink); color: white; }
-  .btn-secondary-demo { background: var(--deep-night); color: white; }
-  .btn-ghost-demo { background: transparent; border: 1px solid var(--bloom-pink); color: var(--bloom-pink); }
-  .btn-teal-demo { background: var(--garden-teal); color: white; }
+  .btn-primary-demo   { background: var(--saffron);  color: white; }
+  .btn-secondary-demo { background: var(--espresso); color: white; }
+  .btn-ghost-demo     { background: transparent; border: 1px solid var(--saffron); color: var(--saffron); }
+  .btn-pine-demo      { background: var(--pine); color: white; }
   .input-demo {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid rgba(0,0,0,0.12);
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    outline: none;
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px; font-size: 14px;
+    font-family: 'Questrial', sans-serif;
+    color: var(--gray-text); margin-bottom: 8px; outline: none;
   }
   .select-demo {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid rgba(0,0,0,0.12);
-    border-radius: 8px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text-dark);
-    background: white;
-    outline: none;
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px; font-size: 13px;
+    font-family: 'Questrial', sans-serif;
+    color: var(--espresso); background: white; outline: none;
   }
   .tag-demo { display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 20px; margin: 2px; }
 
   /* ── TESTIMONIAL ── */
   .testimonial-mock {
-    background: var(--deep-night);
-    border-radius: 16px;
-    padding: 40px 48px;
-    position: relative;
-    overflow: hidden;
+    background: var(--espresso);
+    border-radius: 16px; padding: 40px 48px;
+    position: relative; overflow: hidden;
   }
   .testimonial-mock::before {
     content: '"';
-    font-family: 'Playfair Display', serif;
+    font-family: 'Ojuju', cursive;
     font-size: 160px;
-    color: rgba(244,123,180,0.12);
-    position: absolute;
-    top: -20px;
-    left: 30px;
-    line-height: 1;
+    color: rgba(212,134,10,0.12);
+    position: absolute; top: -20px; left: 30px; line-height: 1;
   }
   .testimonial-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-style: italic;
-    color: white;
-    max-width: 580px;
-    position: relative;
-    z-index: 1;
-    margin-bottom: 20px;
-    line-height: 1.55;
+    font-family: 'Ojuju', cursive;
+    font-size: 20px; font-style: italic;
+    color: white; max-width: 580px;
+    position: relative; z-index: 1;
+    margin-bottom: 20px; line-height: 1.55;
   }
   .testimonial-source { font-size: 13px; color: rgba(255,255,255,0.45); position: relative; z-index: 1; }
-  .testimonial-source strong { color: var(--bloom-pink); }
+  .testimonial-source strong { color: var(--saffron); }
 
   /* ── SPACING ── */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -585,309 +468,164 @@
 
   /* ── FOOTER ── */
   .doc-footer {
-    background: var(--deep-night);
+    background: var(--espresso);
     color: rgba(255,255,255,0.4);
     text-align: center;
     padding: 32px 60px;
     font-size: 12px;
   }
-  .doc-footer strong { color: var(--bloom-pink); }
+  .doc-footer strong { color: var(--saffron); }
 
   /* ── FEEDBACK ── */
   .feedback-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px; margin-bottom: 10px;
   }
-  .feedback-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+  .feedback-actions { display: flex; align-items: center; gap: 6px; }
   .fb-like, .fb-improve {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 500;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 500;
     padding: 4px 10px;
     border: 1px solid var(--border-soft);
-    border-radius: 20px;
-    cursor: pointer;
+    border-radius: 20px; cursor: pointer;
     background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    transition: all .25s;
-    color: var(--text-muted);
-    line-height: 1.4;
+    font-family: 'Questrial', sans-serif;
+    transition: all .25s; color: var(--gray-text); line-height: 1.4;
   }
-  .fb-like:hover { color: var(--garden-teal); border-color: var(--garden-teal); background: var(--garden-teal-light); }
-  .fb-like.liked { color: var(--garden-teal); border-color: var(--garden-teal); background: var(--garden-teal-light); cursor: default; }
-  .fb-improve:hover { color: var(--bloom-pink); border-color: var(--bloom-pink); background: var(--bloom-pink-light); }
+  .fb-like:hover   { color: var(--pine);    border-color: var(--pine);    background: var(--pine-tint); }
+  .fb-like.liked   { color: var(--pine);    border-color: var(--pine);    background: var(--pine-tint); cursor: default; }
+  .fb-improve:hover { color: var(--saffron); border-color: var(--saffron); background: var(--saffron-tint); }
+
   .feedback-fab {
-    position: fixed;
-    bottom: 32px;
-    right: 32px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    position: fixed; bottom: 32px; right: 32px; z-index: 1000;
+    display: flex; align-items: center; gap: 8px;
     padding: 12px 20px;
-    background: var(--deep-night);
-    color: white;
-    border: none;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 4px 20px rgba(26,16,40,0.25);
+    background: var(--espresso); color: white;
+    border: none; border-radius: 30px;
+    font-size: 13px; font-weight: 500;
+    font-family: 'Questrial', sans-serif;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 4px 20px rgba(30,18,8,0.25);
     transition: all .2s;
   }
   .feedback-fab:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 28px rgba(26,16,40,0.35);
-    background: var(--midnight-bloom);
+    box-shadow: 0 6px 28px rgba(30,18,8,0.35);
+    background: var(--cinnamon);
   }
   .feedback-area {
-    background: var(--warm-sand);
+    background: var(--gray-lightest);
     padding: 48px 60px;
     text-align: center;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid var(--gray-light);
   }
   .feedback-area h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    color: var(--deep-night);
-    margin-bottom: 8px;
+    font-family: 'Ojuju', cursive;
+    font-size: 24px; color: var(--espresso); margin-bottom: 8px;
   }
-  .feedback-area p {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-  }
+  .feedback-area p { font-size: 14px; color: var(--gray-text); margin-bottom: 24px; }
   .feedback-area .fb-improve {
-    font-size: 14px;
-    padding: 10px 24px;
-    border-radius: 8px;
-    color: white;
-    background: var(--deep-night);
-    border: none;
+    font-size: 14px; padding: 10px 24px; border-radius: 8px;
+    color: white; background: var(--espresso); border: none;
   }
-  .feedback-area .fb-improve:hover {
-    background: var(--midnight-bloom);
-    color: white;
-  }
+  .feedback-area .fb-improve:hover { background: var(--cinnamon); color: white; }
 
   /* ── TOAST ── */
   .toast {
-    position: fixed;
-    bottom: 90px;
-    right: 32px;
-    z-index: 3000;
-    background: var(--garden-teal);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    box-shadow: 0 4px 20px rgba(29,158,117,0.3);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all .3s ease;
-    pointer-events: none;
+    position: fixed; bottom: 90px; right: 32px; z-index: 3000;
+    background: var(--pine); color: white;
+    padding: 12px 20px; border-radius: 12px;
+    font-size: 13px; font-weight: 500;
+    font-family: 'Questrial', sans-serif;
+    box-shadow: 0 4px 20px rgba(74,94,53,0.3);
+    opacity: 0; transform: translateY(10px);
+    transition: all .3s ease; pointer-events: none;
   }
   .toast.show { opacity: 1; transform: translateY(0); }
-  .feedback-counter {
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-left: 2px;
-  }
 
   /* ── FEEDBACK MODAL ── */
   .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(26,16,40,0.6);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
+    display: none; position: fixed; inset: 0;
+    background: rgba(30,18,8,0.6);
+    z-index: 2000; justify-content: center; align-items: center; padding: 24px;
   }
   .modal-overlay.open { display: flex; }
   .modal-box {
-    background: white;
-    border-radius: 16px;
-    max-width: 520px;
-    width: 100%;
-    padding: 36px;
-    box-shadow: 0 20px 60px rgba(26,16,40,0.3);
-    position: relative;
-    max-height: 90vh;
-    overflow-y: auto;
+    background: white; border-radius: 16px;
+    max-width: 520px; width: 100%; padding: 36px;
+    box-shadow: 0 20px 60px rgba(30,18,8,0.25);
+    position: relative; max-height: 90vh; overflow-y: auto;
   }
   .modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--text-muted);
-    line-height: 1;
-    padding: 4px;
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; font-size: 24px;
+    cursor: pointer; color: var(--gray-mid); line-height: 1; padding: 4px;
   }
-  .modal-close:hover { color: var(--text-dark); }
-  .modal-box h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: var(--deep-night);
-    margin-bottom: 4px;
-  }
-  .modal-box .modal-section-name {
-    font-size: 13px;
-    color: var(--bloom-pink);
-    margin-bottom: 4px;
-    font-weight: 500;
-  }
-  .modal-box .modal-sub {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-  }
-  .modal-box label {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-dark);
-    margin-bottom: 6px;
-  }
-  .modal-box textarea,
-  .modal-box input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid rgba(0,0,0,0.12);
+  .modal-close:hover { color: var(--espresso); }
+  .modal-box h3 { font-family: 'Ojuju', cursive; font-size: 22px; color: var(--espresso); margin-bottom: 4px; }
+  .modal-box .modal-section-name { font-size: 13px; color: var(--saffron); margin-bottom: 4px; font-weight: 500; }
+  .modal-box .modal-sub { font-size: 13px; color: var(--gray-text); margin-bottom: 20px; }
+  .modal-box label { display: block; font-size: 13px; font-weight: 500; color: var(--espresso); margin-bottom: 6px; }
+  .modal-box textarea, .modal-box input {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--gray-light);
     border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--text-dark);
-    background: var(--soft-white);
-    transition: border .2s;
-    box-sizing: border-box;
+    font-family: 'Questrial', sans-serif; font-size: 14px;
+    color: var(--espresso); background: var(--gray-lightest);
+    transition: border .2s; box-sizing: border-box;
   }
-  .modal-box textarea:focus,
-  .modal-box input:focus {
-    outline: none;
-    border-color: var(--bloom-pink);
-  }
+  .modal-box textarea:focus, .modal-box input:focus { outline: none; border-color: var(--saffron); }
   .modal-box textarea { resize: vertical; min-height: 110px; }
   .modal-box .form-group { margin-bottom: 16px; }
-  .modal-box .form-row {
-    display: flex;
-    gap: 16px;
-  }
+  .modal-box .form-row { display: flex; gap: 16px; }
   .modal-box .form-row .form-group { flex: 1; }
   .modal-submit {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: var(--deep-night);
-    color: white;
-    font-size: 15px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    transition: background .2s;
+    width: 100%; padding: 12px; border: none; border-radius: 8px;
+    background: var(--espresso); color: white;
+    font-size: 15px; font-weight: 500;
+    font-family: 'Questrial', sans-serif; cursor: pointer; transition: background .2s;
   }
-  .modal-submit:hover { background: var(--midnight-bloom); }
-  .modal-submit:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  .modal-success {
-    display: none;
-    text-align: center;
-    padding: 32px 0;
-  }
+  .modal-submit:hover { background: var(--cinnamon); }
+  .modal-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .modal-success { display: none; text-align: center; padding: 32px 0; }
   .modal-success .check { font-size: 48px; margin-bottom: 12px; }
-  .modal-success h4 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--garden-teal); }
-  .modal-success p { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+  .modal-success h4 { font-family: 'Ojuju', cursive; font-size: 20px; color: var(--pine); }
+  .modal-success p { font-size: 14px; color: var(--gray-text); margin-top: 8px; }
 
   @media (max-width: 768px) {
     .cover { padding: 36px 20px 32px; }
     .cover h1 { font-size: 30px; }
-    .cover-tags { gap: 6px; }
-    .cover-tag { font-size: 10px; padding: 4px 10px; }
     .section { padding: 36px 20px; }
     .section-title { font-size: 24px; }
-    .section-label { font-size: 9px; }
-    .section-desc { font-size: 13px; margin-bottom: 24px; }
     .palette-grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; }
     .swatch-color { height: 50px; }
-    .swatch-info { padding: 6px 8px; }
-    .swatch-name { font-size: 10px; }
     .type-row { flex-direction: column; gap: 4px; padding: 14px 16px; }
-    .type-meta { min-width: auto; font-size: 10px; }
     .type-sample-h1 { font-size: 28px; }
     .type-sample-h2 { font-size: 20px; }
-    .type-sample-h3 { font-size: 15px; }
     .site-map { grid-template-columns: 1fr; }
-    .page-card { padding: 14px 16px; }
     .hero-mockup { padding: 20px 16px; min-height: auto; }
-    .hero-mockup::before { display: none; }
-    .hero-nav { flex-wrap: wrap; gap: 8px; }
-    .hero-navlink { font-size: 10px; }
-    .hero-cta-nav { padding: 5px 12px; font-size: 10px; }
     .hero-headline { font-size: 22px; }
-    .hero-sub-text { font-size: 12px; }
     .hero-btns { flex-direction: column; gap: 8px; }
-    .hero-btn-primary, .hero-btn-secondary { width: 100%; text-align: center; padding: 10px; font-size: 12px; }
-    .hero-pill { font-size: 10px; padding: 4px 10px; }
     .features-grid { grid-template-columns: 1fr; }
     .services-row { grid-template-columns: 1fr; }
-    .service-card-mock { padding: 16px; }
     .flow-steps { flex-direction: column; gap: 2px; }
-    .flow-step { min-width: auto; }
     .flow-step:first-child { border-radius: 12px 12px 0 0; }
-    .flow-step:last-child { border-radius: 0 0 12px 12px; }
+    .flow-step:last-child  { border-radius: 0 0 12px 12px; }
     .flow-arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
     .testimonial-mock { padding: 40px 20px; }
     .testimonial-text { font-size: 18px; }
     .component-showcase { grid-template-columns: 1fr; }
     .tokens-grid { grid-template-columns: 1fr; }
     .two-col { grid-template-columns: 1fr; }
-    .token-group { padding: 16px; }
-    .comp-group { padding: 16px; }
     .feedback-area { padding: 32px 20px; }
-    .feedback-area h3 { font-size: 20px; }
     .feedback-header { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .feedback-actions { width: 100%; }
-    .fb-like, .fb-improve { flex: 1; justify-content: center; padding: 6px 8px; font-size: 11px; }
     .feedback-fab { bottom: 16px; right: 16px; padding: 10px 16px; font-size: 12px; }
     .modal-box { padding: 20px; margin: 12px; }
     .modal-box .form-row { flex-direction: column; gap: 0; }
     .doc-footer { padding: 20px; font-size: 11px; }
   }
 
-  /* ── FOCUS VISIBLE ── */
-  *:focus-visible {
-    outline: 2px solid var(--bloom-pink-dark);
-    outline-offset: 2px;
-  }
-  .fb-like:focus-visible, .fb-improve:focus-visible,
-  .feedback-fab:focus-visible, .modal-close:focus-visible,
-  .modal-submit:focus-visible, .hero-navlink:focus-visible,
-  .mock-btn:focus-visible, .btn-demo:focus-visible {
-    outline: 2px solid var(--bloom-pink-dark);
-    outline-offset: 2px;
-  }
+  *:focus-visible { outline: 2px solid var(--cinnamon); outline-offset: 2px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -911,79 +649,71 @@
 <!-- COLOUR PALETTE -->
 <div class="section">
   <div class="section-label">01 — Colour System</div>
-  <h2 class="section-title">The Garden Palette</h2>
-  <p class="section-desc">Drawn directly from the client's slides: deep midnight navy as foundation, bloom pink as the signature accent, earth teal for nature and growth, and warm gold for luminosity.</p>
+  <h2 class="section-title">The Spice Garden Palette</h2>
+  <p class="section-desc">Five colours drawn directly from the client's inspiration image — espresso, cinnamon, saffron, pine, and sand — anchored by clean white and light gray neutrals. No additional colours used anywhere on the site.</p>
   <div class="palette-grid">
     <div class="swatch">
-      <div class="swatch-color" style="background:#1a1028;"></div>
+      <div class="swatch-color" style="background:#1E1208;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Deep Night</div>
-        <div class="swatch-hex">#1a1028</div>
-        <div class="swatch-role">Primary BG · Hero</div>
+        <div class="swatch-name">Espresso</div>
+        <div class="swatch-hex">#1E1208</div>
+        <div class="swatch-role">Primary BG · Hero · Footer</div>
       </div>
     </div>
     <div class="swatch">
-      <div class="swatch-color" style="background:#2e1a47;"></div>
+      <div class="swatch-color" style="background:#8B4513;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Midnight Bloom</div>
-        <div class="swatch-hex">#2e1a47</div>
-        <div class="swatch-role">Secondary Dark</div>
+        <div class="swatch-name">Cinnamon</div>
+        <div class="swatch-hex">#8B4513</div>
+        <div class="swatch-role">Secondary dark · Hover states</div>
       </div>
     </div>
     <div class="swatch">
-      <div class="swatch-color" style="background:#f47bb4;"></div>
+      <div class="swatch-color" style="background:#D4860A;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Bloom Pink</div>
-        <div class="swatch-hex">#f47bb4</div>
-        <div class="swatch-role">Primary Accent · CTAs</div>
+        <div class="swatch-name">Saffron</div>
+        <div class="swatch-hex">#D4860A</div>
+        <div class="swatch-role">Primary accent · CTAs</div>
       </div>
     </div>
     <div class="swatch">
-      <div class="swatch-color" style="background:#fce4f0;"></div>
+      <div class="swatch-color" style="background:#4A5E35;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Blush Light</div>
-        <div class="swatch-hex">#fce4f0</div>
-        <div class="swatch-role">Soft highlights</div>
+        <div class="swatch-name">Pine</div>
+        <div class="swatch-hex">#4A5E35</div>
+        <div class="swatch-role">Growth · Ubuntu · Nature</div>
       </div>
     </div>
     <div class="swatch">
-      <div class="swatch-color" style="background:#1d9e75;"></div>
+      <div class="swatch-color" style="background:#D4AA78;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Garden Teal</div>
-        <div class="swatch-hex">#1d9e75</div>
-        <div class="swatch-role">Growth · Ubuntu</div>
+        <div class="swatch-name">Sand Beige</div>
+        <div class="swatch-hex">#D4AA78</div>
+        <div class="swatch-role">Warm highlights · Badges</div>
       </div>
     </div>
     <div class="swatch">
-      <div class="swatch-color" style="background:#e1f5ee;"></div>
+      <div class="swatch-color" style="background:#FFFFFF; border: 1px solid #EDE8E1;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Jade Mist</div>
-        <div class="swatch-hex">#e1f5ee</div>
-        <div class="swatch-role">Teal light fill</div>
+        <div class="swatch-name">White</div>
+        <div class="swatch-hex">#FFFFFF</div>
+        <div class="swatch-role">Card surfaces</div>
       </div>
     </div>
     <div class="swatch">
-      <div class="swatch-color" style="background:#f5a623;"></div>
+      <div class="swatch-color" style="background:#F7F4F0;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Sunset Gold</div>
-        <div class="swatch-hex">#f5a623</div>
-        <div class="swatch-role">Livelihood · Energy</div>
+        <div class="swatch-name">Ivory Gray</div>
+        <div class="swatch-hex">#F7F4F0</div>
+        <div class="swatch-role">Page background</div>
       </div>
     </div>
     <div class="swatch">
-      <div class="swatch-color" style="background:#fdfaf7;"></div>
+      <div class="swatch-color" style="background:#EDE8E1;"></div>
       <div class="swatch-info">
-        <div class="swatch-name">Soft White</div>
-        <div class="swatch-hex">#fdfaf7</div>
-        <div class="swatch-role">Light page BG</div>
-      </div>
-    </div>
-    <div class="swatch">
-      <div class="swatch-color" style="background:#f5efe6;"></div>
-      <div class="swatch-info">
-        <div class="swatch-name">Warm Sand</div>
-        <div class="swatch-hex">#f5efe6</div>
-        <div class="swatch-role">Alt section BG</div>
+        <div class="swatch-name">Warm Gray</div>
+        <div class="swatch-hex">#EDE8E1</div>
+        <div class="swatch-role">Borders · Alt section BG</div>
       </div>
     </div>
   </div>
@@ -993,26 +723,26 @@
 <div class="section">
   <div class="section-label">02 — Typography</div>
   <h2 class="section-title">Voice in Type</h2>
-  <p class="section-desc">Playfair Display for sacred, soulful headlines — echoing the warmth of the slides. DM Sans for accessible, modern body copy.</p>
+  <p class="section-desc">Ojuju for bold hero headlines. Questrial for strong section titles and body copy—clean, modern, accessible.</p>
   <div class="type-samples">
     <div class="type-row">
-      <span class="type-meta">H1 · Playfair 600 · 42px</span>
+      <span class="type-meta">H1 · Ojuju 600 · 42px</span>
       <span class="type-sample-h1">Your Sacred Garden</span>
     </div>
     <div class="type-row">
-      <span class="type-meta">H2 · Playfair Italic 400 · 28px</span>
+      <span class="type-meta">H2 · Questrial 600 · 28px</span>
       <span class="type-sample-h2">Align with your Ikigai</span>
     </div>
     <div class="type-row">
-      <span class="type-meta">H3 · DM Sans 500 · 18px</span>
+      <span class="type-meta">H3 · Questrial 500 · 18px</span>
       <span class="type-sample-h3">Purpose Discovery & Feminine Leadership</span>
     </div>
     <div class="type-row">
-      <span class="type-meta">Body · DM Sans 400 · 16px</span>
+      <span class="type-meta">Body · Questrial 400 · 16px</span>
       <span class="type-sample-body">I don't just help you find purpose — I help you design a life that feels aligned, abundant, and alive.</span>
     </div>
     <div class="type-row">
-      <span class="type-meta">Caption · DM Sans 500 · 11px UC</span>
+      <span class="type-meta">Caption · Questrial 500 · 11px UC</span>
       <span class="type-sample-caption">Ikigai · Ubuntu · Kihooto</span>
     </div>
   </div>
@@ -1022,8 +752,7 @@
 <div class="section">
   <div class="section-label">03 — Page Structure</div>
   <h2 class="section-title">Hero Section Concept</h2>
-  <p class="section-desc">Dark, immersive entry with the coach's name, guiding metaphor, and immediate calls-to-action. Mirrors the deep-night brand from slides.</p>
-
+  <p class="section-desc">Espresso dark immersive entry with the coach's name, guiding metaphor, and immediate calls-to-action.</p>
   <div class="hero-mockup">
     <nav class="hero-nav">
       <span class="hero-logo">Umulkheiri Jalo</span>
@@ -1053,7 +782,7 @@
 <div class="section">
   <div class="section-label">04 — Site Architecture</div>
   <h2 class="section-title">Pages & Navigation</h2>
-  <p class="section-desc">Seven core pages modelled on the Mystical Journeys structure, adapted to the Ikigai + Ubuntu + Kihooto philosophy.</p>
+  <p class="section-desc">Seven core pages adapted to the Ikigai + Ubuntu + Kihooto philosophy.</p>
   <div class="site-map">
     <div class="page-card primary">
       <div class="page-num">Page 01</div>
@@ -1139,11 +868,10 @@
 <div class="section">
   <div class="section-label">05 — Services UI</div>
   <h2 class="section-title">Pricing Cards Concept</h2>
-  <p class="section-desc">Clean cards matching the rate card offering — individual packages, group, and VIP, with the transformation path as the featured (midnight) card.</p>
-
+  <p class="section-desc">Clean cards using only the spice palette — the Transformation Path featured on the espresso dark card.</p>
   <div class="services-row">
     <div class="service-card-mock">
-      <span class="service-badge badge-pink">Discovery</span>
+      <span class="service-badge badge-saffron">Discovery</span>
       <div class="mock-price">$50</div>
       <div class="mock-price-label">Waived · Currently Free</div>
       <div class="mock-service-name">Ikigai Discovery Session</div>
@@ -1151,12 +879,12 @@
       <button class="mock-btn mock-btn-ghost">Book Free Session</button>
     </div>
     <div class="service-card-mock">
-      <span class="service-badge badge-teal">Journey</span>
+      <span class="service-badge badge-pine">Journey</span>
       <div class="mock-price">$555</div>
       <div class="mock-price-label">5 sessions · 90 mins each</div>
       <div class="mock-service-name">Ikigai Alignment Journey</div>
       <div class="mock-service-desc">Purpose alignment, goal clarity & lifestyle design. Worksheets & follow-up included.</div>
-      <button class="mock-btn mock-btn-teal">Start Journey</button>
+      <button class="mock-btn mock-btn-pine">Start Journey</button>
     </div>
     <div class="service-card-mock featured">
       <span class="service-badge badge-night">★ Transformation</span>
@@ -1164,10 +892,10 @@
       <div class="mock-price-label light">12 sessions · 1 hr each</div>
       <div class="mock-service-name light">Ikigai Transformation Path</div>
       <div class="mock-service-desc light">Full integration of purpose, mindset, habits & embodiment practices. Includes custom toolkit.</div>
-      <button class="mock-btn mock-btn-pink">Begin Transformation</button>
+      <button class="mock-btn mock-btn-saffron">Begin Transformation</button>
     </div>
     <div class="service-card-mock">
-      <span class="service-badge badge-gold">VIP Day</span>
+      <span class="service-badge badge-sand">VIP Day</span>
       <div class="mock-price">$400</div>
       <div class="mock-price-label">1 Full Day · 4 Hours</div>
       <div class="mock-service-name">Ikigai Intensive VIP Day</div>
@@ -1181,103 +909,79 @@
 <div class="section">
   <div class="section-label">06 — Key Features & Functionalities</div>
   <h2 class="section-title">What the Website Does</h2>
-  <p class="section-desc">Every feature is designed to convert visitors into clients, build trust through philosophy, and make booking frictionless.</p>
+  <p class="section-desc">Every feature designed to convert visitors into clients, build trust through philosophy, and make booking frictionless.</p>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon icon-pink">🌸</div>
+      <div class="feature-icon icon-saffron">🌸</div>
       <div class="feature-title">Ikigai Venn Diagram — Interactive</div>
-      <div class="feature-desc">Animated SVG diagram showing the 4 elements of the inner garden (Passion / Skills / Service / Livelihood) with hover tooltips explaining each quadrant.</div>
-      <div class="feature-tags">
-        <span class="ftag">SVG Animation</span><span class="ftag">Interactive</span><span class="ftag">Philosophy Page</span>
-      </div>
+      <div class="feature-desc">Animated SVG diagram showing the 4 elements with hover tooltips explaining each quadrant.</div>
+      <div class="feature-tags"><span class="ftag">SVG Animation</span><span class="ftag">Interactive</span><span class="ftag">Philosophy Page</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-teal">📅</div>
+      <div class="feature-icon icon-pine">📅</div>
       <div class="feature-title">Session Booking Widget</div>
-      <div class="feature-desc">Integrated Calendly or Cal.com embed for scheduling Discovery, Journey, and VIP sessions. Auto-sends confirmation with session prep guide.</div>
-      <div class="feature-tags">
-        <span class="ftag">Calendly Embed</span><span class="ftag">Auto-email</span><span class="ftag">Booking Page</span>
-      </div>
+      <div class="feature-desc">Integrated Calendly or Cal.com embed. Auto-sends confirmation with session prep guide.</div>
+      <div class="feature-tags"><span class="ftag">Calendly Embed</span><span class="ftag">Auto-email</span><span class="ftag">Booking Page</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-gold">✦</div>
+      <div class="feature-icon icon-sand">✦</div>
       <div class="feature-title">Ikigai Self-Assessment Quiz</div>
-      <div class="feature-desc">A short 6–8 question quiz that reveals which element of the user's inner garden needs the most tending — leads into a personalised coaching recommendation.</div>
-      <div class="feature-tags">
-        <span class="ftag">Lead Magnet</span><span class="ftag">Email Capture</span><span class="ftag">Home / Philosophy</span>
-      </div>
+      <div class="feature-desc">6–8 question quiz revealing which element needs tending — leads into a personalised coaching recommendation.</div>
+      <div class="feature-tags"><span class="ftag">Lead Magnet</span><span class="ftag">Email Capture</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-midnight">🌍</div>
+      <div class="feature-icon icon-espresso">🌍</div>
       <div class="feature-title">Philosophy Scroll Story</div>
-      <div class="feature-desc">Scroll-triggered narrative that unfolds the Ikigai + Ubuntu + Kihooto triangle as the user reads down — each concept revealed with animated entrance.</div>
-      <div class="feature-tags">
-        <span class="ftag">Scroll Animation</span><span class="ftag">Storytelling</span><span class="ftag">About / Philosophy</span>
-      </div>
+      <div class="feature-desc">Scroll-triggered narrative that unfolds the Ikigai + Ubuntu + Kihooto triangle as the user reads down.</div>
+      <div class="feature-tags"><span class="ftag">Scroll Animation</span><span class="ftag">Storytelling</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-pink">💬</div>
+      <div class="feature-icon icon-saffron">💬</div>
       <div class="feature-title">Testimonials Carousel</div>
-      <div class="feature-desc">Rotating client testimonials on the dark brand background — name, location, and coaching package included for specificity and trust.</div>
-      <div class="feature-tags">
-        <span class="ftag">Social Proof</span><span class="ftag">Auto-rotate</span><span class="ftag">Home</span>
-      </div>
+      <div class="feature-desc">Rotating client testimonials on the espresso brand background — name, location, and package included.</div>
+      <div class="feature-tags"><span class="ftag">Social Proof</span><span class="ftag">Auto-rotate</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-teal">📝</div>
+      <div class="feature-icon icon-pine">📝</div>
       <div class="feature-title">The Ikigai Journal (Blog)</div>
-      <div class="feature-desc">Filterable blog by topic (Purpose, Ubuntu, Leadership, Mindset). Newsletter opt-in strips within posts. SEO-optimised for organic discovery.</div>
-      <div class="feature-tags">
-        <span class="ftag">Blog CMS</span><span class="ftag">Newsletter</span><span class="ftag">SEO</span>
-      </div>
+      <div class="feature-desc">Filterable blog by topic. Newsletter opt-in strips within posts. SEO-optimised for organic discovery.</div>
+      <div class="feature-tags"><span class="ftag">Blog CMS</span><span class="ftag">Newsletter</span><span class="ftag">SEO</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-gold">💳</div>
+      <div class="feature-icon icon-sand">💳</div>
       <div class="feature-title">Multi-Currency Payment</div>
-      <div class="feature-desc">PayPal, M-Pesa, and Bank Transfer supported. 50% deposit flow. Sliding scale option for students visible on booking page.</div>
-      <div class="feature-tags">
-        <span class="ftag">PayPal</span><span class="ftag">M-Pesa</span><span class="ftag">Deposit Flow</span>
-      </div>
+      <div class="feature-desc">PayPal, M-Pesa, and Bank Transfer supported. 50% deposit flow with sliding scale for students.</div>
+      <div class="feature-tags"><span class="ftag">PayPal</span><span class="ftag">M-Pesa</span><span class="ftag">Deposit Flow</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-midnight">🎤</div>
-      <div class="feature-title">Speaking & Corporate Enquiry Form</div>
-      <div class="feature-desc">Dedicated form for keynote and corporate masterclass bookings. Selectable duration (30–60 min) and organisation type. Starts at $555 / $600.</div>
-      <div class="feature-tags">
-        <span class="ftag">B2B Lead Form</span><span class="ftag">Services Page</span>
-      </div>
+      <div class="feature-icon icon-espresso">🎤</div>
+      <div class="feature-title">Speaking & Corporate Enquiry</div>
+      <div class="feature-desc">Dedicated form for keynote and corporate masterclass bookings. Selectable duration and organisation type.</div>
+      <div class="feature-tags"><span class="ftag">B2B Lead Form</span><span class="ftag">Services Page</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-pink">🌿</div>
+      <div class="feature-icon icon-saffron">🌿</div>
       <div class="feature-title">Credentials Trust Strip</div>
-      <div class="feature-desc">Certified Excellence / IPHM / IAOTH / CMA badge bar displayed prominently near the hero and on the About page to establish professional authority.</div>
-      <div class="feature-tags">
-        <span class="ftag">Trust Signals</span><span class="ftag">Accreditation</span>
-      </div>
+      <div class="feature-desc">IPHM / IAOTH / CMA badge bar displayed near the hero and on the About page.</div>
+      <div class="feature-tags"><span class="ftag">Trust Signals</span><span class="ftag">Accreditation</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-teal">📦</div>
-      <div class="feature-title">Downloadable Ikigai Toolkit Upsell</div>
-      <div class="feature-desc">$75 PDF toolkit available as a standalone add-on — Gumroad or PayPal payment with automatic file delivery. Featured as an add-on in services.</div>
-      <div class="feature-tags">
-        <span class="ftag">Digital Product</span><span class="ftag">Add-On</span><span class="ftag">$75</span>
-      </div>
+      <div class="feature-icon icon-pine">📦</div>
+      <div class="feature-title">Downloadable Toolkit Upsell</div>
+      <div class="feature-desc">$75 PDF toolkit as a standalone add-on — Gumroad or PayPal payment with automatic file delivery.</div>
+      <div class="feature-tags"><span class="ftag">Digital Product</span><span class="ftag">Add-On</span><span class="ftag">$75</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-gold">🔔</div>
+      <div class="feature-icon icon-sand">🔔</div>
       <div class="feature-title">Email List / Newsletter</div>
-      <div class="feature-desc">Mailchimp or ConvertKit integration. Opt-in via quiz completion, blog sidebar, and footer. Subscribers receive a welcome guide to the Inner Garden philosophy.</div>
-      <div class="feature-tags">
-        <span class="ftag">Email Marketing</span><span class="ftag">Lead Nurture</span>
-      </div>
+      <div class="feature-desc">Mailchimp or ConvertKit. Opt-in via quiz, blog sidebar, and footer. Welcome guide to Inner Garden philosophy.</div>
+      <div class="feature-tags"><span class="ftag">Email Marketing</span><span class="ftag">Lead Nurture</span></div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon icon-midnight">📱</div>
+      <div class="feature-icon icon-espresso">📱</div>
       <div class="feature-title">Mobile-First Responsive Design</div>
-      <div class="feature-desc">All pages optimised for mobile with collapsible nav, touch-friendly booking flow, and readable typography at all screen sizes.</div>
-      <div class="feature-tags">
-        <span class="ftag">Mobile-first</span><span class="ftag">Accessible</span>
-      </div>
+      <div class="feature-desc">All pages optimised for mobile with collapsible nav, touch-friendly booking flow, and readable typography.</div>
+      <div class="feature-tags"><span class="ftag">Mobile-first</span><span class="ftag">Accessible</span></div>
     </div>
   </div>
 </div>
@@ -1288,7 +992,7 @@
   <h2 class="section-title">Core User Journeys</h2>
   <p class="section-desc">Two primary flows designed to convert: the self-discovery seeker and the corporate/community buyer.</p>
 
-  <p style="font-size:13px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow A — Individual Client</p>
+  <p style="font-size:13px;font-weight:500;color:var(--gray-mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow A — Individual Client</p>
   <div class="flow-steps" style="margin-bottom:28px;">
     <div class="flow-step">
       <div class="flow-step-num">01</div>
@@ -1321,7 +1025,7 @@
     </div>
   </div>
 
-  <p style="font-size:13px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow B — Corporate / Group Buyer</p>
+  <p style="font-size:13px;font-weight:500;color:var(--gray-mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow B — Corporate / Group Buyer</p>
   <div class="flow-steps">
     <div class="flow-step">
       <div class="flow-step-num">01</div>
@@ -1355,11 +1059,11 @@
   </div>
 </div>
 
-<!-- TESTIMONIAL MOCKUP -->
+<!-- TESTIMONIAL -->
 <div class="section">
   <div class="section-label">08 — Social Proof</div>
   <h2 class="section-title">Testimonial Design</h2>
-  <p class="section-desc">Dark brand immersive background with large italic quote — mirrors the deep-night brand personality from the slides.</p>
+  <p class="section-desc">Espresso dark background with large italic quote and saffron source accent.</p>
   <div class="testimonial-mock">
     <p class="testimonial-text">Working with Umulkheiri didn't just bring clarity — it brought me home to myself. The weaving of Ikigai, Ubuntu, and Kihooto created a compass I carry with me every single day.</p>
     <div class="testimonial-source"><strong>Client, Nairobi</strong> · Ikigai Transformation Path</div>
@@ -1370,14 +1074,14 @@
 <div class="section">
   <div class="section-label">09 — UI Components</div>
   <h2 class="section-title">Component Library</h2>
-  <p class="section-desc">Consistent components used across all pages — buttons, inputs, and badges all follow the garden palette.</p>
+  <p class="section-desc">All components use only the five spice colours plus white and light gray — no exceptions.</p>
   <div class="component-showcase">
     <div class="comp-group">
       <div class="comp-label">Buttons</div>
       <button class="btn-demo btn-primary-demo">Begin Your Journey</button>
       <button class="btn-demo btn-secondary-demo">Explore Philosophy</button>
       <button class="btn-demo btn-ghost-demo">Learn More</button>
-      <button class="btn-demo btn-teal-demo">Book Group Circle</button>
+      <button class="btn-demo btn-pine-demo">Book Group Circle</button>
     </div>
     <div class="comp-group">
       <div class="comp-label">Form Inputs</div>
@@ -1393,13 +1097,13 @@
     </div>
     <div class="comp-group">
       <div class="comp-label">Tags & Badges</div>
-      <span class="tag-demo" style="background:var(--bloom-pink-light);color:#993356;">Purpose</span>
-      <span class="tag-demo" style="background:var(--garden-teal-light);color:#0f6e56;">Ubuntu</span>
-      <span class="tag-demo" style="background:#fef3dc;color:#854f0b;">Livelihood</span>
-      <span class="tag-demo" style="background:rgba(46,26,71,0.08);color:#2e1a47;">Kihooto</span>
-      <span class="tag-demo" style="background:var(--deep-night);color:var(--bloom-pink);">★ Certified</span>
+      <span class="tag-demo" style="background:rgba(212,134,10,0.12);color:#7A4A00;">Purpose</span>
+      <span class="tag-demo" style="background:rgba(74,94,53,0.12);color:#2A3C1A;">Ubuntu</span>
+      <span class="tag-demo" style="background:rgba(212,170,120,0.25);color:#6B4A1A;">Livelihood</span>
+      <span class="tag-demo" style="background:rgba(139,69,19,0.10);color:#5C2A08;">Kihooto</span>
+      <span class="tag-demo" style="background:var(--espresso);color:var(--saffron);">★ Certified</span>
       <br><br>
-      <div style="background:var(--bloom-pink-light);border-radius:8px;padding:12px;font-size:12px;color:#993356;border-left:3px solid var(--bloom-pink);">
+      <div style="background:rgba(212,134,10,0.10);border-radius:8px;padding:12px;font-size:12px;color:#7A4A00;border-left:3px solid var(--saffron);">
         <strong>Signature Promise</strong><br>I don't just help you find purpose — I help you design a life that feels aligned, abundant, and alive.
       </div>
     </div>
@@ -1410,47 +1114,45 @@
       <div class="token-row"><span class="token-name">H1 Display Size</span><span class="token-value">52px</span></div>
       <div class="token-row"><span class="token-name">Line Height</span><span class="token-value">1.7</span></div>
       <div class="token-row"><span class="token-name">Section Padding</span><span class="token-value">80px 60px</span></div>
-      <div class="token-row"><span class="token-name">Card Shadow</span><span class="token-value">none / border</span></div>
-      <div class="token-row"><span class="token-name">Card Border</span><span class="token-value">1px solid rgba(0,0,0,0.06)</span></div>
+      <div class="token-row"><span class="token-name">Card Border</span><span class="token-value">1px solid #EDE8E1</span></div>
       <div class="token-row"><span class="token-name">CTA Radius</span><span class="token-value">8px / pill 20px</span></div>
     </div>
   </div>
 </div>
 
-<!-- INSPIRATION COMPARISON -->
+<!-- WHAT WE KEPT -->
 <div class="section">
   <div class="section-label">10 — Inspired By Mystical Journeys</div>
   <h2 class="section-title">What We've Kept & Elevated</h2>
-  <p class="section-desc">Drawing the best structural patterns from mystical-journeys.online, infused with the deep-night + bloom-pink palette from the client's own slides.</p>
-
+  <p class="section-desc">Structural patterns from mystical-journeys.online, infused entirely with the Spice Garden palette.</p>
   <div class="two-col">
     <div>
       <div class="token-group" style="margin-bottom:16px;">
         <h4>Borrowed from Mystical Journeys</h4>
-        <div class="token-row"><span class="token-name">Coach personality hero section</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
-        <div class="token-row"><span class="token-name">Soul Coaching Packages layout</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
-        <div class="token-row"><span class="token-name">Blog / journal as wisdom space</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
-        <div class="token-row"><span class="token-name">Testimonial pullquote style</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
-        <div class="token-row"><span class="token-name">Private community / inner circle</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
-        <div class="token-row"><span class="token-name">Corporate / intuitive coaching page</span><span style="color:var(--garden-teal);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Coach personality hero section</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Soul Coaching Packages layout</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Blog / journal as wisdom space</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Testimonial pullquote style</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Private community / inner circle</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Corporate / intuitive coaching page</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
       </div>
     </div>
     <div>
       <div class="token-group">
         <h4>Uniquely Umulkheiri's Own</h4>
-        <div class="token-row"><span class="token-name">Deep Night + Bloom Pink palette</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
-        <div class="token-row"><span class="token-name">Sacred Garden metaphor woven throughout</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
-        <div class="token-row"><span class="token-name">Ubuntu / Kihooto philosophy section</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
-        <div class="token-row"><span class="token-name">Ikigai Triangle interactive diagram</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
-        <div class="token-row"><span class="token-name">M-Pesa payment integration</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
-        <div class="token-row"><span class="token-name">Self-assessment quiz + lead nurture</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
-        <div class="token-row"><span class="token-name">Nairobi / African diaspora context</span><span style="color:var(--bloom-pink);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Espresso + Saffron palette</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Sacred Garden metaphor throughout</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Ubuntu / Kihooto philosophy section</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Ikigai Triangle interactive diagram</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">M-Pesa payment integration</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Self-assessment quiz + lead nurture</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Nairobi / African diaspora context</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- GENERAL FEEDBACK -->
+<!-- FEEDBACK AREA -->
 <div class="feedback-area">
   <h3>Got Thoughts on the Full Brief?</h3>
   <p>Click the button below to share general feedback that doesn't fit a specific section.</p>
@@ -1462,9 +1164,7 @@
 </div>
 
 <!-- FLOATING FAB -->
-<button class="feedback-fab" onclick="openModal('General Feedback')">
-  💬 Feedback
-</button>
+<button class="feedback-fab" onclick="openModal('General Feedback')">💬 Feedback</button>
 
 <!-- FEEDBACK MODAL -->
 <div class="modal-overlay" id="feedbackModal">
@@ -1473,16 +1173,12 @@
     <h3>Help Me Improve This</h3>
     <div class="modal-section-name" id="modalSection">Section</div>
     <p class="modal-sub">What could be better about this section?</p>
-
     <form id="feedbackForm" onsubmit="submitFeedback(event)">
       <input type="hidden" name="section" id="formSection">
-      <input type="hidden" name="subject" id="formSubject">
-
       <div class="form-group">
         <label for="formFeedback">Your Feedback *</label>
         <textarea id="formFeedback" name="feedback" required placeholder="What do you think? What works, what could change..."></textarea>
       </div>
-
       <div class="form-row">
         <div class="form-group">
           <label for="formName">Your Name</label>
@@ -1493,10 +1189,8 @@
           <input id="formEmail" name="email" type="email" placeholder="Optional">
         </div>
       </div>
-
       <button class="modal-submit" type="submit" id="submitBtn">Send Feedback</button>
     </form>
-
     <div class="modal-success" id="modalSuccess">
       <div class="check">✓</div>
       <h4>Thank You!</h4>
@@ -1505,32 +1199,18 @@
   </div>
 </div>
 
-<!-- FEEDBACK SCRIPT -->
 <script>
   var SUPABASE_URL = 'https://srpiijgniyvlzfktaaie.supabase.co';
   var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
   var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // ── Thumbs Up ──
   function thumbsUp(section, btn) {
     if (btn.classList.contains('liked')) return;
-
-    sb.from('feedback').insert({
-      section: section,
-      reaction: 'thumbs_up',
-      feedback: null,
-      name: null,
-      email: null,
-      source: 'umu'
-    }).then(function(result) {
-      if (!result.error) {
-        btn.classList.add('liked');
-        showToast('👍 Got it! Thanks for the love on ' + section);
-      }
+    sb.from('feedback').insert({ section: section, reaction: 'thumbs_up', feedback: null, name: null, email: null, source: 'umu' }).then(function(result) {
+      if (!result.error) { btn.classList.add('liked'); showToast('👍 Got it! Thanks for the love on ' + section); }
     });
   }
 
-  // ── Could Be Better (opens modal) ──
   function openModal(section) {
     document.getElementById('modalSection').textContent = section;
     document.getElementById('formSection').value = section;
@@ -1544,17 +1224,12 @@
     document.getElementById('feedbackModal').classList.add('open');
   }
 
-  function closeModal() {
-    document.getElementById('feedbackModal').classList.remove('open');
-  }
+  function closeModal() { document.getElementById('feedbackModal').classList.remove('open'); }
 
-  // ── Submit Modal Form ──
   function submitFeedback(e) {
     e.preventDefault();
     var btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-
+    btn.disabled = true; btn.textContent = 'Sending...';
     sb.from('feedback').insert({
       section: document.getElementById('formSection').value,
       reaction: 'could_be_better',
@@ -1565,67 +1240,49 @@
     }).then(function(result) {
       if (result.error) {
         alert('Something went wrong. Please try again.');
-        btn.disabled = false;
-        btn.textContent = 'Send Feedback';
+        btn.disabled = false; btn.textContent = 'Send Feedback';
       } else {
         document.getElementById('feedbackForm').style.display = 'none';
         document.getElementById('modalSuccess').style.display = 'block';
-        showToast('💡 Thanks! Your feedback on ' + document.getElementById('formSection').value + ' has been noted.');
+        showToast('💡 Thanks! Your feedback has been noted.');
       }
     });
   }
 
-  // ── Toast Notification ──
   function showToast(msg) {
     var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
+    t.textContent = msg; t.classList.add('show');
     clearTimeout(t._hide);
     t._hide = setTimeout(function() { t.classList.remove('show'); }, 3000);
   }
 
-  // ── Close modal on overlay click ──
-  document.getElementById('feedbackModal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
+  document.getElementById('feedbackModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  // ── Inject per-section feedback buttons ──
   (function() {
     var sections = document.querySelectorAll('.section');
     sections.forEach(function(section) {
       var label = section.querySelector('.section-label');
       var title = section.querySelector('.section-title');
       if (!label || !title) return;
-
       var header = document.createElement('div');
       header.className = 'feedback-header';
-
       var textGroup = document.createElement('div');
       label.parentNode.insertBefore(textGroup, label);
       textGroup.appendChild(label);
       textGroup.appendChild(title);
-
       header.appendChild(textGroup);
-
       var actions = document.createElement('div');
       actions.className = 'feedback-actions';
-
       var sectionName = label.textContent.trim();
-
       var likeBtn = document.createElement('button');
       likeBtn.className = 'fb-like';
       likeBtn.innerHTML = '👍';
       likeBtn.onclick = function() { thumbsUp(sectionName, likeBtn); };
-
       var improveBtn = document.createElement('button');
       improveBtn.className = 'fb-improve';
       improveBtn.textContent = '💡 Could Be Better';
       improveBtn.onclick = function() { openModal(sectionName); };
-
       actions.appendChild(likeBtn);
       actions.appendChild(improveBtn);
       header.appendChild(actions);
@@ -1634,8 +1291,6 @@
   })();
 </script>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
-
 </body>
 </html>
