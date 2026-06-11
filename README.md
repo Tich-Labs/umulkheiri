@@ -2,6 +2,8 @@
 
 Brand & website for **Umulkheiri Jalo**, a certified Ikigai Alignment Coach (ID45632-28225) based in Nairobi, Kenya.
 
+**Live (GitHub Pages):** [https://tich-labs.github.io/umulkheiri/](https://tich-labs.github.io/umulkheiri/)
+
 ---
 
 ## Overview
@@ -96,11 +98,13 @@ npm run lint     # ESLint
 
 ## Legacy Site (GitHub Pages)
 
-The root-level files (`index.html`, `site.html`, `dashboard.html`) form the original coaching website:
-- **`index.html`** — Design brief with section-level feedback buttons connected to Supabase
-- **`site.html`** — 7-page vanilla JS SPA (Home, About, Services, Philosophy, Journal, Community, Contact)
-- **`dashboard.html`** — Passcode-gated admin dashboard for feedback analytics
-- Deployed via `gh-pages` branch at `https://tich-labs.github.io/umulkheiri/`
+The root-level files form the original coaching website deployed via `gh-pages`:
+
+| Page | URL |
+|------|-----|
+| Design Brief | [https://tich-labs.github.io/umulkheiri/](https://tich-labs.github.io/umulkheiri/) |
+| Coaching Website | [https://tich-labs.github.io/umulkheiri/site.html](https://tich-labs.github.io/umulkheiri/site.html) |
+| Admin Dashboard | [https://tich-labs.github.io/umulkheiri/dashboard.html](https://tich-labs.github.io/umulkheiri/dashboard.html) |
 
 ---
 
