@@ -101,11 +101,11 @@ export default function ServicesPage() {
             description="Booking is simple — no pressure, no complexity."
           />
           <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {[
-              { step: "1", title: "Book a Discovery Session", desc: "30-min free call to explore where you are and what you need." },
-              { step: "2", title: "Choose Your Path", desc: "Pick the package and any add-ons that fit your goals." },
-              { step: "3", title: "Begin Your Journey", desc: "Get your prep guide, schedule sessions, and start blooming." },
-            ].map((item) => (
+              {[
+                { step: "1", title: "Explore Your Options", desc: "Browse packages, compare paths, and choose what resonates." },
+                { step: "2", title: "Book & Personalise", desc: "Select add-ons, apply a discount, and pick your payment method." },
+                { step: "3", title: "Begin Your Journey", desc: "Receive your prep guide, schedule sessions, and start blooming." },
+              ].map((item) => (
               <div key={item.step} className="text-center">
                 <span className="w-10 h-10 rounded-full bg-bloom-pink text-white font-semibold flex items-center justify-center mx-auto mb-3 text-sm">
                   {item.step}
@@ -196,12 +196,17 @@ export default function ServicesPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-xl mx-auto text-center">
             <h3 className="font-medium text-text-dark text-sm mb-3">Accepted Payment Methods</h3>
-            <div className="flex flex-wrap justify-center gap-2 mb-3">
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
               {["PayPal", "M-Pesa", "Bank Transfer"].map((p) => (
                 <span key={p} className="text-sm px-4 py-2 rounded-full border border-black/10 text-text-muted">{p}</span>
               ))}
             </div>
-            <p className="text-sm text-text-muted">50% deposit secures your spot. Sliding scale available for students.</p>
+            <p className="text-sm text-text-muted mb-6">50% deposit secures your spot. Sliding scale available for students.</p>
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-text-muted">
+              <span>📧 <a href="mailto:umulkheiri@yahoo.com" className="text-bloom-pink-dark hover:underline">umulkheiri@yahoo.com</a></span>
+              <span>💬 <a href="https://wa.me/254140565335" className="text-bloom-pink-dark hover:underline">+254 140 565 335</a></span>
+              <span>📍 Nairobi, Kenya</span>
+            </div>
           </div>
         </div>
       </section>

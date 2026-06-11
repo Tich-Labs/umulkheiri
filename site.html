@@ -67,6 +67,17 @@
             cursor: pointer;
         }
 
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: var(--saffron);
+            font-size: 24px;
+            line-height: 1;
+        }
+
         .nav-menu {
             display: flex;
             gap: 32px;
@@ -593,27 +604,64 @@
             text-decoration: none;
         }
 
-        /* ── RESPONSIVE ── */
+        /* ── TABLET & BELOW ── */
         @media (max-width: 768px) {
             section {
-                padding: 50px 20px;
+                padding: 48px 20px !important;
             }
 
             nav {
                 padding: 0 20px;
             }
 
+            .nav-toggle {
+                display: block;
+            }
+
             .nav-menu {
-                gap: 16px;
-                font-size: 12px;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(30, 18, 8, 0.99);
+                padding: 20px 24px;
+                gap: 4px;
+                border-bottom: 1px solid rgba(212, 134, 10, 0.2);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .nav-menu a,
+            .nav-menu .nav-cta {
+                width: 100%;
+                padding: 12px 16px;
+                font-size: 15px;
+                text-align: left;
+            }
+
+            .nav-cta {
+                margin-top: 8px;
+                text-align: center;
             }
 
             h1 {
-                font-size: 42px;
+                font-size: 28px;
             }
 
             h2 {
-                font-size: 28px;
+                font-size: 22px;
+            }
+
+            .hero-subtitle {
+                font-size: 15px;
+            }
+
+            #hero {
+                padding: 120px 20px 60px !important;
             }
 
             .hero-buttons {
@@ -622,14 +670,108 @@
 
             .btn {
                 width: 100%;
+                text-align: center;
+            }
+
+            .pill {
+                font-size: 12px;
+                padding: 8px 14px;
             }
 
             .two-col {
                 grid-template-columns: 1fr;
             }
 
+            .four-col {
+                grid-template-columns: 1fr;
+            }
+
+            .three-col {
+                grid-template-columns: 1fr;
+            }
+
             .service-card.featured {
                 transform: scale(1);
+            }
+
+            .testimonial p {
+                font-size: 17px;
+            }
+
+            .testimonial {
+                padding: 28px 20px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                padding: 32px 20px;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+        }
+
+        /* ── SMALL PHONES ── */
+        @media (max-width: 480px) {
+            section {
+                padding: 36px 16px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .section-subtitle {
+                font-size: 14px;
+                margin-bottom: 32px;
+            }
+
+            #hero {
+                padding: 100px 16px 40px;
+            }
+
+            .hero-pills {
+                gap: 8px;
+            }
+
+            .pill {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .service-card,
+            .card {
+                padding: 24px 20px;
+            }
+
+            .service-price {
+                font-size: 28px;
+            }
+
+            .service-card.featured {
+                padding: 24px 20px;
+            }
+
+            .four-col,
+            .three-col {
+                gap: 16px;
+                margin-top: 32px;
+            }
+
+            .testimonial p {
+                font-size: 15px;
+            }
+
+            footer {
+                padding: 24px 16px;
             }
         }
     </style>
@@ -639,7 +781,8 @@
     <header>
         <nav>
             <div class="logo" onclick="goToPage('home')">Umulkheiri Jalo</div>
-            <div class="nav-menu">
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+            <div class="nav-menu" id="navMenu">
                 <a onclick="goToPage('home')" class="nav-link active" data-page="home">Home</a>
                 <a onclick="goToPage('about')" class="nav-link" data-page="about">About</a>
                 <a onclick="goToPage('services')" class="nav-link" data-page="services">Services</a>
@@ -1414,6 +1557,15 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // Mobile menu
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            navToggle.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+        });
+
         // Page routing
         function goToPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
@@ -1421,6 +1573,9 @@
             
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+
+            navMenu.classList.remove('open');
+            navToggle.textContent = '☰';
             
             window.scrollTo(0, 0);
         }

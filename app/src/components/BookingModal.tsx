@@ -168,7 +168,7 @@ export default function BookingModal({
                     {payment === "bank" && "Bank Transfer"}
                   </p>
                   <p className="text-xs text-text-muted mt-1">
-                    {payment === "paypal" && "Send to umulkheiri@example.com. Confirmation email with payment link will follow."}
+                    {payment === "paypal" && "Send to umulkheiri@yahoo.com. A payment invoice link will be sent to your email."}
                     {payment === "mpesa" && "Paybill: 247247, Account: IKIGAI-[Your Name]. Confirmation SMS will be sent."}
                     {payment === "bank" && "Account details will be sent to your email within 1 hour."}
                   </p>

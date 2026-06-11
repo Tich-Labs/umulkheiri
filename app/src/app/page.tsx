@@ -8,44 +8,44 @@ const features = [
   {
     icon: "🌸",
     iconColor: "pink" as const,
-    title: "Ikigai Venn Diagram — Interactive",
-    description: "Animated SVG diagram showing the 4 elements of the inner garden (Passion / Skills / Service / Livelihood) with hover tooltips explaining each quadrant.",
-    tags: ["SVG Animation", "Interactive"],
+    title: "Ikigai Venn Diagram",
+    description: "SVG diagram showing the four elements of the inner garden — Passion, Skills, Service, and Livelihood — at the intersection of your Ikigai.",
+    tags: ["SVG Graphic", "Philosophy Visual"],
   },
   {
     icon: "📅",
     iconColor: "teal" as const,
-    title: "Session Booking Widget",
-    description: "Integrated scheduling for Discovery, Journey, and VIP sessions. Auto-sends confirmation with session prep guide.",
-    tags: ["Calendly Embed", "Auto-email"],
+    title: "Session Booking Modal",
+    description: "Step-by-step booking flow for Discovery, Journey, Transformation, and VIP sessions. Select package, add-ons, and payment method.",
+    tags: ["Booking Flow", "3-Step Modal"],
   },
   {
     icon: "✦",
     iconColor: "gold" as const,
-    title: "Ikigai Self-Assessment Quiz",
-    description: "A short 6-8 question quiz that reveals which element of your inner garden needs the most tending.",
-    tags: ["Lead Magnet", "Email Capture"],
+    title: "Add-On & Discount System",
+    description: "Optional add-ons like the Ikigai Toolkit PDF and Group Circle Pass. Discount codes (IKIGAI10, WELCOME20) for savings.",
+    tags: ["Upsells", "Discount Codes"],
   },
   {
     icon: "💬",
     iconColor: "pink" as const,
-    title: "Testimonials Carousel",
-    description: "Rotating client testimonials on the dark brand background — name, location, and coaching package included for trust.",
+    title: "Client Testimonial Spotlight",
+    description: "Featured testimonial on the deep-night background — name, location, and coaching package included for social proof.",
     tags: ["Social Proof"],
   },
   {
     icon: "💳",
     iconColor: "gold" as const,
-    title: "Multi-Currency Payment",
-    description: "PayPal, M-Pesa, and Bank Transfer supported. 50% deposit flow. Sliding scale option for students.",
-    tags: ["PayPal", "M-Pesa"],
+    title: "Multi-Method Payment Selection",
+    description: "PayPal, M-Pesa, and Bank Transfer displayed. 50% deposit calculation with sliding scale option for students.",
+    tags: ["PayPal", "M-Pesa", "Bank Transfer"],
   },
   {
     icon: "🎤",
     iconColor: "midnight" as const,
-    title: "Speaking & Corporate Enquiry",
-    description: "Dedicated form for keynote and corporate masterclass bookings. Selectable duration and organisation type.",
-    tags: ["B2B Lead Form"],
+    title: "Corporate & Group Offerings",
+    description: "Keynote speaking, corporate masterclasses, and executive retreats with clear pricing and enquiry flow.",
+    tags: ["Corporate", "Group Programs"],
   },
 ];
 
@@ -98,19 +98,19 @@ const blogPosts = [
     tag: "Purpose",
     title: "Finding Your Ikigai in a Noisy World",
     excerpt: "How to tune out the noise and tune into what truly matters — a practical guide to discovering your reason for being.",
-    date: "Mar 12, 2026",
+    date: "Jun 8, 2026",
   },
   {
     tag: "Ubuntu",
     title: "I Am Because We Are — The Power of Connection",
     excerpt: "Exploring Ubuntu philosophy and how collective belonging shapes our sense of purpose and fulfillment.",
-    date: "Feb 28, 2026",
+    date: "May 21, 2026",
   },
   {
     tag: "Leadership",
     title: "Feminine Leadership: Leading from the Heart",
     excerpt: "Why the world needs more feminine leadership — nurturing, intuitive, and deeply connected to purpose.",
-    date: "Feb 10, 2026",
+    date: "May 5, 2026",
   },
 ];
 
@@ -261,7 +261,7 @@ export default function HomePage() {
       {/* ── FEATURES ── */}
       <section className="bg-warm-sand py-16 md:py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <SectionHeading label="Key Features" title="What the Website Does" description="Every feature is designed to convert visitors into clients, build trust through philosophy, and make booking frictionless." />
+          <SectionHeading label="Key Features" title="What the Website Offers" description="Every feature is designed to convert visitors into clients, build trust through philosophy, and make booking frictionless." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => <FeatureCard key={f.title} {...f} />)}
           </div>
@@ -287,7 +287,7 @@ export default function HomePage() {
           <SectionHeading label="Social Proof" title="What Clients Say" />
           <TestimonialCard
             quote="Working with Umulkheiri didn't just bring clarity — it brought me home to myself. The weaving of Ikigai, Ubuntu, and Kihooto created a compass I carry with me every single day."
-            name="Client"
+            name="Grace M."
             location="Nairobi"
             package="Ikigai Transformation Path"
           />
@@ -341,9 +341,22 @@ export default function HomePage() {
             <span className="text-3xl mb-4 block">🌿</span>
             <h2 className="font-serif text-2xl font-semibold text-deep-night mb-2">The Inner Garden Letter</h2>
             <p className="text-base text-text-muted mb-6">Monthly reflections on purpose, belonging, and right action. Delivered to your inbox with care.</p>
-            <form className="flex gap-3">
-              <input type="email" placeholder="Your email address" className="flex-1 px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-white" />
-              <Button href="/services" variant="primary">Subscribe</Button>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="flex gap-3"
+            >
+              <input
+                type="email"
+                placeholder="Your email address"
+                required
+                className="flex-1 px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-white"
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 rounded-lg bg-bloom-pink text-white text-sm font-medium hover:bg-bloom-pink-dark transition-colors cursor-pointer"
+              >
+                Subscribe
+              </button>
             </form>
           </div>
         </div>
