@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { Ojuju, Questrial } from "next/font/google";
+import NavigationWrapper from "@/components/NavigationWrapper";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const ojuju = Ojuju({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ojuju",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const questrial = Questrial({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  weight: "400",
+  variable: "--font-questrial",
   display: "swap",
 });
 
@@ -28,14 +29,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${playfair.variable} ${dmSans.variable}`}
-    >
+    <html lang="en" className={`${ojuju.variable} ${questrial.variable}`}>
       <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <NavigationWrapper>
+          <main className="flex-1">{children}</main>
+        </NavigationWrapper>
       </body>
     </html>
   );

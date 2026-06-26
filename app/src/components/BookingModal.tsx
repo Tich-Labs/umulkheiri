@@ -97,7 +97,7 @@ export default function BookingModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
-      style={{ background: "rgba(26,16,40,0.6)" }}
+      style={{ background: "rgba(30,18,8,0.6)" }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -114,7 +114,7 @@ export default function BookingModal({
         {submitted ? (
           <div className="text-center py-8">
             <div className="text-4xl mb-3">🌸</div>
-            <h3 className="font-serif text-xl font-semibold text-garden-teal mb-2">
+            <h3 className="font-display text-xl font-semibold text-pine mb-2">
               Booking Confirmed!
             </h3>
             <p className="text-sm text-text-mid mb-6">
@@ -134,7 +134,7 @@ export default function BookingModal({
                 </div>
               )}
               {appliedDiscount && (
-                <div className="flex justify-between text-sm text-garden-teal">
+                <div className="flex justify-between text-sm text-pine">
                   <span>Discount ({appliedDiscount.label})</span>
                   <span className="font-medium">-${discountAmount}</span>
                 </div>
@@ -167,20 +167,20 @@ export default function BookingModal({
                     {payment === "mpesa" && "M-Pesa"}
                     {payment === "bank" && "Bank Transfer"}
                   </p>
-                  <p className="text-xs text-text-muted mt-1">
+                  <p className="text-sm text-text-muted mt-1">
                     {payment === "paypal" && "Send to umulkheiri@yahoo.com. A payment invoice link will be sent to your email."}
                     {payment === "mpesa" && "Paybill: 247247, Account: IKIGAI-[Your Name]. Confirmation SMS will be sent."}
                     {payment === "bank" && "Account details will be sent to your email within 1 hour."}
                   </p>
                 </div>
               )}
-              <p className="text-xs text-text-muted pt-2">
+              <p className="text-sm text-text-muted pt-2">
                 A confirmation email with next steps and your session prep guide will arrive within 24 hours. I&rsquo;ll reach out to schedule your first session.
               </p>
             </div>
             <button
               onClick={() => { reset(); onClose(); }}
-              className="px-6 py-3 rounded-lg bg-deep-night text-white text-sm font-medium hover:bg-midnight-bloom transition-colors cursor-pointer"
+              className="px-6 py-3 rounded-lg bg-espresso text-white text-sm font-medium hover:bg-cinnamon transition-colors cursor-pointer"
             >
               Done
             </button>
@@ -188,15 +188,15 @@ export default function BookingModal({
         ) : (
           <div className="space-y-6">
             {/* Steps indicator */}
-            <div className="flex items-center gap-2 text-xs font-medium">
+            <div className="flex items-center gap-2 text-sm font-medium">
               {["Choose", "Details", "Pay"].map((label, i) => {
                 const idx = i + 1;
                 return (
                   <div key={label} className="flex items-center gap-2">
                     <span
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ${
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-sm ${
                         step === idx
-                          ? "bg-bloom-pink text-white"
+                          ? "bg-saffron text-white"
                           : step > idx
                           ? "bg-garden-teal text-white"
                           : "bg-black/6 text-text-muted"
@@ -224,7 +224,7 @@ export default function BookingModal({
                   <select
                     value={service}
                     onChange={(e) => setService(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-soft-white text-text-dark"
+                    className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-saffron transition-colors bg-soft-white text-text-dark"
                   >
                     <option value="">Select a package...</option>
                     {mainServices.map((opt) => (
@@ -243,13 +243,13 @@ export default function BookingModal({
                     {addonOptions.map((addon) => (
                       <label
                         key={addon.value}
-                        className="flex items-center gap-3 px-4 py-3 rounded-lg border border-black/8 hover:border-bloom-pink/30 transition-colors cursor-pointer"
+                        className="flex items-center gap-3 px-4 py-3 rounded-lg border border-black/8 hover:border-saffron/30 transition-colors cursor-pointer"
                       >
                         <input
                           type="checkbox"
                           checked={addons.includes(addon.value)}
                           onChange={() => toggleAddon(addon.value)}
-                          className="accent-bloom-pink w-4 h-4"
+                          className="accent-saffron w-4 h-4"
                         />
                         <span className="text-sm text-text-dark flex-1">{addon.label}</span>
                         <span className="text-sm text-text-muted">+${addon.price}</span>
@@ -271,7 +271,7 @@ export default function BookingModal({
                       </div>
                     )}
                     {appliedDiscount && (
-                      <div className="flex justify-between text-garden-teal">
+                      <div className="flex justify-between text-pine">
                         <span>Discount ({appliedDiscount.label})</span>
                         <span>-${discountAmount}</span>
                       </div>
@@ -286,7 +286,7 @@ export default function BookingModal({
                 <button
                   onClick={() => setStep(2)}
                   disabled={!service}
-                  className="w-full py-3 rounded-lg bg-bloom-pink text-white font-medium text-sm hover:bg-bloom-pink-dark transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-lg bg-saffron text-white font-medium text-sm hover:bg-cinnamon transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Continue
                 </button>
@@ -304,23 +304,23 @@ export default function BookingModal({
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-text-dark mb-1.5">
-                      Full Name <span className="text-bloom-pink">*</span>
+                      Full Name <span className="text-saffron">*</span>
                     </label>
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-soft-white"
+                      className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-saffron transition-colors bg-soft-white"
                       placeholder="Your name"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-text-dark mb-1.5">
-                      Email <span className="text-bloom-pink">*</span>
+                      Email <span className="text-saffron">*</span>
                     </label>
                     <input
                       type="email"
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-soft-white"
+                      className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-saffron transition-colors bg-soft-white"
                       placeholder="you@example.com"
                     />
                   </div>
@@ -332,7 +332,7 @@ export default function BookingModal({
                   </label>
                   <input
                     type="tel"
-                    className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-soft-white"
+                    className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-saffron transition-colors bg-soft-white"
                     placeholder="+254 7XX XXX XXX"
                   />
                 </div>
@@ -343,7 +343,7 @@ export default function BookingModal({
                   </label>
                   <textarea
                     rows={3}
-                    className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-soft-white resize-y"
+                    className="w-full px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-saffron transition-colors bg-soft-white resize-y"
                     placeholder="Anything you'd like me to know before we begin..."
                   />
                 </div>
@@ -357,7 +357,7 @@ export default function BookingModal({
                   </button>
                   <button
                     onClick={() => setStep(3)}
-                    className="flex-[2] py-3 rounded-lg bg-bloom-pink text-white font-medium text-sm hover:bg-bloom-pink-dark transition-colors cursor-pointer"
+                    className="flex-[2] py-3 rounded-lg bg-saffron text-white font-medium text-sm hover:bg-cinnamon transition-colors cursor-pointer"
                   >
                     Continue to Payment
                   </button>
@@ -387,7 +387,7 @@ export default function BookingModal({
                     </div>
                   )}
                   {appliedDiscount && (
-                    <div className="flex justify-between text-garden-teal">
+                    <div className="flex justify-between text-pine">
                       <span>Discount ({appliedDiscount.label})</span>
                       <span>-${discountAmount}</span>
                     </div>
@@ -400,7 +400,7 @@ export default function BookingModal({
                     <>
                       <div className="flex justify-between text-sm">
                         <span className="text-text-muted">Deposit due now (50%)</span>
-                        <span className="font-medium text-bloom-pink">${deposit}</span>
+                        <span className="font-medium text-saffron">${deposit}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-text-muted">Balance due later</span>
@@ -412,7 +412,7 @@ export default function BookingModal({
                     <p className="text-sm text-text-muted text-center py-2">Free session — no payment needed.</p>
                   )}
                   {total === 0 && appliedDiscount && (
-                    <p className="text-sm text-garden-teal text-center py-2">Discount applied — your session is now free!</p>
+                    <p className="text-sm text-pine text-center py-2">Discount applied — your session is now free!</p>
                   )}
                 </div>
 
@@ -430,21 +430,21 @@ export default function BookingModal({
                         setDiscountError("");
                       }}
                       placeholder="Enter code"
-                      className="flex-1 px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-bloom-pink transition-colors bg-soft-white uppercase"
+                      className="flex-1 px-4 py-3 rounded-lg border border-black/12 text-sm outline-none focus:border-saffron transition-colors bg-soft-white uppercase"
                     />
                     <button
                       type="button"
                       onClick={applyDiscount}
-                      className="px-5 py-3 rounded-lg border border-bloom-pink text-bloom-pink text-sm font-medium hover:bg-bloom-pink-light transition-colors cursor-pointer"
+                      className="px-5 py-3 rounded-lg border border-saffron text-saffron text-sm font-medium hover:bg-saffron-tint transition-colors cursor-pointer"
                     >
                       Apply
                     </button>
                   </div>
                   {discountError && (
-                    <p className="text-xs text-bloom-pink-dark mt-1">{discountError}</p>
+                    <p className="text-sm text-cinnamon mt-1">{discountError}</p>
                   )}
                   {appliedDiscount && (
-                    <p className="text-xs text-garden-teal mt-1">{appliedDiscount.label} applied!</p>
+                    <p className="text-sm text-pine mt-1">{appliedDiscount.label} applied!</p>
                   )}
                 </div>
 
@@ -462,8 +462,8 @@ export default function BookingModal({
                         key={opt.value}
                         className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-colors cursor-pointer ${
                           payment === opt.value
-                            ? "border-bloom-pink bg-bloom-pink-light"
-                            : "border-black/8 hover:border-bloom-pink/30"
+                            ? "border-saffron bg-saffron-tint"
+                            : "border-black/8 hover:border-saffron/30"
                         }`}
                       >
                         <input
@@ -472,11 +472,11 @@ export default function BookingModal({
                           value={opt.value}
                           checked={payment === opt.value}
                           onChange={(e) => setPayment(e.target.value)}
-                          className="accent-bloom-pink"
+                          className="accent-saffron"
                         />
                         <div>
                           <span className="text-sm font-medium text-text-dark">{opt.label}</span>
-                          <span className="text-xs text-text-muted block">{opt.desc}</span>
+                          <span className="text-sm text-text-muted block">{opt.desc}</span>
                         </div>
                       </label>
                     ))}
@@ -493,7 +493,7 @@ export default function BookingModal({
                   <button
                     onClick={() => setSubmitted(true)}
                     disabled={!payment && total > 0}
-                    className="flex-[2] py-3 rounded-lg bg-deep-night text-white font-medium text-sm hover:bg-midnight-bloom transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="flex-[2] py-3 rounded-lg bg-espresso text-white font-medium text-sm hover:bg-cinnamon transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {total > 0 ? `Confirm Booking — $${deposit} deposit` : "Confirm Free Session"}
                   </button>

@@ -1,31 +1,40 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-dm-sans);
+  /* ── Fonts ── */
+  --font-display: var(--font-ojuju);
+  --font-sans:    var(--font-questrial);
 
-  --color-deep-night: #1a1028;
-  --color-midnight-bloom: #2e1a47;
-  --color-bloom-pink: #f47bb4;
-  --color-bloom-pink-light: #fce4f0;
-  --color-bloom-pink-dark: #b83e7a;
-  --color-sunset-gold: #f5a623;
-  --color-garden-teal: #1d9e75;
-  --color-garden-teal-light: #e1f5ee;
-  --color-soft-white: #fdfaf7;
-  --color-warm-sand: #f5efe6;
-  --color-text-dark: #1a1028;
-  --color-text-mid: #35254a;
-  --color-text-muted: #4f3f5f;
-  --color-border-soft: rgba(244, 123, 180, 0.2);
+  /* ── Spice palette (matches site.html :root exactly) ── */
+  --color-espresso:      #1E1208;
+  --color-cinnamon:      #8B4513;
+  --color-saffron:       #D4860A;
+  --color-pine:          #4A5E35;
+  --color-sand:          #D4AA78;
+
+  /* ── Tints ── */
+  --color-saffron-tint:  rgba(212,134,10,0.10);
+  --color-pine-tint:     rgba(74,94,53,0.10);
+  --color-sand-tint:     rgba(212,170,120,0.18);
+  --color-espresso-tint: rgba(30,18,8,0.06);
+
+  /* ── Neutrals (matches site.html exactly) ── */
+  --color-cream:         #F9F7F2;
+  --color-soft-white:    #F9F7F2;
+  --color-warm-sand:     #EDE8E1;
+  --color-text-dark:     #5C4F42;
+  --color-text-mid:      #5C4F42;
+  --color-text-muted:    #C4BAB0;
+  --color-border-soft:   rgba(212,134,10,0.20);
 }
 
 @layer base {
   body {
-    background-color: var(--color-soft-white);
-    color: var(--color-text-dark);
+    background-color: var(--color-cream);
+    color: var(--color-espresso);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
   }
 }

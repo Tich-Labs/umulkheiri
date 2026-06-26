@@ -1,0 +1,227 @@
+{
+  "hero": {
+    "badge": "Certified Ikigai Alignment Coach",
+    "headline": "Your Sacred Garden Awaits — Align with your Ikigai",
+    "subtitle": "Certified Ikigai Alignment Coach blending Japanese purpose philosophy, Ubuntu belonging, and Kihooto justice into your transformation.",
+    "emotionalHook": "",
+    "pills": [
+      "Purpose Discovery",
+      "Feminine Leadership",
+      "Authentic Life Design",
+      "Ubuntu & Community"
+    ],
+    "image": ""
+  },
+  "coachIntro": {
+    "label": "Meet Umulkheiri",
+    "heading": "I don't just help you find purpose — I help you design a life that feels aligned, abundant, and alive.",
+    "body": "As a certified Ikigai Alignment Coach, I blend the Japanese philosophy of purpose with Ubuntu's deep sense of belonging and Kihooto's call to right action. Together, we'll cultivate your inner garden so you can bloom where you're planted.",
+    "photo": "/uploads/1782475898468.heic"
+  },
+  "services": [
+    {
+      "badge": "Discovery",
+      "badgeVariant": "pink",
+      "price": "$50",
+      "priceLabel": "Waived — Currently Free",
+      "title": "Ikigai Discovery Session",
+      "description": "30 min deep dive into life purpose, core values & next direction. Perfect for clarity seekers.",
+      "cta": "Book Free Session",
+      "ctaVariant": "ghost"
+    },
+    {
+      "badge": "Journey",
+      "badgeVariant": "teal",
+      "price": "$555",
+      "priceLabel": "5 sessions · 90 mins each",
+      "title": "Ikigai Alignment Journey",
+      "description": "Purpose alignment, goal clarity & lifestyle design. Worksheets & follow-up included.",
+      "cta": "Start Journey",
+      "ctaVariant": "teal"
+    },
+    {
+      "badge": "★ Transformation",
+      "badgeVariant": "night",
+      "price": "$1,000",
+      "priceLabel": "12 sessions · 1 hr each",
+      "title": "Ikigai Transformation Path",
+      "description": "Full integration of purpose, mindset, habits & embodiment practices. Includes custom toolkit.",
+      "cta": "Begin Transformation",
+      "ctaVariant": "primary",
+      "featured": true
+    },
+    {
+      "badge": "VIP Day",
+      "badgeVariant": "gold",
+      "price": "$400",
+      "priceLabel": "1 Full Day · 4 Hours",
+      "title": "Ikigai Intensive VIP Day",
+      "description": "Private immersion — vision mapping, energy work & strategy for your next life chapter.",
+      "cta": "Reserve Your Day",
+      "ctaVariant": "ghost"
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "Working with Umulkheiri didn't just bring clarity — it brought me home to myself. The weaving of Ikigai, Ubuntu, and Kihooto created a compass I carry with me every single day.",
+      "name": "Grace M.",
+      "location": "Nairobi",
+      "package": "Ikigai Transformation Path"
+    }
+  ],
+  "blog": [
+    {
+      "tag": "Purpose",
+      "title": "Finding Your Ikigai in a Noisy World",
+      "excerpt": "How to tune out the noise and tune into what truly matters — a practical guide to discovering your reason for being.",
+      "date": "Jun 8, 2026",
+      "coverImage": "/uploads/1782476354553.jpeg",
+      "body": "We live in an age of infinite options and constant noise. Notifications pull us in every direction, comparison culture quietly convinces us we are behind, and the pressure to have it all figured out sits heavy on our chests. In all of this busyness, the question that truly matters — what is my reason for being? — gets buried.\n\nIkigai, the Japanese concept that translates loosely to 'that which makes life worth living,' is not a grand revelation that arrives in a single moment. It is a slow, patient unfolding. It lives at the intersection of four questions: What do I love? What am I good at? What does the world need? And what can I be rewarded for? These are not questions you answer once and file away. They are questions you return to, again and again, as you grow.\n\nThe first step is creating silence. Not the absence of sound, but the inner quiet that allows you to hear yourself. This might look like a morning journal practice, a walk without your phone, or sitting with discomfort instead of reaching for distraction. In that space, notice what excites you before the world tells you what should excite you.\n\nNext, pay attention to your energy. What activities leave you feeling expanded, even when they are challenging? What drains you even when it looks impressive from the outside? Your body knows your Ikigai before your mind does. The restlessness you feel in work that doesn't align with you is not ingratitude — it is a compass.\n\nFinally, remember that Ikigai is not found in isolation. It is cultivated in community, in service, in relationship. Bring your gifts to the world not to perform or prove, but to contribute. When your purpose connects to something larger than yourself, the noise of the world fades — and what remains is clarity, aliveness, and a deep sense of coming home.",
+      "featured": true
+    },
+    {
+      "tag": "Ubuntu",
+      "title": "I Am Because We Are — The Power of Connection",
+      "excerpt": "Exploring Ubuntu philosophy and how collective belonging shapes our sense of purpose and fulfillment.",
+      "date": "May 21, 2026",
+      "coverImage": "/uploads/1782476414369.jpeg",
+      "body": "There is a Nguni Bantu philosophy that says: Umuntu ngumuntu ngabantu. A person is a person through other persons. This is Ubuntu — a worldview that places human interdependence at the heart of everything. Not as a nice idea, but as a lived truth that shapes how we move, how we lead, and how we heal.\n\nIn a world that celebrates radical individualism, Ubuntu offers a counter-narrative. It does not say that the individual does not matter. It says the individual only fully becomes themselves in the presence of others. Our gifts are not truly ours until they are given away. Our healing is not complete until it ripples outward. Our purpose is never just personal — it is communal.\n\nI have seen this in my own coaching work. The women who come to me often arrive with a quiet ache of disconnection. They have achieved things — degrees, careers, titles — but they feel alone in the journey. What they are longing for is not simply more success. They are longing to be known, to belong, and to contribute to something beyond themselves. That longing is Ubuntu calling.\n\nPracticing Ubuntu in daily life looks like listening deeply before speaking. It looks like celebrating others' wins without diminishing your own. It looks like showing up for your community not when it is convenient, but when it is needed. It looks like recognising that when one of us rises, we all rise.\n\nAs you explore your own purpose, ask yourself: who shaped me? Whose shoulders am I standing on? How does my Ikigai serve the collective? When you root your individual purpose in communal belonging, you discover that you were never meant to do this alone — and that is not a weakness. It is the source of your greatest strength.",
+      "featured": true
+    },
+    {
+      "tag": "Leadership",
+      "title": "Feminine Leadership: Leading from the Heart",
+      "excerpt": "Why the world needs more feminine leadership — nurturing, intuitive, and deeply connected to purpose.",
+      "date": "May 5, 2026",
+      "coverImage": "/uploads/1782476424350.jpeg",
+      "body": "For too long, leadership has been defined by a single template: assertive, hierarchical, outcome-driven, and largely shaped by masculine ways of knowing. This template has produced results, yes. But it has also produced burnout, disconnection, and organisations that optimise for performance at the expense of people. The world is asking for something different now.\n\nFeminine leadership is not about gender. It is about a quality of presence — one that leads with empathy, listens with the whole body, makes decisions from both intuition and evidence, and holds space for the full humanity of those in its care. These qualities have always existed in great leaders throughout history. What is shifting is our willingness to name them, value them, and cultivate them intentionally.\n\nOne of the most powerful acts of feminine leadership is the willingness to not know. In a culture that rewards certainty, admitting uncertainty can feel like weakness. But sitting in the question, gathering diverse perspectives, and allowing answers to emerge rather than forcing them — this is wisdom. It creates the conditions for genuine innovation and collective intelligence.\n\nAnother hallmark of this kind of leadership is the ability to hold both vision and tenderness simultaneously. To have a bold, ambitious north star for your organisation or your community, while also asking: how are you doing? Do you feel seen? Is this pace sustainable? These questions are not soft — they are strategic. Teams that feel cared for give their best work freely, not because they are afraid, but because they are inspired.\n\nIf you are a woman who leads — formally or informally, in an organisation or in your home, in a boardroom or in a circle — know this: the way you lead is not a compromise of leadership. It is an evolution of it. The world does not need you to lead like a man. It needs you to lead like yourself, fully and unapologetically.",
+      "featured": true
+    }
+  ],
+  "extras": [
+    {
+      "name": "Ikigai Toolkit PDF",
+      "price": "$75",
+      "desc": "Downloadable workbook with exercises, journal prompts, and the Inner Garden framework."
+    },
+    {
+      "name": "Email Check-In Add-On",
+      "price": "$50",
+      "desc": "Weekly email support between sessions to keep you on track with your alignment goals."
+    },
+    {
+      "name": "Group Circle Pass",
+      "price": "$100",
+      "desc": "Access to 4 weekly group coaching circles for shared purpose exploration."
+    }
+  ],
+  "corporate": [
+    {
+      "name": "Keynote Speaking",
+      "price": "From $555",
+      "duration": "30-60 min",
+      "desc": "Inspirational keynote on Ikigai, Ubuntu, and purpose-led leadership for your team or event."
+    },
+    {
+      "name": "Corporate Masterclass",
+      "price": "From $600",
+      "duration": "Half/Full Day",
+      "desc": "Immersive workshop combining Ikigai alignment with team-building and leadership development."
+    },
+    {
+      "name": "Executive Retreat",
+      "price": "Custom",
+      "duration": "2-3 Days",
+      "desc": "Bespoke retreat for leadership teams — purpose discovery, strategic visioning, and embodiment."
+    }
+  ],
+  "community": [
+    {
+      "icon": "🌸",
+      "title": "Ikigai Alignment Circles",
+      "desc": "Weekly group coaching circles where women gather to explore purpose, share wisdom, and grow together."
+    },
+    {
+      "icon": "👑",
+      "title": "Women's Leadership Program",
+      "desc": "A 6-week immersive program for women ready to step into feminine leadership."
+    },
+    {
+      "icon": "🎓",
+      "title": "Youth & ALX Alumni Programs",
+      "desc": "Tailored sessions for young professionals navigating career purpose and impact-driven leadership."
+    },
+    {
+      "icon": "🌍",
+      "title": "Community Retreats",
+      "desc": "Immersive weekend retreats combining Ikigai alignment with nature, connection, and collective healing."
+    }
+  ],
+  "pillarsImage": "/images/pillars.png",
+  "servicesImage": "/images/services.png",
+  "servicesHeroImage": "/images/community.jpeg",
+  "communityImage": "/images/community.jpeg",
+  "journalImage": "/images/journal.png",
+  "credentials": [
+    "IPHM Accredited",
+    "IAOTH Member",
+    "CMA Certified"
+  ],
+  "newsletter": {
+    "heading": "The Inner Garden Letter",
+    "body": "Monthly reflections on purpose, belonging, and right action. Delivered to your inbox with care."
+  },
+  "pillars": [
+    {
+      "icon": "🌸",
+      "title": "Ikigai",
+      "subtitle": "Purpose & Passion",
+      "desc": "Discover your reason for being at the intersection of what you love, what you're good at, what the world needs, and what you can be rewarded for."
+    },
+    {
+      "icon": "🌍",
+      "title": "Ubuntu",
+      "subtitle": "Belonging & Community",
+      "desc": "\"I am because we are.\" Your purpose is inseparable from the community around you. We heal and grow together."
+    },
+    {
+      "icon": "⚖️",
+      "title": "Kihooto",
+      "subtitle": "Justice & Right Action",
+      "desc": "Align your life with integrity. Kihooto is the call to right action — to live in alignment with your deepest values."
+    }
+  ],
+  "elements": [
+    {
+      "icon": "❤️",
+      "title": "Passion",
+      "subtitle": "What you love",
+      "desc": "The things that bring you joy, energy, and a sense of flow."
+    },
+    {
+      "icon": "⭐",
+      "title": "Skills",
+      "subtitle": "What you're good at",
+      "desc": "Your natural talents and cultivated abilities."
+    },
+    {
+      "icon": "🌍",
+      "title": "Service",
+      "subtitle": "What the world needs",
+      "desc": "The contribution only you can make."
+    },
+    {
+      "icon": "💰",
+      "title": "Livelihood",
+      "subtitle": "What you can be rewarded for",
+      "desc": "Creating value the world will sustain."
+    }
+  ],
+  "faq": [
+    { "q": "What happens in a Discovery Session?",   "a": "A relaxed, no-pressure 30-minute conversation where we explore where you are, what's calling you, and whether we're a good fit to work together." },
+    { "q": "Do I need to know my purpose already?",  "a": "Not at all. Most clients come because they feel a sense of misalignment or curiosity. The process is designed to uncover your purpose together." },
+    { "q": "Are sessions online or in-person?",      "a": "Sessions are held via video call, so you can join from anywhere in the world. In-person intensives can be arranged upon request." },
+    { "q": "What if I can't afford the full price?", "a": "I offer a sliding scale for students and those facing financial hardship. Reach out and we'll find something that works." },
+    { "q": "Can I add extras to any package?",       "a": "Absolutely. You can mix and match any add-on with any package. The booking form lets you select your main service and check any add-ons you'd like." }
+  ]
+}

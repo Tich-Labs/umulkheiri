@@ -9,14 +9,16 @@ export default function SectionHeading({
 }) {
   return (
     <div className="mb-10">
-      <p className="text-bloom-pink-dark text-xs uppercase tracking-widest font-medium mb-2">
-        {label}
-      </p>
-      <h2 className="font-serif text-3xl md:text-4xl font-semibold text-deep-night">
+      {label && (
+        <p className="text-pine text-sm uppercase font-medium mb-2.5" style={{ letterSpacing: "3px" }}>
+          {label}
+        </p>
+      )}
+      <h2 className="font-sans text-[28px] font-semibold text-espresso leading-snug">
         {title}
       </h2>
       {description && (
-        <p className="mt-3 text-text-muted max-w-2xl text-base leading-relaxed">
+        <p className="mt-4 text-text-dark text-base max-w-[700px] mb-[50px]" style={{ lineHeight: "1.7" }}>
           {description}
         </p>
       )}
