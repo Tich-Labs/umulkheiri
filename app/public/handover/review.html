@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Review — Umulkheiri Next.js App | Updated June 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #f9f8f6;
+      padding: 40px 24px 80px;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    header { margin-bottom: 48px; border-bottom: 3px solid #4A5E35; padding-bottom: 24px; }
+    header h1 { font-size: 26px; font-weight: 700; color: #1E1208; margin-bottom: 6px; }
+    header p { color: #555; font-size: 14px; }
+    header .meta span { margin-right: 20px; }
+
+    h2 { font-size: 18px; font-weight: 700; color: #1E2A4A; margin: 40px 0 16px; border-left: 4px solid #D4860A; padding-left: 12px; }
+    h3 { font-size: 15px; font-weight: 700; color: #1a1a1a; margin: 20px 0 6px; }
+    p { margin-bottom: 10px; }
+    ul { margin: 8px 0 12px 20px; }
+    li { margin-bottom: 6px; }
+    code { font-family: 'SF Mono', Consolas, monospace; background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .open    { background: #fde8e5; color: #8b1a1a; }
+    .done    { background: #e0f0e0; color: #1a5c1a; }
+    .partial { background: #fef3e2; color: #8a5700; }
+    .new     { background: #e8eef8; color: #1E2A4A; }
+
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th { background: #1E1208; color: white; text-align: left; padding: 10px 12px; }
+    td { padding: 10px 12px; border-bottom: 1px solid #e0ddd8; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #f4f2ee; }
+
+    .item { background: white; border: 1px solid #e0ddd8; border-radius: 8px; padding: 20px 24px; margin-bottom: 14px; }
+    .item-header { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+    .item-header strong { font-size: 15px; }
+    .note { background: #fffbf0; border-left: 3px solid #D4860A; padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; font-size: 14px; color: #5a4a00; }
+    .code-block { background: #1E1208; color: #e8e4dc; padding: 14px 18px; border-radius: 6px; font-family: 'SF Mono', Consolas, monospace; font-size: 13px; margin: 12px 0; white-space: pre-wrap; }
+
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin: 20px 0; }
+    .summary-card { background: white; border: 1px solid #e0ddd8; border-radius: 8px; padding: 16px; text-align: center; }
+    .summary-card .num { font-size: 36px; font-weight: 800; line-height: 1; }
+    .summary-card .label { font-size: 12px; color: #666; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .green  { color: #4A5E35; }
+    .amber  { color: #D4860A; }
+    .red    { color: #C1452B; }
+    .navy   { color: #1E2A4A; }
+
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .feature-grid .item { margin-bottom: 0; }
+    @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } }
+
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0ddd8; color: #888; font-size: 13px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Dev Review — Umulkheiri Jalo Coaching Site</h1>
+    <p class="meta">
+      <span>Updated: <strong>June 2026 (v2)</strong></span>
+      <span>Stack: <code>Next.js 16 App Router</code></span>
+      <span>CMS: <code>content.json</code></span>
+      <span>Admin: <code>/admin</code></span>
+      <span>Currency: <code>KES</code> (toggleable)</span>
+    </p>
+  </header>
+
+  <!-- SNAPSHOT -->
+  <h2>Status Snapshot</h2>
+  <div class="summary-grid">
+    <div class="summary-card"><div class="num green">11</div><div class="label">Items Done</div></div>
+    <div class="summary-card"><div class="num amber">3</div><div class="label">Still Open</div></div>
+    <div class="summary-card"><div class="num navy">8</div><div class="label">New Features Added</div></div>
+    <div class="summary-card"><div class="num red">4</div><div class="label">Client blockers left</div></div>
+  </div>
+  <p>The site has migrated from a static <code>site.html</code> prototype to a full <strong>Next.js 16 App Router</strong> application with a file-based CMS (<code>content.json</code>), an admin editing panel at <code>/admin</code>, dynamic journal post pages, a full services page with booking modal, and all illustrations placed. Home hero now merges the coach introduction into a single section with photo overlay. All prices updated to KES with a USD/KES toggle in admin. Pine (<code>#4A5E35</code>) is the accent colour throughout. The remaining gaps are entirely client-side: professional email, more testimonials, circle dates, and SEO meta tags.</p>
+
+  <!-- WHAT'S BEEN BUILT -->
+  <h2>What's Been Built Since Original Review</h2>
+
+  <div class="feature-grid">
+    <div class="item">
+      <div class="item-header"><span class="badge new">NEW</span><strong>Next.js App — 5 Routes</strong></div>
+      <ul>
+        <li><code>/</code> — Homepage (7 sections)</li>
+        <li><code>/services</code> — Full services page with booking modal</li>
+        <li><code>/journal</code> — Article listing with cover images</li>
+        <li><code>/journal/[slug]</code> — Individual article pages</li>
+        <li><code>/admin</code> — CMS editing panel</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-header"><span class="badge new">NEW</span><strong>content.json CMS</strong></div>
+      <p>All site content lives in one file, editable via admin or directly. Sections:</p>
+      <ul>
+        <li>hero, coachIntro, services, extras, corporate</li>
+        <li>testimonials, blog (3 articles + body), community</li>
+        <li>pillars, elements, credentials, newsletter, faq</li>
+        <li>Image paths: hero, pillars, services, community, journal, servicesHero</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-header"><span class="badge new">NEW</span><strong>/admin Panel</strong></div>
+      <ul>
+        <li>Section-by-section editor with live preview pane</li>
+        <li>Image upload → <code>/public/uploads/</code></li>
+        <li>Inline edit for all text, prices, dates, tags</li>
+        <li>Blog editor with cover image, body, featured flag</li>
+        <li>Save writes back to <code>content.json</code> via API route</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-header"><span class="badge new">NEW</span><strong>/services Page</strong></div>
+      <ul>
+        <li>Services hero photo with dark overlay</li>
+        <li>"How It Works" 2-column layout: <code>hero_bg.png</code> image left, 3 steps right</li>
+        <li>Individual coaching packages (4 cards) with "All prices in KES" badge</li>
+        <li>Add-ons grid + Corporate grid with currency badge</li>
+        <li>Payment methods strip</li>
+        <li>FAQ accordion (CMS-driven)</li>
+        <li>Booking modal with service + add-on selection (KES prices)</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-header"><span class="badge new">NEW</span><strong>KES Pricing + Currency Toggle</strong></div>
+      <ul>
+        <li>All prices changed from USD to KES in <code>content.json</code></li>
+        <li><code>currency</code> field (KES/USD) at top level of <code>content.json</code></li>
+        <li>Admin → Services: KES/USD radio toggle at top of editor</li>
+        <li>"All prices in KES" badge shown on Individual Packages and Add-Ons sections</li>
+        <li>BookingModal prices and calculations updated to KES</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-header"><span class="badge new">NEW</span><strong>Homepage Sections</strong></div>
+      <ul>
+        <li>Hero: two-column text + coach photo with gradient overlay — merged Coach Intro into hero</li>
+        <li>emotionalHook paragraph below subtitle ("You've built the resume…")</li>
+        <li>Credentials strip on <code>bg-cream</code> (separated from Pillars below)</li>
+        <li>Three Pillars: image left, cards right</li>
+        <li>Ikigai Venn: 3-column (cards | SVG/image | cards)</li>
+        <li>Services preview + link to /services</li>
+        <li>Testimonials on warm-sand bg</li>
+        <li>Community: photo + program cards</li>
+        <li>Blog: compact card strips + journal image (featured posts only)</li>
+        <li>Newsletter signup form</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-header"><span class="badge new">NEW</span><strong>Images Placed</strong></div>
+      <ul>
+        <li><code>hero_bg.png</code> — Hero illustration</li>
+        <li><code>Umulkheiri.jpg</code> — Coach portrait (object-position tuned)</li>
+        <li><code>pillars.png</code> — Three Pillars illustration</li>
+        <li><code>services.png</code> — Services conversation scene</li>
+        <li><code>community.jpeg</code> — Circle of women (also used as services hero bg)</li>
+        <li><code>journal.png</code> — Living Desk scene</li>
+        <li><code>ikigai.png</code> — Venn diagram centre image</li>
+        <li>3× blog cover images in <code>/uploads/</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ITEMS FROM ORIGINAL REVIEW -->
+  <h2>Original Review Items — Updated Status</h2>
+
+  <div class="item">
+    <div class="item-header"><span class="badge done">DONE</span><strong>1. Umulkheiri's Photograph</strong></div>
+    <p><code>Umulkheiri.jpg</code> is used in the merged hero section as the right-column photo with a dark gradient overlay showing "Meet Your Coach — Umulkheiri Jalo" and her quote. Object-position tuned to frame her face and upper body (<code>center 38%</code>). Admin panel allows swapping via file upload in Hero section. The separate Coach Intro section was removed from the homepage; the coach data remains in <code>content.json</code> for admin completeness.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge done">DONE</span><strong>2. Pricing — KES + Currency Toggle</strong></div>
+    <p>All prices converted to KES: Discovery KES 3,500 (waived/free), Journey KES 40,000, Transformation KES 72,000, VIP Day KES 29,000. Add-ons and corporate pricing also updated. A <code>currency</code> field in <code>content.json</code> lets the admin toggle between KES/USD display. BookingModal hardcoded prices and calculations updated to KES. "All prices in KES" badge shown on services sections.</p>
+    <div class="note">Admin → Services includes a KES/USD radio toggle. Switching to USD updates the badge display, but price strings would need manual editing in <code>content.json</code> for full USD conversion.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge done">DONE</span><strong>3. Hero Copy</strong></div>
+    <p>Headline and subtitle are in <code>content.json</code> under <code>hero.headline</code> and <code>hero.subtitle</code>. "Align" is highlighted in saffron gold via a split-render. Editable via admin Hero section.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge open">OPEN</span><strong>4. Professional Email Address</strong></div>
+    <p><code>umulkheiri@yahoo.com</code> still appears in <code>ServicesClient.tsx</code> (payment section) and the footer. No change until client confirms domain email.</p>
+    <div class="note">Blocker: client to set up domain email (Google Workspace ~$6/mo or Zoho free tier). Then find-and-replace in <code>ServicesClient.tsx</code> and <code>Footer.tsx</code>.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge done">DONE</span><strong>5. FAQ Answers</strong></div>
+    <p>FAQ is CMS-driven via <code>content.json → faq[]</code> array. Five questions with Umulkheiri's voice answers. Editable directly in <code>content.json</code> or once an admin FAQ editor is added.</p>
+    <div class="note">Admin panel doesn't yet have a dedicated FAQ editor tab — edit directly in <code>content.json</code> for now.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge done">DONE</span><strong>6. Journal Articles</strong></div>
+    <p>Three articles with real titles, excerpts, dates, cover images, and full body text (5 paragraphs each). Topics: Ikigai in a noisy world, Ubuntu, Feminine Leadership. Individual article pages at <code>/journal/[slug]</code>. Featured flag controls which show on the homepage blog strip.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge partial">PARTIAL</span><strong>7. Community Circle Dates</strong></div>
+    <p>Community programs are CMS-driven and display correctly. Circle descriptions say "weekly" / "monthly" but no specific upcoming dates are shown — this is honest while circles are still forming.</p>
+    <div class="note">When Umulkheiri confirms dates: update <code>content.json → community[].desc</code> for the relevant circle. Or add a <code>nextDate</code> field to each community item if needed.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge open">OPEN</span><strong>8. Additional Testimonials</strong></div>
+    <p>Currently one testimonial (Grace M., Nairobi, Transformation Path). The grid handles multiple automatically — <code>grid-cols-2</code> kicks in when more than one is present. Just needs content.</p>
+    <div class="note">Blocker: Umulkheiri to collect 2–3 more quotes and add via admin → Testimonials or directly in <code>content.json</code>.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge done">DONE</span><strong>9. Credentials</strong></div>
+    <p>Credentials strip displays IPHM Accredited · IAOTH Member · CMA Certified from <code>content.json → credentials[]</code>. Strip has <code>bg-cream</code> to visually separate from the Pillars section below.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge partial">PARTIAL</span><strong>10. Mobile Review</strong></div>
+    <p>All sections use responsive Tailwind classes. Two-column layouts collapse to single column at <code>md:</code> breakpoint. Navigation has a mobile menu (hamburger). Admin panel is desktop-only by design.</p>
+    <div class="note">Still needed: manual QA pass on real iPhone and Android. Check: nav tap targets, hero CTA buttons, booking modal scroll on small screens, WhatsApp link reachability.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><span class="badge open">OPEN</span><strong>11. SEO & Open Graph Tags</strong></div>
+    <p>Next.js <code>layout.tsx</code> has no metadata export yet. Missing: page title, meta description, og:title, og:description, og:image.</p>
+    <div class="code-block">// app/src/app/layout.tsx — add this:
+export const metadata = {
+  title: "Umulkheiri Jalo | Ikigai Alignment Coach",
+  description: "Certified Ikigai Alignment Coach in Nairobi. Blending Japanese Ikigai, Ubuntu belonging, and Kihooto justice for purpose-led transformation.",
+  openGraph: {
+    title: "Umulkheiri Jalo | Ikigai Alignment Coach",
+    description: "Align with your purpose through coaching rooted in African wisdom and Japanese Ikigai philosophy.",
+    images: ["/images/Umulkheiri.jpg"],
+  },
+};</div>
+    <div class="note">Each route can also export its own metadata — especially useful for /journal/[slug] to use article title + excerpt per post.</div>
+  </div>
+
+  <!-- REMAINING CLIENT BLOCKERS -->
+  <h2>Client-Side Blockers Remaining</h2>
+  <table>
+    <tr><th>Item</th><th>What's Needed</th><th>Where to Update</th></tr>
+    <tr><td>Professional email</td><td>Confirmed domain email address</td><td><code>ServicesClient.tsx</code> + <code>Footer.tsx</code></td></tr>
+    <tr><td>Extra testimonials</td><td>2–3 quotes + client permission to use names</td><td>Admin → Testimonials, or <code>content.json → testimonials[]</code></td></tr>
+    <tr><td>Circle dates</td><td>Actual dates when circles are scheduled</td><td><code>content.json → community[].desc</code></td></tr>
+    <tr><td>SEO metadata</td><td>Approved meta description text (160 chars)</td><td><code>app/src/app/layout.tsx</code></td></tr>
+  </table>
+
+  <!-- ILLUSTRATION STATUS -->
+  <h2>Illustration Status</h2>
+  <table>
+    <tr><th>Scene</th><th>File</th><th>Status</th><th>Where Used</th></tr>
+    <tr><td>Hero — The Receiving Woman</td><td><code>hero_bg.png</code></td><td><span class="badge done">PLACED</span></td><td>Services "How It Works" section (left column)</td></tr>
+    <tr><td>Three Pillars — Botanical</td><td><code>pillars.png</code></td><td><span class="badge done">PLACED</span></td><td>Pillars section (left column)</td></tr>
+    <tr><td>Services — Coaching Conversation</td><td><code>services.png</code></td><td><span class="badge done">PLACED</span></td><td>Services section (full width, max-w-2xl)</td></tr>
+    <tr><td>Community — Circle of Women</td><td><code>community.jpeg</code></td><td><span class="badge done">PLACED</span></td><td>Community section + /services hero bg</td></tr>
+    <tr><td>Journal — The Living Desk</td><td><code>journal.png</code></td><td><span class="badge done">PLACED</span></td><td>Blog section (right column) + /journal hero bg</td></tr>
+    <tr><td>Ikigai Venn Diagram</td><td><code>ikigai.png</code></td><td><span class="badge done">PLACED</span></td><td>Ikigai Elements section (centre column)</td></tr>
+    <tr><td>About — Umulkheiri Portrait</td><td><code>Umulkheiri.jpg</code></td><td><span class="badge done">PLACED</span></td><td>Coach Intro portrait card</td></tr>
+  </table>
+
+  <!-- TECH NOTES -->
+  <h2>Technical Notes</h2>
+
+  <div class="item">
+    <div class="item-header"><strong>Admin panel updated — Hero merged, Coach removed, Currency added</strong></div>
+    <p>The admin sidebar no longer has a "Coach Intro" section (the coach data merged into the Hero section on the live page). Hero preview now shows the coach photo with gradient overlay. An <code>emotionalHook</code> textarea was added to the Hero editor. A KES/USD currency radio toggle was added to the Services editor. Admin save still preserves all fields including <code>coachIntro</code> data.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><strong>Pine accent colour</strong></div>
+    <p>Pine (<code>#4A5E35</code>) is used throughout as the accent colour: section heading labels, "Explore Services" button, blog tag pills, hover states, Services contact links, currency badge. Replaces cinnamon as the primary accent. Hero pills use <code>rgba(74,94,53,0.2)</code> background.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><strong>Text size floor: 14px (<code>text-sm</code>)</strong></div>
+    <p>Every <code>text-xs</code>, <code>text-[10px]</code>, <code>text-[11px]</code>, and <code>text-[12px]</code> was replaced with <code>text-sm</code> (14px) across 10 files. No text on the site is smaller than 14px.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><strong>Admin save preserves all CMS fields</strong></div>
+    <p>The admin panel loads the full <code>content.json</code> into state (including fields it doesn't edit: <code>pillars</code>, <code>elements</code>, <code>faq</code>, <code>credentials</code>, <code>newsletter</code>). These pass through untouched on save. Confirmed: no data loss on admin save.</p>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><strong>Uploaded images are gitignored</strong></div>
+    <p><code>/public/uploads/</code> is in <code>app/.gitignore</code>. Blog cover images and the coach photo (if uploaded via admin) will not be committed. On deploy, these must be present on the server or use a CDN/object storage. For Vercel: use Vercel Blob or commit the uploads folder separately.</p>
+    <div class="note">Current coach photo (<code>Umulkheiri.jpg</code>) and all illustrations are in <code>/public/images/</code> which IS committed. Only <code>/public/uploads/</code> (admin-uploaded files) is excluded.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header"><strong>Deployment: Vercel (not Netlify)</strong></div>
+    <p>This is a Next.js app — deploy to Vercel for zero-config. Custom domain on Vercel free plan is supported. The <code>content.json</code> write API (<code>/api/admin/save</code>) requires a writable filesystem — Vercel's serverless functions are read-only at runtime. For production admin editing, migrate to a database (PlanetScale, Supabase) or use Vercel's Edge Config / KV store.</p>
+    <div class="note">For the launch MVP, the admin save will work on any Node.js host with a persistent filesystem (Railway, Render, Fly.io). Vercel is fine if content updates are made via direct <code>content.json</code> edits in the repo and redeployed.</div>
+  </div>
+
+  <footer>
+    <p>Internal dev document — not for client distribution.</p>
+    <p>Updated June 2026 (v2). Stack: Next.js 16 App Router · Tailwind CSS v4 · TypeScript · File-based CMS (KES).</p>
+  </footer>
+
+</div>
+</body>
+</html>
