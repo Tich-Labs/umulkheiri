@@ -1,2 +1,9 @@
 .DS_Store
-review.html
+/*.html
+.vscode/
+.claude/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store?
