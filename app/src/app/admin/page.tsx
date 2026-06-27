@@ -12,6 +12,7 @@ type Service = {
 type Testimonial   = { quote: string; name: string; location: string; package: string };
 type BlogPost      = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string; featured?: boolean; seoTitle?: string; seoDescription?: string };
 type CommunityItem = { icon: string; title: string; desc: string; date: string };
+type Faq          = { q: string; a: string };
 type Extra         = { name: string; price: string; desc: string };
 type Corporate     = { name: string; price: string; duration: string; desc: string };
 type Content = {
@@ -24,6 +25,7 @@ type Content = {
   testimonials: Testimonial[];
   blog:       BlogPost[];
   community:  CommunityItem[];
+  faq:        Faq[];
   pillarsImage: string;
   servicesImage: string;
   communityImage: string;
@@ -34,7 +36,7 @@ const EMPTY: Content = {
   currency: "KES",
   hero: { badge: "", headline: "", subtitle: "", emotionalHook: "", pills: [], image: "" },
   coachIntro: { label: "", heading: "", body: "", photo: "" },
-  services: [], extras: [], corporate: [], testimonials: [], blog: [], community: [],
+  services: [], extras: [], corporate: [], testimonials: [], blog: [], community: [], faq: [],
   pillarsImage: "", servicesImage: "", communityImage: "", journalImage: "",
 };
 
@@ -47,6 +49,7 @@ const SECTIONS = [
   { id: "testimonials",label: "Testimonials" },
   { id: "blog",        label: "Journal" },
   { id: "community",   label: "Community" },
+  { id: "faq",         label: "FAQ" },
 ] as const;
 
 type SectionId = (typeof SECTIONS)[number]["id"];
@@ -176,8 +179,11 @@ function AdminContent() {
   function setCorporate(i: number, k: keyof Corporate, v: string) {
     setContent(c => { const co = [...(c.corporate ?? [])]; co[i] = { ...co[i], [k]: v }; return { ...c, corporate: co }; });
   }
+  function setFaq(i: number, k: keyof Faq, v: string) {
+    setContent(c => { const f = [...(c.faq ?? [])]; f[i] = { ...f[i], [k]: v }; return { ...c, faq: f }; });
+  }
 
-  const { hero, services, extras = [], corporate = [], testimonials, blog, community, pillarsImage, servicesImage, communityImage, journalImage, currency } = content;
+  const { hero, services, extras = [], corporate = [], testimonials, blog, community, faq = [], pillarsImage, servicesImage, communityImage, journalImage, currency } = content;
 
   const saveBtn = (
     <button onClick={handleSave} disabled={status === "saving"}
@@ -706,6 +712,47 @@ function AdminContent() {
             </div>
           )}
 
+          {/* ─── FAQ ─── */}
+          {activeSection === "faq" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <PreviewShell title="FAQ — as shown on /services">
+                <div className="bg-cream px-6 py-8">
+                  <div className="max-w-2xl mx-auto space-y-3">
+                    {faq.length === 0
+                      ? <p className="text-espresso/30 text-sm">No FAQs yet</p>
+                      : faq.map(item => (
+                        <details key={item.q} className="bg-white rounded-xl border border-warm-sand group">
+                          <summary className="px-6 py-4 font-sans font-medium text-sm text-espresso cursor-pointer list-none flex items-center justify-between">
+                            {item.q || <span className="opacity-30">Question…</span>}
+                            <span className="text-saffron text-lg group-open:rotate-45 transition-transform">+</span>
+                          </summary>
+                          <div className="px-6 pb-4 text-sm text-text-dark leading-relaxed">{item.a || <span className="opacity-30">Answer…</span>}</div>
+                        </details>
+                      ))
+                    }
+                  </div>
+                </div>
+              </PreviewShell>
+              <EditShell>
+                {faq.map((item, i) => (
+                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
+                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">FAQ {i + 1}</p>
+                    <Field label="Question"><input className={inp} value={item.q} onChange={e => setFaq(i, "q", e.target.value)} placeholder="What happens in a Discovery Session?" /></Field>
+                    <Field label="Answer"><textarea className={ta + " min-h-[100px]"} value={item.a} onChange={e => setFaq(i, "a", e.target.value)} placeholder="A relaxed, no-pressure 30-minute conversation…" /></Field>
+                  </div>
+                ))}
+                <div className="flex gap-4 pt-1">
+                  <button onClick={() => setContent(c => ({ ...c, faq: [...(c.faq ?? []), { q: "", a: "" }] }))}
+                    className="text-sm text-saffron hover:text-cinnamon transition-colors cursor-pointer">+ Add FAQ</button>
+                  {faq.length > 0 && (
+                    <button onClick={() => setContent(c => ({ ...c, faq: (c.faq ?? []).slice(0, -1) }))}
+                      className="text-sm text-espresso/40 hover:text-saffron transition-colors cursor-pointer">Remove last</button>
+                  )}
+                </div>
+              </EditShell>
+            </div>
+          )}
+
           {/* ─── MANUAL ─── */}
           {activeSection === "manual" && (
             <div className="space-y-6 text-sm leading-relaxed">
@@ -714,10 +761,16 @@ function AdminContent() {
             return (<>
 
               <div className="grid grid-cols-2 gap-6">
-              {/* Welcome */}
-              <div className="bg-cream border border-saffron/20 rounded-xl px-6 py-5">
-                <h3 className="font-semibold text-espresso text-lg mb-1">Welcome to your site editor</h3>
-                <p className="text-text-mid">Everything on your website is editable here. Consider all current text and prices as placeholders — replace them with your own words. No coding needed.</p>
+              {/* Welcome + Placeholder merged */}
+              <div className="bg-cream border border-saffron/20 rounded-xl px-6 py-5 flex flex-col gap-4">
+                <div>
+                  <h3 className="font-semibold text-espresso text-lg mb-1">Welcome to your site editor</h3>
+                  <p className="text-text-mid">Everything on your website is editable here. Consider all current text and prices as placeholders — replace them with your own words. No coding needed.</p>
+                </div>
+                <div className="rounded-xl px-5 py-4" style={{ background: "#FFFBF0", border: "1px solid #D4860A" }}>
+                  <p className="font-semibold text-sm" style={{ color: "#8A5700" }}>Everything here is placeholder content</p>
+                  <p className="text-sm mt-1" style={{ color: "#7A5A00" }}>All the text, prices, images, and articles you see on the site are sample content I created to show the layout. Feel free to change anything — that's what this panel is for. If you're unsure what to put in a field, just ask.</p>
+                </div>
               </div>
 
               {/* How to use */}
@@ -750,7 +803,7 @@ function AdminContent() {
                 <div className="flex flex-wrap gap-1.5 px-5 pt-4 pb-2 border-b border-saffron/10">
                   {["hero","services","addons","corporate","testimonials","journal","community"].map(id => (
                     <button key={id} onClick={() => setActiveManualTab(id)}
-                      className={`px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors cursor-pointer ${activeTab === id ? "bg-pine text-white" : "bg-cream text-text-mid hover:bg-saffron/20"}`}>
+                      className={`px-3.5 py-1.5 text-sm font-medium rounded-lg transition-colors cursor-pointer ${activeTab === id ? "bg-pine text-white" : "bg-cream text-text-mid hover:bg-saffron/20"}`}>
                       {id === "hero" ? "Hero" : id === "services" ? "Services" : id === "addons" ? "Add-Ons" : id === "corporate" ? "Corporate" : id === "testimonials" ? "Testimonials" : id === "journal" ? "Journal" : "Community"}
                     </button>
                   ))}
@@ -759,13 +812,13 @@ function AdminContent() {
                   {/* Hero */}
                   {activeTab === "hero" && (
                     <div className="px-5 py-4">
-                      <p className="text-text-mid mb-3">This is the first thing visitors see — the big bold section at the top of your home page.</p>
+                      <p className="text-text-mid mb-3">The first thing visitors see — bold headline, your photo on the right with a &quot;Meet Your Coach&quot; overlay, and the emotional hook below.</p>
                       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                        <div><span className="font-semibold text-espresso">Headline</span><br/><span className="text-text-mid">Your main title. Currently: "Your Sacred Garden Awaits — Align with your Ikigai". The word "Align" will automatically turn gold.</span></div>
-                        <div><span className="font-semibold text-espresso">Subtitle</span><br/><span className="text-text-mid">The line below the headline. Describe what you do in one sentence.</span></div>
-                        <div><span className="font-semibold text-espresso">Emotional hook</span><br/><span className="text-text-mid">A powerful paragraph that speaks to your ideal client's inner ache. Currently a sample about being "accomplished and hollow". Replace with your own message.</span></div>
-                        <div><span className="font-semibold text-espresso">Pills</span><br/><span className="text-text-mid">Comma-separated tags shown below the buttons. E.g. "Purpose Discovery, Feminine Leadership".</span></div>
-                        <div><span className="font-semibold text-espresso">Coach photo</span><br/><span className="text-text-mid">Upload your photo. It appears in the right column with a "Meet Your Coach" overlay. Current image is a placeholder.</span></div>
+                        <div><span className="font-semibold text-espresso">Headline</span><br/><span className="text-text-mid">Your main title. The word &quot;Align&quot; automatically turns gold wherever it appears.</span></div>
+                        <div><span className="font-semibold text-espresso">Subtitle</span><br/><span className="text-text-mid">One sentence below the headline — describe what you do and who you serve.</span></div>
+                        <div><span className="font-semibold text-espresso">Emotional hook</span><br/><span className="text-text-mid">A paragraph that speaks to your client&apos;s inner ache. Replace the sample text with your own words.</span></div>
+                        <div><span className="font-semibold text-espresso">Pills</span><br/><span className="text-text-mid">Comma-separated topic tags below the buttons. E.g. &quot;Purpose Discovery, Feminine Leadership&quot;.</span></div>
+                        <div><span className="font-semibold text-espresso">Coach photo</span><br/><span className="text-text-mid">Upload your portrait — appears in the hero right column and again in the coach intro section.</span></div>
                       </div>
                     </div>
                     )}
@@ -773,20 +826,18 @@ function AdminContent() {
                   {/* Services */}
                   {activeTab === "services" && (
                     <div className="px-5 py-4">
-                      <p className="text-text-mid mb-3">Your 4 coaching packages shown on the /services page. You can edit every detail.</p>
+                      <p className="text-text-mid mb-3">Your 4 coaching packages on the /services page. Each card is fully editable.</p>
                       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                        <div><span className="font-semibold text-espresso">Display currency</span><br/><span className="text-text-mid">Toggle between KES and USD. Controls the "All prices in" badge. Switching to USD won't auto-convert prices — edit each price string too.</span></div>
-                        <div><span className="font-semibold text-espresso">Section image</span><br/><span className="text-text-mid">The photo at the top of the services page hero.</span></div>
+                        <div><span className="font-semibold text-espresso">Display currency</span><br/><span className="text-text-mid">Toggle KES / USD. Switching won&apos;t auto-convert price strings — update those too.</span></div>
+                        <div><span className="font-semibold text-espresso">Services hero image</span><br/><span className="text-text-mid">Background photo on the /services page banner. Upload a new image to change it.</span></div>
                       </div>
                       <p className="font-semibold text-espresso text-sm mt-3 mb-2">Each package has:</p>
                       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                        <div><span className="font-semibold text-espresso">Badge</span><br/><span className="text-text-mid">Tag at top of card. E.g. "Discovery", "Journey", "★ Transformation"</span></div>
-                        <div><span className="font-semibold text-espresso">Price</span><br/><span className="text-text-mid">The big number. Format as "KES 40,000" or "From KES 40,000"</span></div>
-                        <div><span className="font-semibold text-espresso">Price label</span><br/><span className="text-text-mid">Small text below price. E.g. "5 sessions · 90 mins each"</span></div>
-                        <div><span className="font-semibold text-espresso">Title</span><br/><span className="text-text-mid">Package name shown below the price</span></div>
-                        <div><span className="font-semibold text-espresso">Description</span><br/><span className="text-text-mid">1-2 sentences about what's included</span></div>
-                        <div><span className="font-semibold text-espresso">CTA text</span><br/><span className="text-text-mid">Button text. E.g. "Book Free Session", "Start Journey"</span></div>
-                        <div><span className="font-semibold text-espresso">Featured</span><br/><span className="text-text-mid">Check for dark background card (stands out).</span></div>
+                        <div><span className="font-semibold text-espresso">Badge</span><br/><span className="text-text-mid">Tag at the top of the card. E.g. &quot;Discovery&quot;, &quot;★ Transformation&quot;</span></div>
+                        <div><span className="font-semibold text-espresso">Price + label</span><br/><span className="text-text-mid">Big number (&quot;KES 40,000&quot;) + small text below (&quot;5 sessions · 90 mins each&quot;)</span></div>
+                        <div><span className="font-semibold text-espresso">Title &amp; Description</span><br/><span className="text-text-mid">Package name and 1-2 sentences on what&apos;s included</span></div>
+                        <div><span className="font-semibold text-espresso">CTA text</span><br/><span className="text-text-mid">Button label. E.g. &quot;Book Free Session&quot;, &quot;Start Journey&quot;</span></div>
+                        <div><span className="font-semibold text-espresso">Featured</span><br/><span className="text-text-mid">Tick for a dark background card — makes one package stand out as the recommended choice.</span></div>
                       </div>
                     </div>
                     )}
@@ -820,43 +871,45 @@ function AdminContent() {
                   {/* Testimonials */}
                   {activeTab === "testimonials" && (
                     <div className="px-5 py-4">
-                      <p className="text-text-mid mb-3">Social proof quotes from clients. Displayed on the home page.</p>
+                      <p className="text-text-mid mb-3">Client quotes on the home page. Currently 1 — aim for 3–4. Adding a 5th automatically switches the layout to a horizontal scroll carousel.</p>
                       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                        <div><span className="font-semibold text-espresso">Quote</span><br/><span className="text-text-mid">Full testimonial in the client's own words.</span></div>
-                        <div><span className="font-semibold text-espresso">Name</span><br/><span className="text-text-mid">First name (or full name with permission).</span></div>
-                        <div><span className="font-semibold text-espresso">Location</span><br/><span className="text-text-mid">E.g. "Nairobi" — adds credibility.</span></div>
-                        <div><span className="font-semibold text-espresso">Package</span><br/><span className="text-text-mid">Which package they used.</span></div>
+                        <div><span className="font-semibold text-espresso">Quote</span><br/><span className="text-text-mid">Full testimonial in the client&apos;s own words. Decorative quote marks are added automatically.</span></div>
+                        <div><span className="font-semibold text-espresso">Name</span><br/><span className="text-text-mid">First name or full name with permission. Shown in gold.</span></div>
+                        <div><span className="font-semibold text-espresso">Location</span><br/><span className="text-text-mid">E.g. &quot;Nairobi&quot; — adds local credibility.</span></div>
+                        <div><span className="font-semibold text-espresso">Package</span><br/><span className="text-text-mid">Which package they used. Shown beside the name.</span></div>
                       </div>
-                      <p className="text-text-mid text-sm mt-2">Currently 1 testimonial (Grace M.). Aim for 3-4 total.</p>
                     </div>
                     )}
 
                   {/* Journal */}
                   {activeTab === "journal" && (
                     <div className="px-5 py-4">
-                      <p className="text-text-mid mb-3">Your articles. Listing at /journal, individual articles at /journal/[title]. Only featured articles show on the home page.</p>
-                      <p className="font-semibold text-espresso text-sm mb-2">Table columns (click a row to expand):</p>
+                      <p className="text-text-mid mb-3">Your articles — listed at /journal, each at /journal/article-title. Articles with ★ Featured also appear on the home page.</p>
+                      <p className="font-semibold text-espresso text-sm mb-2">Click any row to expand all fields:</p>
                       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                        <div><span className="font-semibold text-espresso">Img</span><br/><span className="text-text-mid">Thumbnail of the cover image.</span></div>
-                        <div><span className="font-semibold text-espresso">Feat (★)</span><br/><span className="text-text-mid">★ = shows on home page. Click row to toggle.</span></div>
-                        <div><span className="font-semibold text-espresso">Tag</span><br/><span className="text-text-mid">Category like "Purpose", "Ubuntu", "Leadership"</span></div>
-                        <div><span className="font-semibold text-espresso">Date</span><br/><span className="text-text-mid">Display date. Format as "Jun 8, 2026"</span></div>
-                        <div><span className="font-semibold text-espresso">Cover image</span><br/><span className="text-text-mid">Upload a photo for the listing card and article hero.</span></div>
-                        <div><span className="font-semibold text-espresso">Excerpt</span><br/><span className="text-text-mid">Short preview on the listing card. 1-2 sentences.</span></div>
-                        <div><span className="font-semibold text-espresso">Full body</span><br/><span className="text-text-mid">Complete article. Separate paragraphs with blank lines.</span></div>
+                        <div><span className="font-semibold text-espresso">Featured (★)</span><br/><span className="text-text-mid">Shows on home page too. Toggle in the expanded row.</span></div>
+                        <div><span className="font-semibold text-espresso">Tag / Category</span><br/><span className="text-text-mid">Start typing for suggestions (Purpose, Ubuntu, Ikigai, Leadership…) or enter your own.</span></div>
+                        <div><span className="font-semibold text-espresso">Cover image</span><br/><span className="text-text-mid">Shown on the listing card and as the article hero banner.</span></div>
+                        <div><span className="font-semibold text-espresso">Title &amp; Excerpt</span><br/><span className="text-text-mid">Title is the headline. Excerpt is the short preview on the listing card (1–2 sentences).</span></div>
+                        <div><span className="font-semibold text-espresso">Full body</span><br/><span className="text-text-mid">Complete article text. Separate paragraphs with a blank line.</span></div>
                       </div>
-                      <p className="text-text-mid text-sm mt-3">The 3 current articles are placeholders with sample body text. Replace or rewrite freely.</p>
+                      <p className="font-semibold text-espresso text-sm mt-4 mb-2">SEO fields — scroll down inside an expanded article:</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">SEO Title</span><br/><span className="text-text-mid">The blue headline in Google results. Max 60 chars. Blank = uses article title.</span></div>
+                        <div><span className="font-semibold text-espresso">Meta Description</span><br/><span className="text-text-mid">The grey snippet in Google. Max 160 chars. Write something that makes someone click. Blank = uses excerpt.</span></div>
+                      </div>
+                      <p className="text-text-mid text-sm mt-3">The 3 current articles are sample content — replace them with your own writing.</p>
                     </div>
                     )}
 
                   {/* Community */}
                   {activeTab === "community" && (
                     <div className="px-5 py-4">
-                      <p className="text-text-mid mb-3">Group programs displayed on the home page and /services.</p>
+                      <p className="text-text-mid mb-3">Group programs on the home page. A &quot;Join the Waitlist&quot; button appears automatically below the cards — it pre-fills an email to you so clients can reach out before dates are confirmed.</p>
                       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                        <div><span className="font-semibold text-espresso">Icon (emoji)</span><br/><span className="text-text-mid">A single emoji like 🌸 👑 🌍 🎓</span></div>
-                        <div><span className="font-semibold text-espresso">Title</span><br/><span className="text-text-mid">Program name. E.g. "Ikigai Alignment Circles"</span></div>
-                        <div><span className="font-semibold text-espresso">Date</span><br/><span className="text-text-mid">Shown in saffron under the title. Free text — e.g. "Every Thursday at 6pm" or "Next session: July 10, 2026"</span></div>
+                        <div><span className="font-semibold text-espresso">Icon (emoji)</span><br/><span className="text-text-mid">A single emoji fills the icon square. E.g. 🌸 👑 🌍 🎓</span></div>
+                        <div><span className="font-semibold text-espresso">Title</span><br/><span className="text-text-mid">Program name in bold. E.g. &quot;Ikigai Alignment Circles&quot;</span></div>
+                        <div><span className="font-semibold text-espresso">Date</span><br/><span className="text-text-mid">Shown in gold. E.g. &quot;Every Thursday at 6pm&quot; or &quot;Next: July 10, 2026&quot;. Leave blank until dates are confirmed.</span></div>
                         <div><span className="font-semibold text-espresso">Description</span><br/><span className="text-text-mid">What the program involves — frequency, format, audience.</span></div>
                       </div>
                     </div>
@@ -866,27 +919,15 @@ function AdminContent() {
 
               {/* Not in admin yet */}
               <div className="bg-white border border-saffron/20 rounded-xl px-5 py-4">
-                <p className="font-semibold text-espresso text-sm mb-1">Things not in this panel (yet)</p>
-                <p className="text-text-mid">These parts of the site are edited directly in the content file. I can update them for you on request, or add them to this admin panel:</p>
-                <div className="grid sm:grid-cols-3 gap-x-6 gap-y-2 text-sm mt-2">
-                  <div><span className="font-medium text-espresso">FAQ</span><br/><span className="text-text-mid">Questions on /services</span></div>
-                  <div><span className="font-medium text-espresso">Credentials</span><br/><span className="text-text-mid">Certification badges</span></div>
-                  <div><span className="font-medium text-espresso">Newsletter text</span><br/><span className="text-text-mid">Signup form heading</span></div>
-                  <div><span className="font-medium text-espresso">Pillars &amp; Elements</span><br/><span className="text-text-mid">3 pillars, 4 ikigai elements</span></div>
-                  <div><span className="font-medium text-espresso">Section images</span><br/><span className="text-text-mid">Pillars, community, journal photos</span></div>
+                <p className="font-semibold text-espresso text-sm mb-1">Things not in this panel — reach out to update</p>
+                <p className="text-text-mid text-sm mb-2">These parts of the site exist but aren&apos;t editable here yet. Send me the new content and I&apos;ll update them:</p>
+                <div className="grid sm:grid-cols-3 gap-x-6 gap-y-2 text-sm">
+                  <div><span className="font-medium text-espresso">Credentials strip</span><br/><span className="text-text-mid">IPHM, IAOTH, CMA badges</span></div>
+                  <div><span className="font-medium text-espresso">Three Pillars</span><br/><span className="text-text-mid">Ikigai, Ubuntu, Kihooto cards</span></div>
+                  <div><span className="font-medium text-espresso">Ikigai Elements</span><br/><span className="text-text-mid">Passion, Skills, Service, Livelihood</span></div>
+                  <div><span className="font-medium text-espresso">Newsletter copy</span><br/><span className="text-text-mid">&quot;Inner Garden Letter&quot; heading &amp; body</span></div>
+                  <div><span className="font-medium text-espresso">Contact email</span><br/><span className="text-text-mid">Update once domain email is ready</span></div>
                 </div>
-              </div>
-
-              {/* Placeholder alert */}
-              <div className="rounded-xl px-5 py-4" style={{ background: "#FFFBF0", border: "1px solid #D4860A" }}>
-                <p className="font-semibold text-sm" style={{ color: "#8A5700" }}>Everything here is placeholder content</p>
-                <p className="text-sm mt-1" style={{ color: "#7A5A00" }}>All the text, prices, images, and articles you see on the site are sample content I created to show the layout. Feel free to change anything — that's what this panel is for. If you're unsure what to put in a field, just ask.</p>
-              </div>
-
-              {/* Need help */}
-              <div className="bg-white border border-saffron/20 rounded-xl px-5 py-4">
-                <p className="font-semibold text-saffron text-sm mb-1">Need help?</p>
-                <p className="text-text-mid">If a field is unclear, or you want to add something that isn't here (like a new section or page), just reach out. I'm happy to walk you through anything.</p>
               </div>
             </>);
             })()}

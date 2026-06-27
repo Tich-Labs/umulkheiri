@@ -155,7 +155,7 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
           <div className="max-w-2xl mx-auto space-y-3">
             {faq.map(item => (
               <details key={item.q} className="bg-white rounded-xl border border-warm-sand group">
-                <summary className="px-6 py-4 font-sans font-medium text-sm text-espresso cursor-pointer list-none flex items-center justify-between">
+                <summary className="px-6 py-4 font-sans font-bold text-sm text-espresso cursor-pointer list-none flex items-center justify-between">
                   {item.q}
                   <span className="text-saffron text-lg group-open:rotate-45 transition-transform">+</span>
                 </summary>
