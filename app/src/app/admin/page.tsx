@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, Fragment, Suspense } from "react";
+import { useState, useEffect, useCallback, useRef, Fragment, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import ServiceCard from "@/components/ServiceCard";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdminClient } from "@/lib/supabase-admin-client";
 import { img } from "@/lib/path";
 
 /* ── types ── */
@@ -93,11 +93,98 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 const inp = "w-full bg-white border border-saffron/20 rounded-lg px-3 py-2 text-sm text-espresso placeholder-espresso/30 focus:outline-none focus:border-saffron transition-colors";
 const ta  = inp + " resize-y min-h-[80px]";
 
+/* ── ImageUpload ── */
+function ImageUpload({ value, onChange, placeholder }: { value: string; onChange: (url: string) => void; placeholder?: string }) {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() ?? "jpg";
+      const name = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: upErr } = await supabaseAdminClient.storage
+        .from("uploads")
+        .upload(name, file, { upsert: false });
+      if (upErr) throw upErr;
+      const { data: { publicUrl } } = supabaseAdminClient.storage
+        .from("uploads")
+        .getPublicUrl(name);
+      onChange(publicUrl);
+    } catch (err) {
+      alert(`Upload failed: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
+
+  return (
+    <div>
+      <input className={inp} value={value} readOnly placeholder={placeholder ?? "Upload or enter URL"} />
+      <button
+        type="button"
+        onClick={() => fileRef.current?.click()}
+        disabled={uploading}
+        className="mt-1.5 text-xs bg-saffron/10 hover:bg-saffron/20 text-saffron px-3 py-1.5 rounded-lg transition-colors cursor-pointer disabled:opacity-50">
+        {uploading ? "Uploading…" : "↑ Upload image"}
+      </button>
+      <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
+    </div>
+  );
+}
+
+/* ── PasswordGate ── */
+function PasswordGate({ children }: { children: React.ReactNode }) {
+  const required = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+  const [pw, setPw] = useState("");
+  const [authed, setAuthed] = useState(!required);
+  const [err, setErr] = useState(false);
+
+  useEffect(() => {
+    if (required && sessionStorage.getItem("admin-authed") === "1") setAuthed(true);
+  }, [required]);
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (pw === required) {
+      setAuthed(true);
+      sessionStorage.setItem("admin-authed", "1");
+    } else {
+      setErr(true);
+      setTimeout(() => setErr(false), 2000);
+    }
+  }
+
+  if (!required || authed) return <>{children}</>;
+
+  return (
+    <div className="flex h-screen bg-cream items-center justify-center">
+      <div className="bg-white rounded-2xl p-10 w-80 shadow-lg border border-saffron/20">
+        <h1 className="font-display text-xl font-semibold text-espresso mb-1">Umulkheiri Jalo</h1>
+        <p className="text-sm text-espresso/40 mb-6">Site Editor</p>
+        <form onSubmit={submit} className="space-y-3">
+          <input type="password" className={inp} placeholder="Password" value={pw}
+            onChange={e => { setPw(e.target.value); setErr(false); }} autoFocus />
+          {err && <p className="text-red-500 text-xs">Incorrect password</p>}
+          <button type="submit" className="w-full bg-espresso text-white text-sm font-medium py-2.5 rounded-lg hover:bg-espresso/90 transition-colors cursor-pointer">
+            Enter
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 /* ── main ── */
 export default function AdminPage() {
   return (
     <Suspense fallback={<div className="flex h-screen bg-white items-center justify-center text-espresso/50">Loading…</div>}>
-      <AdminContent />
+      <PasswordGate>
+        <AdminContent />
+      </PasswordGate>
     </Suspense>
   );
 }
@@ -108,6 +195,8 @@ function AdminContent() {
   const [content, setContent]     = useState<Content>(EMPTY);
   const [editing, setEditing]     = useState("");
   const [activeManualTab, setActiveManualTab] = useState("hero");
+  const [saving, setSaving]       = useState(false);
+  const [saved, setSaved]         = useState(false);
   const activeSection: SectionId  = (searchParams.get("section") as SectionId) || "hero";
 
   function goToSection(id: SectionId) {
@@ -115,9 +204,27 @@ function AdminContent() {
   }
 
   const fetchContent = useCallback(async () => {
-    const { data } = await supabase.from("content").select("data").single();
+    const { data, error } = await supabaseAdminClient.from("content").select("data").single();
+    if (error) console.error("Failed to load content:", error.message);
     if (data?.data) setContent(data.data as Content);
   }, []);
+
+  async function saveContent() {
+    setSaving(true);
+    setSaved(false);
+    try {
+      const { data: existing, error: readErr } = await supabaseAdminClient.from("content").select("id").single();
+      if (readErr) throw readErr;
+      const { error } = await supabaseAdminClient.from("content").update({ data: content }).eq("id", existing.id);
+      if (error) throw error;
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch (err) {
+      alert(`Save failed: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setSaving(false);
+    }
+  }
 
   useEffect(() => { fetchContent(); }, [fetchContent]);
 
@@ -181,7 +288,10 @@ function AdminContent() {
           <h2 className="font-semibold text-espresso text-base">
             {SECTIONS.find(s => s.id === activeSection)?.label}
           </h2>
-          <span className="text-xs bg-cream border border-saffron/20 text-text-mid px-3 py-1.5 rounded-lg font-medium">Read-only — edit in Supabase</span>
+          <button onClick={saveContent} disabled={saving}
+            className={`text-xs px-4 py-1.5 rounded-lg font-medium transition-colors cursor-pointer disabled:opacity-50 ${saved ? "bg-pine text-white" : "bg-espresso hover:bg-espresso/90 text-white"}`}>
+            {saving ? "Saving…" : saved ? "✓ Saved" : "Save Changes"}
+          </button>
         </div>
 
         {/* content */}
@@ -247,9 +357,13 @@ function AdminContent() {
                 <Field label="Pills — comma separated">
                   <input className={inp} value={hero.pills.join(", ")} onChange={e => setHero("pills", e.target.value.split(",").map(p => p.trim()).filter(Boolean))} placeholder="Purpose Discovery, Feminine Leadership…" />
                 </Field>
-                <Field label="Coach photo URL">
+                <Field label="Coach photo">
                   {hero.image && <img src={img(hero.image)} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" style={{ objectPosition: "center 38%" }} />}
-                  <input className={inp} value={hero.image} readOnly placeholder="/images/Umulkheiri.jpg" />
+                  <ImageUpload value={hero.image} onChange={v => setHero("image", v)} placeholder="/images/Umulkheiri.jpg" />
+                </Field>
+                <Field label="Pillars section image">
+                  {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
+                  <ImageUpload value={pillarsImage} onChange={v => setContent(c => ({ ...c, pillarsImage: v }))} placeholder="/images/pillars.jpg" />
                 </Field>
               </EditShell>
             </div>
@@ -290,9 +404,9 @@ function AdminContent() {
                       ))}
                     </div>
                   </Field>
-                  <Field label="Section image URL">
+                  <Field label="Section image">
                     {servicesImage && <img src={img(servicesImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
-                    <input className={inp} value={servicesImage} readOnly placeholder="/images/services.png" />
+                    <ImageUpload value={servicesImage} onChange={v => setContent(c => ({ ...c, servicesImage: v }))} placeholder="/images/services.png" />
                   </Field>
                   {services.map((s, i) => (
                   <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
@@ -486,9 +600,9 @@ function AdminContent() {
 
               {/* Section image */}
               <div className="bg-cream border border-saffron/20 rounded-xl px-6 py-5">
-                <Field label="Journal section image URL">
+                <Field label="Journal section image">
                   {journalImage && <img src={img(journalImage)} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" />}
-                  <input className={inp} value={journalImage} readOnly placeholder="/images/journal.jpg" />
+                  <ImageUpload value={journalImage} onChange={v => setContent(c => ({ ...c, journalImage: v }))} placeholder="/images/journal.jpg" />
                 </Field>
               </div>
 
@@ -546,7 +660,7 @@ function AdminContent() {
                                           </div>
                                         : <div className="w-full h-40 rounded-lg bg-saffron/5 border border-dashed border-saffron/30 flex items-center justify-center text-espresso/30 text-sm mb-2">No cover image</div>
                                       }
-                                      <input className={inp} value={b.coverImage ?? ""} readOnly placeholder="Cover image URL" />
+                                      <ImageUpload value={b.coverImage ?? ""} onChange={v => setBlog(i, "coverImage", v)} placeholder="Upload cover image" />
                                     </Field>
                                   </div>
                                   {/* Right column: featured, tag, date, title, excerpt */}
@@ -635,9 +749,9 @@ function AdminContent() {
                 </div>
               </PreviewShell>
               <EditShell>
-                <Field label="Section image URL">
+                <Field label="Section image">
                   {communityImage && <img src={img(communityImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
-                  <input className={inp} value={communityImage} readOnly placeholder="/images/community.jpeg" />
+                  <ImageUpload value={communityImage} onChange={v => setContent(c => ({ ...c, communityImage: v }))} placeholder="/images/community.jpeg" />
                 </Field>
                 {community.map((cm, i) => (
                   <div key={i} className="mb-4 pb-4 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
