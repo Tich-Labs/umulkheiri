@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umulkheiri Jalo — Website Delivery Report</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #1E1208;
+      background: #F9F7F2;
+      padding: 40px 24px 80px;
+    }
+    .wrap { max-width: 800px; margin: 0 auto; }
+    header { margin-bottom: 48px; border-bottom: 3px solid #4A5E35; padding-bottom: 24px; }
+    header h1 { font-size: 28px; font-weight: 700; color: #1E1208; margin-bottom: 4px; }
+    header p { color: #7A7066; font-size: 15px; line-height: 1.5; }
+
+    h2 { font-size: 20px; font-weight: 700; color: #1E1208; margin: 40px 0 16px; border-left: 4px solid #D4860A; padding-left: 14px; }
+    h3 { font-size: 17px; font-weight: 700; color: #1E1208; margin: 24px 0 8px; }
+    p { margin-bottom: 12px; color: #333; }
+    ul { margin: 8px 0 16px 20px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: white;
+      border: 1px solid #EDE8E1;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+    .card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #4A5E35;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-right: 6px;
+    }
+    .badge-done { background: #E0F0E0; color: #1A5C1A; }
+    .badge-pending { background: #FEF3E2; color: #8A5700; }
+    .badge-info { background: #E8EEF8; color: #1E2A4A; }
+
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 15px; }
+    th { background: #1E1208; color: white; text-align: left; padding: 10px 14px; }
+    td { padding: 10px 14px; border-bottom: 1px solid #EDE8E1; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #F9F7F2; }
+
+    .highlight { background: #FFFBF0; border-left: 3px solid #D4860A; padding: 14px 18px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 15px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+    .step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: #D4860A; color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 15px; }
+    .step h4 { margin-bottom: 4px; font-size: 16px; }
+    .step p { margin-bottom: 0; font-size: 15px; color: #555; }
+
+    .note { background: #F9F7F2; border: 1px solid #EDE8E1; border-radius: 8px; padding: 16px 20px; margin: 12px 0; font-size: 14px; color: #7A7066; }
+
+    .checklist { list-style: none; margin-left: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; }
+    .checklist .check { color: #4A5E35; font-weight: 700; }
+    .checklist .cross { color: #C1452B; font-weight: 700; }
+    .checklist .warn { color: #D4860A; font-weight: 700; }
+
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #EDE8E1; color: #A99E94; font-size: 13px; }
+
+    .new-tag { display: inline-block; font-size: 11px; font-weight: 700; background: #D4860A; color: white; padding: 2px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; letter-spacing: 0.03em; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Website Delivery Report</h1>
+    <p>Umulkheiri Jalo — Ikigai Alignment Coaching &middot; June 2026</p>
+    <p style="margin-top: 8px;">Your coaching website is live and fully functional. This report summarises everything that has been built, how to use the admin panel, and what's still needed from you.</p>
+  </header>
+
+  <div style="background: #E0F0E0; border: 2px solid #4A5E35; border-radius: 12px; padding: 20px 24px; margin-bottom: 32px;">
+    <p style="color: #1A5C1A; font-weight: 700; margin-bottom: 6px; font-size: 15px;">All content is placeholder — you can change everything</p>
+    <p style="color: #2A5C2A; font-size: 15px; margin-bottom: 0;">Every single word, price, image, testimonial, and article on this site is editable through the <strong>admin panel</strong> at <code>/admin</code>. Consider everything you see right now as sample content I created to show what the site can do. You are free — and encouraged — to replace it with your own words, photos, and offers. No coding needed.</p>
+  </div>
+
+  <!-- WHAT'S LIVE -->
+  <h2>Your Website — What's Been Built</h2>
+
+  <div class="card">
+    <h4>Home Page</h4>
+    <p>Your full coaching story, from hero to newsletter. Visitors see:</p>
+    <ul>
+      <li><strong>Hero section</strong> — your headline, a powerful emotional hook, CTA buttons, and your photo with a "Meet Your Coach" overlay</li>
+      <li><strong>Credentials strip</strong> — IPHM, IAOTH, CMA certifications displayed with full body names</li>
+      <li><strong>Three Pillars</strong> — Ikigai, Ubuntu, Kihooto with illustration</li>
+      <li><strong>Ikigai Elements</strong> — the four intersections (Passion, Skills, Service, Livelihood)</li>
+      <li><strong>Services preview</strong> — links to the full services page</li>
+      <li><strong>Testimonials</strong> — client quotes with a visible decorative quote mark; automatically switches to a horizontal scroll carousel when you have 5 or more testimonials</li>
+      <li><strong>Community programs</strong> — group offerings with large emoji icons and bold titles, plus a "Join the Waitlist" CTA button</li>
+      <li><strong>Featured articles</strong> — your journal posts (only featured ones show here)</li>
+      <li><strong>Newsletter signup</strong> — "The Inner Garden Letter"</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Services Page</h4>
+    <ul>
+      <li><strong>Hero</strong> — full background image matching the journal page height, with "Services" label and subtitle</li>
+      <li>How It Works — 3 simple steps with illustration</li>
+      <li>Individual coaching packages — 4 packages (Discovery, Journey, Transformation, VIP Day)</li>
+      <li>Add-Ons — Toolkit PDF, Email Check-In, Group Circle Pass</li>
+      <li>Corporate offerings — Keynote, Masterclass, Executive Retreat</li>
+      <li>FAQ accordion — 5 questions answered (fully editable in admin)</li>
+      <li>Full booking modal — choose a package, add extras, apply a discount code, and select a payment method</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Journal (The Ikigai Journal)</h4>
+    <ul>
+      <li>Article listing page — all your published articles with cover images, tags, and dates</li>
+      <li>Individual article pages — full body text, excerpt as standfirst, cover image hero</li>
+      <li>Featured articles only show on the home page (you control which ones)</li>
+      <li>Each article now has its own Google-optimised page title and description</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Technical Foundations <span class="new-tag">NEW</span></h4>
+    <ul>
+      <li><strong>Cookie consent banner</strong> — appears on first visit, dismissible, stores preference so it doesn't keep showing</li>
+      <li><strong>Image compression</strong> — all site images converted from PNG to JPEG (80–92% smaller files = faster loading)</li>
+      <li><strong>Sitemap</strong> — auto-generated at <code>/sitemap.xml</code>; lists all pages including every blog post. Submit this URL to Google Search Console to get indexed faster</li>
+      <li><strong>robots.txt</strong> — at <code>/robots.txt</code>; tells search engines to crawl the site but stay out of <code>/admin</code></li>
+      <li><strong>Structured data (JSON-LD)</strong> — invisible code that helps Google understand who you are: homepage has a "Person / Coach" schema; every article has an "Article" schema with headline, author, and publish date</li>
+    </ul>
+  </div>
+
+  <!-- PRICING -->
+  <h2>Pricing — Kenyan Shillings (KES)</h2>
+  <p>All prices are displayed in Kenyan Shillings. The admin panel includes a currency toggle (KES/USD) so you can switch at any time.</p>
+  <div class="two-col">
+    <div class="card">
+      <h4>Individual Packages</h4>
+      <ul>
+        <li>Discovery Session: <strong>KES 3,500</strong> (currently free)</li>
+        <li>Alignment Journey: <strong>KES 40,000</strong></li>
+        <li>Transformation Path: <strong>KES 72,000</strong></li>
+        <li>VIP Intensive Day: <strong>KES 29,000</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Add-Ons &amp; Corporate</h4>
+      <ul>
+        <li>Ikigai Toolkit PDF: <strong>KES 5,000</strong></li>
+        <li>Email Check-In: <strong>KES 3,500</strong></li>
+        <li>Group Circle Pass: <strong>KES 7,000</strong></li>
+        <li>Keynote: From <strong>KES 40,000</strong></li>
+        <li>Masterclass: From <strong>KES 45,000</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">These are sample prices. Update them anytime in the admin panel — changes go live immediately.</div>
+
+  <!-- ADMIN -->
+  <h2>Using the Admin Panel</h2>
+  <p>Visit <strong>yoursite.com/admin</strong> to edit all your site content. The panel works like this:</p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div>
+      <h4>Select a section</h4>
+      <p>Use the sidebar on the left to choose what you want to edit — Hero, Services, Journal, Community, etc.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div>
+      <h4>Edit in the right column</h4>
+      <p>Each section has text fields, dropdowns, and image uploads. Changes appear immediately in the preview on the left.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div>
+      <h4>Click Save</h4>
+      <p>Changes are written to your site instantly. You'll see a green "Saved" confirmation.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 8px;">
+    <h4>What you can edit</h4>
+    <div class="two-col" style="margin: 12px 0 0;">
+      <ul>
+        <li>Hero headline, subtitle, emotional hook</li>
+        <li>Coach photo and quote</li>
+        <li>All package prices and descriptions</li>
+        <li>Add-Ons and Corporate offerings</li>
+        <li>Currency display (KES / USD)</li>
+        <li>Section images throughout the site</li>
+        <li>FAQ questions and answers</li>
+      </ul>
+      <ul>
+        <li>Testimonials</li>
+        <li>Journal articles — title, body, cover image, featured flag, tag</li>
+        <li><strong>SEO Title &amp; Meta Description per article</strong> <span class="new-tag">NEW</span></li>
+        <li>Community programs</li>
+        <li>Credentials list</li>
+        <li>Newsletter signup text</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="border-left: 4px solid #D4860A; margin-top: 4px;">
+    <h4>Writing articles for Google <span class="new-tag">NEW</span></h4>
+    <p>When you expand an article in the Journal section of the admin, you'll now see an <strong>SEO</strong> block at the bottom with two fields:</p>
+    <ul>
+      <li><strong>SEO Title</strong> (max 60 characters) — the blue headline people see in Google search results. If you leave it blank it defaults to your article title.</li>
+      <li><strong>Meta Description</strong> (max 160 characters) — the grey snippet below the title in search results. If blank it uses your article excerpt. Aim to write something that makes someone want to click.</li>
+    </ul>
+    <p style="margin-bottom: 0;">The admin shows a live character counter so you can see exactly how many characters you have left as you type.</p>
+  </div>
+
+  <div class="card" style="border-left: 4px solid #4A5E35; margin-top: 4px;">
+    <h4>Adding article tags</h4>
+    <p>The Tag/Category field in the article editor now has smart suggestions. Start typing and you'll see options like <em>Purpose, Ubuntu, Ikigai, Leadership, Feminine Leadership, Healing</em> — or type your own. Tags appear on the article listing page to help readers find related content.</p>
+  </div>
+
+  <div class="highlight">
+    <strong>Tip:</strong> After saving, refresh the live site to see your changes. The admin panel shows a preview so you know exactly what visitors will see.
+  </div>
+
+  <!-- WHAT'S LEFT -->
+  <h2>What's Still Needed From You</h2>
+  <p>These are the remaining items to complete the site. All are things only you can provide — no coding needed.</p>
+
+  <table>
+    <tr><th style="width: 30%;">Item</th><th>Details</th></tr>
+    <tr>
+      <td><span class="badge badge-pending">PENDING</span> Professional email</td>
+      <td>Replace <code>umulkheiri@yahoo.com</code> with a domain email (e.g., hello@umulkheiri.com). Services like Google Workspace (~$6/month) or Zoho (free) can set this up. Once you have the address, let me know and I'll update the booking form and contact links.</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-pending">PENDING</span> More testimonials</td>
+      <td>Currently one testimonial. The section handles up to 6 in a grid; 5 or more automatically switch to a horizontal scroll carousel. Aim for 3–4 quotes with name, location, and which package they used.</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-pending">PENDING</span> Circle dates</td>
+      <td>When your women's circles have confirmed dates, update the Community program descriptions in the admin panel. The "Join the Waitlist" CTA is live in the meantime.</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-pending">PENDING</span> Google Search Console</td>
+      <td>Once your domain is live, go to <a href="https://search.google.com/search-console" target="_blank">search.google.com/search-console</a>, add your site, and submit <code>yoursite.com/sitemap.xml</code>. This tells Google to index all your pages and articles. Takes 1–2 weeks to start appearing.</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-pending">PENDING</span> SEO meta descriptions</td>
+      <td>The site now has placeholder SEO descriptions. Review the Meta Description in each article's SEO block and write them in your own voice (120–160 characters). Also consider updating the article titles to include keywords your clients search for — e.g. "How to Find Your Ikigai in Nairobi".</td>
+    </tr>
+  </table>
+
+  <!-- DESIGN SNAPSHOT -->
+  <h2>Design &amp; Brand Summary</h2>
+  <div class="two-col">
+    <div class="card">
+      <h4>Colour Palette</h4>
+      <ul>
+        <li><strong style="color:#1E1208;">Espresso</strong> — dark backgrounds &amp; text</li>
+        <li><strong style="color:#F9F7F2;">Cream</strong> — main page background</li>
+        <li><strong style="color:#EDE8E1;">Warm Sand</strong> — alternating section backgrounds</li>
+        <li><strong style="color:#D4860A;">Saffron</strong> — gold accent, buttons, highlights</li>
+        <li><strong style="color:#4A5E35;">Pine</strong> — green accent, labels, tags</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Typography</h4>
+      <p><strong>Ojuju</strong> — used for headings and display text (serif, elegant)</p>
+      <p><strong>Questrial</strong> — used for body text (clean, readable)</p>
+      <p style="margin-top: 8px;">All text is at least 14px for readability.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>Images &amp; Illustrations</h4>
+    <p>All site images are compressed (converted from PNG to JPEG) — roughly 80–92% smaller than the originals. The site loads fast without sacrificing visual quality.</p>
+    <ul>
+      <li>Your portrait — hero section right column and "Meet Your Coach" section</li>
+      <li>Hero illustration — used on the Services "How It Works" section</li>
+      <li>Three Pillars botanical illustration</li>
+      <li>Services coaching conversation scene</li>
+      <li>Community circle of women photo — also used as the Services page hero background</li>
+      <li>Journal "living desk" scene</li>
+      <li>Three blog cover images</li>
+    </ul>
+    <div class="note" style="margin-top: 12px;">
+      Your portrait photo and blog covers can be swapped anytime via the admin panel. The illustrations are static files — let me know if you'd like replacements or have new photography to add.
+    </div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <h2>Recommended Next Steps</h2>
+
+  <div class="card" style="border-left: 4px solid #C1452B;">
+    <h4>Before Launch</h4>
+    <ul class="checklist">
+      <li><span class="cross">✗</span> Set up domain email (replace yahoo.com)</li>
+      <li><span class="cross">✗</span> Collect 2–3 more client testimonials</li>
+      <li><span class="cross">✗</span> Confirm dates for community circles (or keep the waitlist CTA)</li>
+      <li><span class="cross">✗</span> Submit sitemap to Google Search Console</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left: 4px solid #D4860A;">
+    <h4>First Week After Launch</h4>
+    <ul class="checklist">
+      <li><span class="warn">→</span> Review and personalise the SEO descriptions for each article</li>
+      <li><span class="warn">→</span> Update service prices to your confirmed KES amounts</li>
+      <li><span class="warn">→</span> Replace placeholder hero copy with your own emotional hook</li>
+      <li><span class="warn">→</span> Rewrite the FAQ in your own voice</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left: 4px solid #4A5E35;">
+    <h4>Ongoing</h4>
+    <ul class="checklist">
+      <li><span class="check">→</span> Publish journal articles regularly — each new article = a new Google-indexed page</li>
+      <li><span class="check">→</span> Add testimonials as you collect them (admin panel, no coding needed)</li>
+      <li><span class="check">→</span> Update community program descriptions as circles confirm dates</li>
+      <li><span class="check">→</span> Adjust prices anytime through the admin panel</li>
+    </ul>
+  </div>
+
+  <div class="highlight">
+    <strong>You can edit everything yourself.</strong> Prices, testimonials, journal articles, FAQ, community programs, and SEO fields — all editable through the admin panel at <strong>/admin</strong>. If you get stuck or want to add new features, just reach out.
+  </div>
+
+  <footer>
+    <p>Website delivery report — updated June 2026.</p>
+    <p>Umulkheiri Jalo &middot; Ikigai Alignment Coaching &middot; Nairobi, Kenya</p>
+  </footer>
+
+</div>
+</body>
+</html>
