@@ -41,4 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 # uploaded client images (committed separately if needed)
-/public/uploads/
+# /public/uploads/ — tracked for static export deployment
