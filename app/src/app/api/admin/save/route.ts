@@ -1,8 +1,10 @@
-import { writeFileSync } from "fs";
-import { join } from "path";
+import { supabaseAdmin } from "@/lib/supabase-server";
 
 export async function POST(request: Request) {
   const { content } = await request.json();
-  writeFileSync(join(process.cwd(), "content.json"), JSON.stringify(content, null, 2));
+  const { error } = await supabaseAdmin
+    .from("content")
+    .upsert({ id: 1, data: content, updated_at: new Date().toISOString() });
+  if (error) return Response.json({ error: error.message }, { status: 500 });
   return Response.json({ ok: true });
 }

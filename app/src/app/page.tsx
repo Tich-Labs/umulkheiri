@@ -1,5 +1,4 @@
-import { readFileSync } from "fs";
-import { join } from "path";
+import { supabaseAdmin } from "@/lib/supabase-server";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/Button";
@@ -9,9 +8,9 @@ import TestimonialCard from "@/components/TestimonialCard";
 import NewsletterForm from "@/components/NewsletterForm";
 import { toSlug } from "@/lib/slug";
 
-function getContent() {
-  const raw = readFileSync(join(process.cwd(), "content.json"), "utf-8");
-  return JSON.parse(raw);
+async function getContent() {
+  const { data } = await supabaseAdmin.from("content").select("data").single();
+  return data?.data ?? {};
 }
 
 const pillarStyles: Record<string, { color: string; bg: string }> = {
@@ -27,8 +26,8 @@ const elementStyles: Record<string, { color: string; bg: string }> = {
   Livelihood: { color: "text-espresso", bg: "bg-espresso-tint" },
 };
 
-export default function HomePage() {
-  const c = getContent();
+export default async function HomePage() {
+  const c = await getContent();
   const hero = c.hero;
   const cms = {
     services: c.services,

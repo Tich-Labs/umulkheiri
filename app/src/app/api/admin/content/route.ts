@@ -1,8 +1,10 @@
-import { readFileSync } from "fs";
-import { join } from "path";
+import { supabaseAdmin } from "@/lib/supabase-server";
 
 export async function GET() {
-  const filePath = join(process.cwd(), "content.json");
-  const raw = readFileSync(filePath, "utf-8");
-  return Response.json(JSON.parse(raw));
+  const { data, error } = await supabaseAdmin
+    .from("content")
+    .select("data")
+    .single();
+  if (error) return Response.json({ error: error.message }, { status: 500 });
+  return Response.json(data.data);
 }

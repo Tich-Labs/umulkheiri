@@ -1,8 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { supabaseAdmin } from "@/lib/supabase-server";
 import ServicesClient from "./ServicesClient";
 
 export const metadata: Metadata = {
@@ -11,8 +10,9 @@ export const metadata: Metadata = {
   openGraph: { title: "Services | Umulkheiri Jalo", images: ["/images/community.jpeg"] },
 };
 
-export default function ServicesPage() {
-  const c = JSON.parse(readFileSync(join(process.cwd(), "content.json"), "utf-8"));
+export default async function ServicesPage() {
+  const { data } = await supabaseAdmin.from("content").select("data").single();
+  const c = data?.data ?? {};
   return (
     <ServicesClient
       services={c.services ?? []}

@@ -1,13 +1,12 @@
 import { MetadataRoute } from "next";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { supabaseAdmin } from "@/lib/supabase-server";
 import { toSlug } from "@/lib/slug";
 
 const BASE = "https://umulkheiri.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const content = JSON.parse(readFileSync(join(process.cwd(), "content.json"), "utf-8"));
-  const blog: { title: string; date?: string }[] = content.blog ?? [];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { data } = await supabaseAdmin.from("content").select("data").single();
+  const blog: { title: string; date?: string }[] = data?.data?.blog ?? [];
 
   const static_pages: MetadataRoute.Sitemap = [
     { url: BASE,              lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },

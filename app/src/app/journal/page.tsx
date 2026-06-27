@@ -1,8 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { supabaseAdmin } from "@/lib/supabase-server";
 import Link from "next/link";
 import { toSlug } from "@/lib/slug";
 
@@ -14,12 +13,9 @@ export const metadata: Metadata = {
 
 type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string };
 
-function getContent() {
-  return JSON.parse(readFileSync(join(process.cwd(), "content.json"), "utf-8"));
-}
-
-export default function JournalPage() {
-  const posts: Post[] = getContent().blog ?? [];
+export default async function JournalPage() {
+  const { data } = await supabaseAdmin.from("content").select("data").single();
+  const posts: Post[] = (data?.data?.blog ?? []);
 
   return (
     <>

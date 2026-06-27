@@ -1,21 +1,21 @@
 export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { supabaseAdmin } from "@/lib/supabase-server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { toSlug } from "@/lib/slug";
 
 type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string; seoTitle?: string; seoDescription?: string };
 
-function getContent() {
-  return JSON.parse(readFileSync(join(process.cwd(), "content.json"), "utf-8"));
+async function getPosts(): Promise<Post[]> {
+  const { data } = await supabaseAdmin.from("content").select("data").single();
+  return data?.data?.blog ?? [];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const posts: Post[] = getContent().blog ?? [];
+  const posts: Post[] = await getPosts();
   const post = posts.find((p) => toSlug(p.title) === slug);
   if (!post) return {};
   const metaTitle = post.seoTitle || post.title;
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function JournalPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const posts: Post[] = getContent().blog ?? [];
+  const posts: Post[] = await getPosts();
   const post = posts.find((p) => toSlug(p.title) === slug);
   if (!post) notFound();
 
