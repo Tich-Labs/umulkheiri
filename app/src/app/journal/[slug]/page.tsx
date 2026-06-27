@@ -1,15 +1,35 @@
 export const dynamic = "force-dynamic";
 
+import type { Metadata } from "next";
 import { readFileSync } from "fs";
 import { join } from "path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { toSlug } from "@/lib/slug";
 
-type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string };
+type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string; seoTitle?: string; seoDescription?: string };
 
 function getContent() {
   return JSON.parse(readFileSync(join(process.cwd(), "content.json"), "utf-8"));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const posts: Post[] = getContent().blog ?? [];
+  const post = posts.find((p) => toSlug(p.title) === slug);
+  if (!post) return {};
+  const metaTitle = post.seoTitle || post.title;
+  const metaDesc  = post.seoDescription || post.excerpt;
+  return {
+    title: metaTitle,
+    description: metaDesc,
+    openGraph: {
+      title: `${metaTitle} | Umulkheiri Jalo`,
+      description: metaDesc,
+      images: post.coverImage ? [{ url: post.coverImage }] : ["/images/journal.jpg"],
+      type: "article",
+    },
+  };
 }
 
 export default async function JournalPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -18,8 +38,21 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
   const post = posts.find((p) => toSlug(p.title) === slug);
   if (!post) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.seoTitle || post.title,
+    description: post.seoDescription || post.excerpt,
+    author: { "@type": "Person", name: "Umulkheiri Jalo", url: "https://umulkheiri.com" },
+    publisher: { "@type": "Person", name: "Umulkheiri Jalo" },
+    datePublished: post.date,
+    ...(post.coverImage ? { image: [`https://umulkheiri.com${post.coverImage}`] } : {}),
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://umulkheiri.com/journal/${slug}` },
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Hero — cover image or gradient fallback */}
       {post.coverImage ? (
         <section className="relative" style={{ height: 480 }}>

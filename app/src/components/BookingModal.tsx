@@ -11,18 +11,18 @@ interface BookingModalProps {
 
 const mainServices = [
   { value: "Ikigai Discovery Session (Free)", price: 0 },
-  { value: "Ikigai Alignment Journey ($555)", price: 555 },
-  { value: "Ikigai Transformation Path ($1,000)", price: 1000 },
-  { value: "Ikigai Intensive VIP Day ($400)", price: 400 },
-  { value: "Keynote Speaking (From $555)", price: 555 },
-  { value: "Corporate Masterclass (From $600)", price: 600 },
+  { value: "Ikigai Alignment Journey (KES 40,000)", price: 40000 },
+  { value: "Ikigai Transformation Path (KES 72,000)", price: 72000 },
+  { value: "Ikigai Intensive VIP Day (KES 29,000)", price: 29000 },
+  { value: "Keynote Speaking (From KES 40,000)", price: 40000 },
+  { value: "Corporate Masterclass (From KES 45,000)", price: 45000 },
   { value: "Executive Retreat (Custom)", price: -1 },
 ];
 
 const addonOptions = [
-  { value: "Ikigai Toolkit PDF ($75)", label: "Ikigai Toolkit PDF", price: 75 },
-  { value: "Email Check-In Add-On ($50)", label: "Weekly Email Check-In", price: 50 },
-  { value: "Group Circle Pass ($100)", label: "Group Circle Pass", price: 100 },
+  { value: "Ikigai Toolkit PDF (KES 5,000)", label: "Ikigai Toolkit PDF", price: 5000 },
+  { value: "Email Check-In Add-On (KES 3,500)", label: "Weekly Email Check-In", price: 3500 },
+  { value: "Group Circle Pass (KES 7,000)", label: "Group Circle Pass", price: 7000 },
 ];
 
 const priceMap: Record<string, number> = {};
@@ -50,7 +50,7 @@ export default function BookingModal({
 
   const discountCodes: Record<string, { type: "percent" | "fixed"; value: number; label: string }> = {
     IKIGAI10: { type: "percent", value: 10, label: "10% off" },
-    WELCOME20: { type: "fixed", value: 20, label: "$20 off" },
+    WELCOME20: { type: "fixed", value: 1000, label: "KES 1,000 off" },
   };
 
   const applyDiscount = () => {
@@ -136,26 +136,26 @@ export default function BookingModal({
               {appliedDiscount && (
                 <div className="flex justify-between text-sm text-pine">
                   <span>Discount ({appliedDiscount.label})</span>
-                  <span className="font-medium">-${discountAmount}</span>
+                  <span className="font-medium">-KES {discountAmount.toLocaleString()}</span>
                 </div>
               )}
               {subtotal > 0 && (
                 <>
                   <div className="flex justify-between text-sm">
                     <span className="text-text-muted">Subtotal</span>
-                    <span className="font-medium text-text-dark">${subtotal}</span>
+                    <span className="font-medium text-text-dark">KES {subtotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm font-semibold pt-1 border-t border-black/8">
                     <span className="text-text-dark">Total due</span>
-                    <span className="text-text-dark">${total}</span>
+                    <span className="text-text-dark">KES {total.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-text-muted">Due now (50% deposit)</span>
-                    <span className="font-medium text-text-dark">${deposit}</span>
+                    <span className="font-medium text-text-dark">KES {deposit.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-text-muted">Due later</span>
-                    <span className="font-medium text-text-dark">${total - deposit}</span>
+                    <span className="font-medium text-text-dark">KES {(total - deposit).toLocaleString()}</span>
                   </div>
                 </>
               )}
@@ -252,7 +252,7 @@ export default function BookingModal({
                           className="accent-saffron w-4 h-4"
                         />
                         <span className="text-sm text-text-dark flex-1">{addon.label}</span>
-                        <span className="text-sm text-text-muted">+${addon.price}</span>
+                        <span className="text-sm text-text-muted">+KES {addon.price.toLocaleString()}</span>
                       </label>
                     ))}
                   </div>
@@ -267,18 +267,18 @@ export default function BookingModal({
                     {addons.length > 0 && (
                       <div className="flex justify-between">
                         <span className="text-text-muted">Add-Ons</span>
-                        <span className="text-text-dark">+${addonsTotal}</span>
+                        <span className="text-text-dark">+KES {addonsTotal.toLocaleString()}</span>
                       </div>
                     )}
                     {appliedDiscount && (
                       <div className="flex justify-between text-pine">
                         <span>Discount ({appliedDiscount.label})</span>
-                        <span>-${discountAmount}</span>
+                        <span>-KES {discountAmount.toLocaleString()}</span>
                       </div>
                     )}
                     <div className="flex justify-between font-semibold pt-1 border-t border-black/8 mt-1">
                       <span className="text-text-dark">Total</span>
-                      <span className="text-text-dark">${total}</span>
+                      <span className="text-text-dark">KES {total.toLocaleString()}</span>
                     </div>
                   </div>
                 )}
@@ -383,28 +383,28 @@ export default function BookingModal({
                   {addons.length > 0 && (
                     <div className="flex justify-between">
                       <span className="text-text-muted">Add-Ons</span>
-                      <span className="text-text-dark">+${addonsTotal}</span>
+                      <span className="text-text-dark">+KES {addonsTotal.toLocaleString()}</span>
                     </div>
                   )}
                   {appliedDiscount && (
                     <div className="flex justify-between text-pine">
                       <span>Discount ({appliedDiscount.label})</span>
-                      <span>-${discountAmount}</span>
+                      <span>-KES {discountAmount.toLocaleString()}</span>
                     </div>
                   )}
                   <div className="flex justify-between font-semibold pt-1 border-t border-black/8 mt-1">
                     <span className="text-text-dark">Total</span>
-                    <span className="text-text-dark">${total}</span>
+                    <span className="text-text-dark">KES {total.toLocaleString()}</span>
                   </div>
                   {total > 0 && (
                     <>
                       <div className="flex justify-between text-sm">
                         <span className="text-text-muted">Deposit due now (50%)</span>
-                        <span className="font-medium text-saffron">${deposit}</span>
+                        <span className="font-medium text-saffron">KES {deposit.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-text-muted">Balance due later</span>
-                        <span className="text-text-dark">${total - deposit}</span>
+                        <span className="text-text-dark">KES {(total - deposit).toLocaleString()}</span>
                       </div>
                     </>
                   )}
@@ -495,7 +495,7 @@ export default function BookingModal({
                     disabled={!payment && total > 0}
                     className="flex-[2] py-3 rounded-lg bg-espresso text-white font-medium text-sm hover:bg-cinnamon transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {total > 0 ? `Confirm Booking — $${deposit} deposit` : "Confirm Free Session"}
+                    {total > 0 ? `Confirm Booking — KES ${deposit.toLocaleString()} deposit` : "Confirm Free Session"}
                   </button>
                 </div>
               </div>

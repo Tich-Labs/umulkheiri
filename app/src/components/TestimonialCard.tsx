@@ -10,9 +10,9 @@ export default function TestimonialCard({
   package: string;
 }) {
   return (
-    <div className="bg-espresso rounded-xl p-10 md:p-12 relative overflow-hidden">
+    <div className="bg-espresso rounded-xl px-10 pt-20 pb-10 md:px-12 md:pt-24 md:pb-12 relative overflow-hidden">
       <span
-        className="absolute -top-6 left-6 font-display text-[160px] leading-none text-saffron/20 pointer-events-none select-none"
+        className="absolute top-2 left-6 font-display text-[160px] leading-none text-saffron/70 pointer-events-none select-none"
         aria-hidden="true"
       >
         &ldquo;

@@ -10,7 +10,7 @@ type Extra     = { name: string; price: string; desc: string };
 type Corporate = { name: string; price: string; duration: string; desc: string };
 type Faq       = { q: string; a: string };
 
-export default function ServicesClient({ services, extras, corporate, faq, heroImage }: { services: Service[]; extras: Extra[]; corporate: Corporate[]; faq: Faq[]; heroImage: string }) {
+export default function ServicesClient({ services, extras, corporate, faq, heroImage, currency }: { services: Service[]; extras: Extra[]; corporate: Corporate[]; faq: Faq[]; heroImage: string; currency: string }) {
   const [modalOpen, setModalOpen]       = useState(false);
   const [modalKey, setModalKey]         = useState(0);
   const [selectedService, setSelectedService] = useState("");
@@ -28,14 +28,17 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       {/* Hero */}
       <section className="relative" style={{ padding: "100px 40px 60px", textAlign: "center" }}>
         <div className="absolute inset-0 overflow-hidden">
-          <img src={heroImage} alt="" className="w-full h-full object-cover object-center" aria-hidden="true" />
+          <img src={heroImage} alt="" className="w-full h-full object-cover" style={{ objectPosition: "center 33%" }} aria-hidden="true" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,18,8,0.50) 0%, rgba(30,18,8,0.30) 100%)" }} />
         </div>
-        <div className="relative z-10 max-w-225 mx-auto">
+        <div className="relative z-10 max-w-225 mx-auto text-center">
           <p className="text-white text-base uppercase font-bold mb-4" style={{ letterSpacing: "3px" }}>Services</p>
           <h1 className="font-display text-[42px] font-semibold text-white mb-4" style={{ lineHeight: 1.2 }}>
             Find the Container That Fits <em className="text-saffron not-italic">Where You Are</em>
           </h1>
+          <p className="text-white/80 text-[18px]" style={{ lineHeight: 1.8 }}>
+            From a single session to full transformation — each package meets you where you are.
+          </p>
         </div>
       </section>
 
@@ -43,18 +46,25 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       <section style={{ background: "#fff", padding: "80px 40px" }}>
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading label="How It Works" title="Three Steps to Begin" description="Booking is simple — no pressure, no complexity." />
-          <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {[
-              { step: "1", title: "Explore Your Options", desc: "Browse packages, compare paths, and choose what resonates." },
-              { step: "2", title: "Book & Personalise",   desc: "Select add-ons, apply a discount, and pick your payment method." },
-              { step: "3", title: "Begin Your Journey",   desc: "Receive your prep guide, schedule sessions, and start blooming." },
-            ].map(item => (
-              <div key={item.step} className="text-center">
-                <span className="w-10 h-10 rounded-full bg-saffron text-white font-semibold flex items-center justify-center mx-auto mb-3 text-sm">{item.step}</span>
-                <h3 className="font-sans font-medium text-espresso text-[18px] mb-1">{item.title}</h3>
-                <p className="text-sm text-text-dark">{item.desc}</p>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div className="rounded-2xl overflow-hidden max-w-xs mx-auto">
+              <img src="/images/hero_bg.png" alt="Woman in deep listening, surrounded by an indigenous garden" className="w-full h-auto" />
+            </div>
+            <div className="grid sm:grid-cols-3 md:grid-cols-1 gap-6">
+              {[
+                { step: "1", title: "Explore Your Options", desc: "Browse packages, compare paths, and choose what resonates." },
+                { step: "2", title: "Book & Personalise",   desc: "Select add-ons, apply a discount, and pick your payment method." },
+                { step: "3", title: "Begin Your Journey",   desc: "Receive your prep guide, schedule sessions, and start blooming." },
+              ].map(item => (
+                <div key={item.step} className="flex md:flex-row gap-4 items-start text-left">
+                  <span className="w-10 h-10 rounded-full bg-saffron text-white font-semibold flex items-center justify-center shrink-0 mt-0.5 text-sm">{item.step}</span>
+                  <div>
+                    <h3 className="font-sans font-medium text-espresso text-[18px] mb-1">{item.title}</h3>
+                    <p className="text-sm text-text-dark">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -62,6 +72,10 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       {/* Individual packages */}
       <section style={{ background: "var(--color-cream, #F9F7F2)", padding: "80px 40px" }}>
         <div className="max-w-[1200px] mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="text-sm text-espresso/50">All prices in</span>
+            <span className="text-sm font-semibold text-pine bg-pine/10 px-3 py-1 rounded-full">{currency}</span>
+          </div>
           <SectionHeading label="For Individuals" title="Individual Coaching Packages" description="From a single session to a full transformation — each package is designed to meet you where you are." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map(pkg => (
@@ -74,6 +88,10 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       {/* Add-ons / Extras */}
       <section style={{ background: "#fff", padding: "80px 40px" }}>
         <div className="max-w-[1200px] mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="text-sm text-espresso/50">All prices in</span>
+            <span className="text-sm font-semibold text-pine bg-pine/10 px-3 py-1 rounded-full">{currency}</span>
+          </div>
           <SectionHeading label="Extras" title="Add-Ons" description="Deepen your coaching experience with these optional additions — select any in the booking form." />
           <div className="grid sm:grid-cols-3 gap-6">
             {extras.map(item => (

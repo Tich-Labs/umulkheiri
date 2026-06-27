@@ -1,9 +1,16 @@
 export const dynamic = "force-dynamic";
 
+import type { Metadata } from "next";
 import { readFileSync } from "fs";
 import { join } from "path";
 import Link from "next/link";
 import { toSlug } from "@/lib/slug";
+
+export const metadata: Metadata = {
+  title: "Journal",
+  description: "Reflections on Ikigai, Ubuntu, feminine leadership, and living a life aligned with your deepest calling.",
+  openGraph: { title: "The Ikigai Journal | Umulkheiri Jalo", images: ["/images/journal.jpg"] },
+};
 
 type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string };
 
@@ -19,7 +26,7 @@ export default function JournalPage() {
       {/* Hero */}
       <section className="relative" style={{ padding: "100px 40px 60px" }}>
         <div className="absolute inset-0 overflow-hidden">
-          <img src="/images/journal.png" alt="" className="w-full h-full object-cover object-top" aria-hidden="true" />
+          <img src="/images/journal.jpg" alt="" className="w-full h-full object-cover object-top" aria-hidden="true" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,18,8,0.45) 0%, rgba(30,18,8,0.25) 100%)" }} />
         </div>
         <div className="relative z-10 max-w-[900px] mx-auto text-center">

@@ -10,11 +10,12 @@ type Service = {
   title: string; description: string; cta: string; ctaVariant?: "primary" | "ghost" | "teal"; featured?: boolean;
 };
 type Testimonial   = { quote: string; name: string; location: string; package: string };
-type BlogPost      = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string; featured?: boolean };
-type CommunityItem = { icon: string; title: string; desc: string };
+type BlogPost      = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string; featured?: boolean; seoTitle?: string; seoDescription?: string };
+type CommunityItem = { icon: string; title: string; desc: string; date: string };
 type Extra         = { name: string; price: string; desc: string };
 type Corporate     = { name: string; price: string; duration: string; desc: string };
 type Content = {
+  currency:   string;
   hero:       { badge: string; headline: string; subtitle: string; emotionalHook: string; pills: string[]; image: string };
   coachIntro: { label: string; heading: string; body: string; photo: string };
   services:   Service[];
@@ -30,6 +31,7 @@ type Content = {
 };
 
 const EMPTY: Content = {
+  currency: "KES",
   hero: { badge: "", headline: "", subtitle: "", emotionalHook: "", pills: [], image: "" },
   coachIntro: { label: "", heading: "", body: "", photo: "" },
   services: [], extras: [], corporate: [], testimonials: [], blog: [], community: [],
@@ -37,8 +39,8 @@ const EMPTY: Content = {
 };
 
 const SECTIONS = [
+  { id: "manual",      label: "⭐ Start Here" },
   { id: "hero",        label: "Hero" },
-  { id: "coach",       label: "Coach Intro" },
   { id: "services",    label: "Services" },
   { id: "extras",      label: "Add-Ons" },
   { id: "corporate",   label: "Corporate" },
@@ -102,6 +104,7 @@ function AdminContent() {
   const [status, setStatus]       = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [uploading, setUploading] = useState(false);
   const [editing, setEditing]     = useState("");
+  const [activeManualTab, setActiveManualTab] = useState("hero");
   const activeSection: SectionId  = (searchParams.get("section") as SectionId) || "hero";
 
   function goToSection(id: SectionId) {
@@ -140,20 +143,6 @@ function AdminContent() {
     setUploading(false);
   }
 
-  async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-    if (res.ok) {
-      const { url } = await res.json();
-      setContent(c => ({ ...c, coachIntro: { ...c.coachIntro, photo: url } }));
-    }
-    setUploading(false);
-  }
-
   async function handleCoverUpload(i: number, e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -168,9 +157,6 @@ function AdminContent() {
 
   function setHero(k: keyof Content["hero"], v: string | string[]) {
     setContent(c => ({ ...c, hero: { ...c.hero, [k]: v } }));
-  }
-  function setCoach(k: keyof Content["coachIntro"], v: string) {
-    setContent(c => ({ ...c, coachIntro: { ...c.coachIntro, [k]: v } }));
   }
   function setService(i: number, k: keyof Service, v: string | boolean) {
     setContent(c => { const s = [...c.services]; s[i] = { ...s[i], [k]: v }; return { ...c, services: s }; });
@@ -191,7 +177,7 @@ function AdminContent() {
     setContent(c => { const co = [...(c.corporate ?? [])]; co[i] = { ...co[i], [k]: v }; return { ...c, corporate: co }; });
   }
 
-  const { hero, coachIntro: coach, services, extras = [], corporate = [], testimonials, blog, community, pillarsImage, servicesImage, communityImage, journalImage } = content;
+  const { hero, services, extras = [], corporate = [], testimonials, blog, community, pillarsImage, servicesImage, communityImage, journalImage, currency } = content;
 
   const saveBtn = (
     <button onClick={handleSave} disabled={status === "saving"}
@@ -249,9 +235,14 @@ function AdminContent() {
                       <h1 className="font-display text-[22px] font-semibold text-white mb-3" style={{ lineHeight: 1.2 }}>
                         {hero.headline || <span className="opacity-30">Your Sacred Garden Awaits…</span>}
                       </h1>
-                      <p className="text-white/80 text-sm mb-5" style={{ lineHeight: 1.8 }}>
+                      <p className="text-white/80 text-sm mb-3" style={{ lineHeight: 1.8 }}>
                         {hero.subtitle || <span className="opacity-40">Subtitle text…</span>}
                       </p>
+                      {hero.emotionalHook && (
+                        <p className="text-white/50 text-sm italic mb-4 leading-relaxed">
+                          {hero.emotionalHook}
+                        </p>
+                      )}
                       <div className="flex gap-2 justify-center md:justify-start flex-wrap mb-5">
                         <span className="bg-saffron text-white text-sm font-semibold px-5 py-2 rounded-lg">Begin Your Journey</span>
                         <span className="border-2 border-saffron text-saffron text-sm font-semibold px-5 py-2 rounded-lg">Explore Services</span>
@@ -259,13 +250,24 @@ function AdminContent() {
                       {hero.pills.length > 0 && (
                         <div className="flex gap-2 justify-center md:justify-start flex-wrap">
                           {hero.pills.map((p, i) => (
-                            <span key={i} className="text-white text-sm px-3 py-1.5 rounded-full" style={{ background: "rgba(212,134,10,0.15)" }}>{p}</span>
+                            <span key={i} className="text-white text-sm px-3 py-1.5 rounded-full" style={{ background: "rgba(74,94,53,0.2)" }}>{p}</span>
                           ))}
                         </div>
                       )}
                     </div>
-                    <div>
-                      <img src={hero.image || "/images/hero_bg.png"} alt="Woman in deep listening" className="w-full h-auto" />
+                    <div className="relative rounded-xl overflow-hidden" style={{ aspectRatio: "3/4" }}>
+                      {hero.image
+                        ? <img src={hero.image} alt="Coach" className="w-full h-full object-cover" style={{ objectPosition: "center 38%" }} />
+                        : <div className="w-full h-full bg-espresso/50 flex items-center justify-center text-white/30 text-sm">No photo</div>
+                      }
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-4 pt-12">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="w-4 h-px bg-saffron shrink-0" />
+                          <span className="text-saffron text-xs uppercase tracking-wider font-semibold">Meet Your Coach</span>
+                        </div>
+                        <p className="text-white font-display text-base font-semibold">Umulkheiri Jalo</p>
+                        <p className="text-white/70 text-xs italic mt-0.5">&ldquo;I don&rsquo;t just help you find purpose&hellip;&rdquo;</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -277,56 +279,16 @@ function AdminContent() {
                 <Field label="Subtitle">
                   <textarea className={ta} value={hero.subtitle} onChange={e => setHero("subtitle", e.target.value)} placeholder="Certified Ikigai Alignment Coach blending…" />
                 </Field>
-                <Field label="Pills — comma separated">
-                  <input className={inp} value={hero.pills.join(", ")} onChange={e => setHero("pills", e.target.value.split(",").map(p => p.trim()).filter(Boolean))} placeholder="✦ Purpose Discovery, 🌿 Feminine Leadership…" />
+                <Field label="Emotional hook (optional)">
+                  <textarea className={ta + " min-h-[80px]"} value={hero.emotionalHook} onChange={e => setHero("emotionalHook", e.target.value)} placeholder="You've built the resume, checked the boxes…" />
                 </Field>
-                <Field label="Hero illustration">
-                  {hero.image && <img src={hero.image} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" />}
+                <Field label="Pills — comma separated">
+                  <input className={inp} value={hero.pills.join(", ")} onChange={e => setHero("pills", e.target.value.split(",").map(p => p.trim()).filter(Boolean))} placeholder="Purpose Discovery, Feminine Leadership…" />
+                </Field>
+                <Field label="Coach photo">
+                  {hero.image && <img src={hero.image} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" style={{ objectPosition: "center 38%" }} />}
                   <input type="file" accept="image/*" onChange={e => handleImageUpload(e, url => setHero("image", url))}
                     className="block text-sm text-espresso/50 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-saffron file:text-white hover:file:bg-cinnamon file:cursor-pointer" />
-                </Field>
-              </EditShell>
-            </div>
-          )}
-
-          {/* ─── COACH INTRO ─── */}
-          {activeSection === "coach" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-              <PreviewShell title="About / Coach Introduction">
-                <div className="bg-white px-8 py-10">
-                  <div className="flex flex-col sm:flex-row gap-6 items-start" style={{ maxWidth: 700, margin: "0 auto" }}>
-                    <div className="w-40 h-40 rounded-full bg-warm-sand flex items-center justify-center flex-shrink-0 overflow-hidden border-4 border-saffron/20">
-                      {coach.photo
-                        ? <img src={coach.photo} alt="Coach" className="w-full h-full object-cover" />
-                        : <span className="text-3xl">🌸</span>}
-                    </div>
-                    <div>
-                      <p className="text-pine text-sm uppercase font-medium mb-2" style={{ letterSpacing: "3px" }}>{coach.label || "Meet Umulkheiri"}</p>
-                      <h2 className="font-sans text-[22px] font-semibold text-espresso mb-3" style={{ lineHeight: 1.3 }}>
-                        {coach.heading || <span className="opacity-30">Heading…</span>}
-                      </h2>
-                      <p className="text-[13px] text-text-dark leading-relaxed">
-                        {coach.body || <span className="opacity-30">Body paragraph…</span>}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </PreviewShell>
-              <EditShell>
-                <Field label="Label (e.g. 'Meet Umulkheiri')">
-                  <input className={inp} value={coach.label} onChange={e => setCoach("label", e.target.value)} />
-                </Field>
-                <Field label="Heading">
-                  <textarea className={ta} value={coach.heading} onChange={e => setCoach("heading", e.target.value)} />
-                </Field>
-                <Field label="Body paragraph">
-                  <textarea className={ta + " min-h-[100px]"} value={coach.body} onChange={e => setCoach("body", e.target.value)} />
-                </Field>
-                <Field label="Photo">
-                  {coach.photo && <img src={coach.photo} alt="Coach" className="w-16 h-16 rounded-full object-cover mb-3 border-2 border-saffron/30" />}
-                  <input type="file" accept="image/*" onChange={handlePhotoUpload}
-                    className="block text-sm text-espresso/50 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-saffron file:text-white hover:file:bg-cinnamon file:cursor-pointer" />
-                  {uploading && <p className="text-saffron text-sm mt-1">Uploading…</p>}
                 </Field>
               </EditShell>
             </div>
@@ -340,6 +302,10 @@ function AdminContent() {
                   <img src={servicesImage || "/images/services.png"} alt="Coaching conversation" className="w-full h-auto" />
                   <div className="px-5 py-8">
                     <div style={{ maxWidth: 900, margin: "0 auto" }}>
+                      <div className="flex items-center justify-center gap-2 mb-4">
+                        <span className="text-sm text-espresso/50">All prices in</span>
+                        <span className="text-sm font-semibold text-pine bg-pine/10 px-3 py-0.5 rounded-full">{currency}</span>
+                      </div>
                       <h2 className="font-sans text-[22px] font-semibold text-espresso mb-2">Individual Coaching Packages</h2>
                       <p className="text-text-dark text-sm mb-8">Choose the path that resonates with your current season of life.</p>
                       <div className="grid grid-cols-2 gap-4">
@@ -352,6 +318,17 @@ function AdminContent() {
                   </div>
                 </PreviewShell>
                 <EditShell>
+                  <Field label="Display currency">
+                    <div className="flex gap-3">
+                      {["KES", "USD"].map(curr => (
+                        <label key={curr} className="flex items-center gap-2 text-sm text-espresso cursor-pointer">
+                          <input type="radio" name="currency" value={curr} checked={currency === curr}
+                            onChange={() => setContent(c => ({ ...c, currency: curr }))} className="accent-saffron" />
+                          <span className={currency === curr ? "text-espresso font-medium" : "text-espresso/50"}>{curr}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </Field>
                   <Field label="Section image">
                     {servicesImage && <img src={servicesImage} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
                     <input type="file" accept="image/*" onChange={e => handleImageUpload(e, url => setContent(c => ({ ...c, servicesImage: url })))}
@@ -390,7 +367,7 @@ function AdminContent() {
                       ? <p className="text-espresso/30 text-sm">No add-ons yet</p>
                       : extras.map((ex, i) => (
                         <div key={i} className="bg-white rounded-xl p-6 border-t-4 border-saffron" style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}>
-                          <p className="font-display text-[28px] font-semibold text-saffron mb-1">{ex.price || "$—"}</p>
+                          <p className="font-display text-[28px] font-semibold text-saffron mb-1">{ex.price || "—"}</p>
                           <h3 className="font-sans text-[16px] font-medium text-espresso mb-2">{ex.name || <span className="opacity-30">Name…</span>}</h3>
                           <p className="text-[13px] text-text-dark leading-relaxed">{ex.desc || <span className="opacity-30">Description…</span>}</p>
                         </div>
@@ -450,7 +427,7 @@ function AdminContent() {
                     <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Offering {i + 1}</p>
                     <div className="grid grid-cols-2 gap-3">
                       <Field label="Name"><input className={inp} value={co.name} onChange={e => setCorporate(i, "name", e.target.value)} /></Field>
-                      <Field label="Price"><input className={inp} value={co.price} onChange={e => setCorporate(i, "price", e.target.value)} placeholder="From $555 / Custom" /></Field>
+                      <Field label="Price"><input className={inp} value={co.price} onChange={e => setCorporate(i, "price", e.target.value)} placeholder="From KES 40,000 / Custom" /></Field>
                       <Field label="Duration"><input className={inp} value={co.duration} onChange={e => setCorporate(i, "duration", e.target.value)} placeholder="30-60 min / Half Day / 2-3 Days" /></Field>
                     </div>
                     <Field label="Description"><textarea className={ta} value={co.desc} onChange={e => setCorporate(i, "desc", e.target.value)} /></Field>
@@ -624,7 +601,12 @@ function AdminContent() {
                                       </label>
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
-                                      <Field label="Tag / Category"><input className={inp} value={b.tag} onChange={e => setBlog(i, "tag", e.target.value)} /></Field>
+                                      <Field label="Tag / Category">
+                                        <input className={inp} list="tag-suggestions" value={b.tag} onChange={e => setBlog(i, "tag", e.target.value)} placeholder="e.g. Purpose" />
+                                        <datalist id="tag-suggestions">
+                                          {["Purpose","Ubuntu","Ikigai","Leadership","Feminine Leadership","Mindfulness","Healing","Career","Community","Kihooto"].map(t => <option key={t} value={t} />)}
+                                        </datalist>
+                                      </Field>
                                       <Field label="Date"><input className={inp} value={b.date} onChange={e => setBlog(i, "date", e.target.value)} /></Field>
                                     </div>
                                     <Field label="Title"><input className={inp} value={b.title} onChange={e => setBlog(i, "title", e.target.value)} /></Field>
@@ -634,6 +616,17 @@ function AdminContent() {
                                 <Field label="Full article body (paragraphs separated by blank lines)">
                                   <textarea className={ta + " min-h-[160px]"} value={b.body ?? ""} onChange={e => setBlog(i, "body", e.target.value)} placeholder="Write the full article here…&#10;&#10;Separate paragraphs with a blank line." />
                                 </Field>
+                                <div className="border-t border-saffron/10 pt-4 mt-2">
+                                  <p className="text-xs font-semibold text-espresso/40 uppercase tracking-wider mb-3">SEO — leave blank to use title &amp; excerpt automatically</p>
+                                  <div className="grid grid-cols-1 gap-3">
+                                    <Field label={`SEO Title (max 60 chars) ${b.seoTitle ? `— ${b.seoTitle.length}/60` : ""}`}>
+                                      <input className={inp} value={b.seoTitle ?? ""} maxLength={60} onChange={e => setBlog(i, "seoTitle", e.target.value)} placeholder={b.title || "Defaults to article title"} />
+                                    </Field>
+                                    <Field label={`Meta Description (max 160 chars) ${b.seoDescription ? `— ${b.seoDescription.length}/160` : ""}`}>
+                                      <textarea className={ta} value={b.seoDescription ?? ""} maxLength={160} onChange={e => setBlog(i, "seoDescription", e.target.value)} placeholder={b.excerpt || "Defaults to excerpt — aim for 120–160 chars"} />
+                                    </Field>
+                                  </div>
+                                </div>
                               </td>
                             </tr>
                           )}
@@ -663,16 +656,17 @@ function AdminContent() {
                   <div style={{ maxWidth: 900, margin: "0 auto" }}>
                     <h2 className="font-sans text-[22px] font-semibold text-espresso mb-2">Group &amp; Community</h2>
                     <p className="text-text-dark text-sm mb-6">Workshops for circles, ALX alumni, and community groups.</p>
-                    <div className="grid md:grid-cols-2 gap-6 items-center">
-                      <div className="rounded-2xl overflow-hidden" style={{ maxHeight: 380 }}>
-                        <img src={communityImage || "/images/community.jpeg"} alt="Circle of women in purpose exploration" className="w-full h-full object-cover" style={{ maxHeight: 380 }} />
+                    <div className="grid md:grid-cols-2 gap-6 items-start">
+                      <div className="rounded-2xl overflow-hidden">
+                        <img src={communityImage || "/images/community.jpeg"} alt="Circle of women in purpose exploration" className="w-full h-auto object-cover" />
                       </div>
                       <div className="grid gap-3">
                         {community.map((p, i) => (
                           <div key={i} className="bg-white rounded-xl p-4 border border-saffron/10 flex gap-4 items-start">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 bg-saffron-tint">{p.icon || "✦"}</div>
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-3xl flex-shrink-0 bg-saffron-tint">{p.icon || "✦"}</div>
                             <div>
                               <h3 className="font-sans text-[14px] font-medium text-text-dark mb-1">{p.title || <span className="opacity-30">Program title</span>}</h3>
+                              {p.date && <p className="text-xs text-saffron font-medium mb-0.5">{p.date}</p>}
                               <p className="text-sm text-text-dark leading-relaxed">{p.desc}</p>
                             </div>
                           </div>
@@ -695,13 +689,209 @@ function AdminContent() {
                       <Field label="Icon (emoji)"><input className={inp} value={cm.icon} onChange={e => setCommunity(i, "icon", e.target.value)} /></Field>
                       <div className="col-span-3"><Field label="Title"><input className={inp} value={cm.title} onChange={e => setCommunity(i, "title", e.target.value)} /></Field></div>
                     </div>
+                    <Field label="Date"><input className={inp} value={cm.date} onChange={e => setCommunity(i, "date", e.target.value)} placeholder='e.g. "Every Thursday" or "July 10, 2026"' />
+                      <p className="text-xs text-text-mid mt-1">Leave blank to hide. Shows in saffron under the title on the home page.</p></Field>
                     <Field label="Description"><textarea className={ta} value={cm.desc} onChange={e => setCommunity(i, "desc", e.target.value)} /></Field>
                   </div>
                 ))}
+                <div className="flex gap-4 pt-1">
+                  <button onClick={() => setContent(c => ({ ...c, community: [...c.community, { icon: "", title: "", desc: "", date: "" }] }))}
+                    className="text-sm text-saffron hover:text-cinnamon transition-colors cursor-pointer">+ Add program</button>
+                  {community.length > 0 && (
+                    <button onClick={() => setContent(c => ({ ...c, community: c.community.slice(0, -1) }))}
+                      className="text-sm text-espresso/40 hover:text-saffron transition-colors cursor-pointer">Remove last</button>
+                  )}
+                </div>
               </EditShell>
             </div>
           )}
 
+          {/* ─── MANUAL ─── */}
+          {activeSection === "manual" && (
+            <div className="space-y-6 text-sm leading-relaxed">
+            {(() => {
+            const activeTab = activeManualTab;
+            return (<>
+
+              <div className="grid grid-cols-2 gap-6">
+              {/* Welcome */}
+              <div className="bg-cream border border-saffron/20 rounded-xl px-6 py-5">
+                <h3 className="font-semibold text-espresso text-lg mb-1">Welcome to your site editor</h3>
+                <p className="text-text-mid">Everything on your website is editable here. Consider all current text and prices as placeholders — replace them with your own words. No coding needed.</p>
+              </div>
+
+              {/* How to use */}
+              <div className="bg-white border border-saffron/20 rounded-xl overflow-hidden">
+                <div className="bg-pine px-5 py-3">
+                  <p className="text-white text-sm font-semibold">How to use this panel</p>
+                </div>
+                <div className="px-5 py-4 space-y-4">
+                  <div className="flex gap-3">
+                    <span className="w-7 h-7 rounded-full bg-saffron text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                    <div><p className="font-semibold text-espresso">Click a section in the left sidebar</p><p className="text-text-mid">Each tab controls a different part of your site — Hero, Services, Journal, etc.</p></div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="w-7 h-7 rounded-full bg-saffron text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                    <div><p className="font-semibold text-espresso">Edit the fields on the right</p><p className="text-text-mid">Type new text, upload images, toggle options. The preview on the left updates as you type.</p></div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="w-7 h-7 rounded-full bg-saffron text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                    <div><p className="font-semibold text-espresso">Click "Save Changes" (top-right)</p><p className="text-text-mid">Your site updates immediately. Refresh the live page to see your changes.</p></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              {/* Section guides — tabs */}
+              <div className="bg-white border border-saffron/20 rounded-xl overflow-hidden">
+                <div className="bg-espresso px-5 py-3">
+                  <p className="text-white text-sm font-semibold">Section-by-section guide</p>
+                </div>
+                <div className="flex flex-wrap gap-1.5 px-5 pt-4 pb-2 border-b border-saffron/10">
+                  {["hero","services","addons","corporate","testimonials","journal","community"].map(id => (
+                    <button key={id} onClick={() => setActiveManualTab(id)}
+                      className={`px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors cursor-pointer ${activeTab === id ? "bg-pine text-white" : "bg-cream text-text-mid hover:bg-saffron/20"}`}>
+                      {id === "hero" ? "Hero" : id === "services" ? "Services" : id === "addons" ? "Add-Ons" : id === "corporate" ? "Corporate" : id === "testimonials" ? "Testimonials" : id === "journal" ? "Journal" : "Community"}
+                    </button>
+                  ))}
+                </div>
+                <div className="divide-y divide-saffron/10">
+                  {/* Hero */}
+                  {activeTab === "hero" && (
+                    <div className="px-5 py-4">
+                      <p className="text-text-mid mb-3">This is the first thing visitors see — the big bold section at the top of your home page.</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Headline</span><br/><span className="text-text-mid">Your main title. Currently: "Your Sacred Garden Awaits — Align with your Ikigai". The word "Align" will automatically turn gold.</span></div>
+                        <div><span className="font-semibold text-espresso">Subtitle</span><br/><span className="text-text-mid">The line below the headline. Describe what you do in one sentence.</span></div>
+                        <div><span className="font-semibold text-espresso">Emotional hook</span><br/><span className="text-text-mid">A powerful paragraph that speaks to your ideal client's inner ache. Currently a sample about being "accomplished and hollow". Replace with your own message.</span></div>
+                        <div><span className="font-semibold text-espresso">Pills</span><br/><span className="text-text-mid">Comma-separated tags shown below the buttons. E.g. "Purpose Discovery, Feminine Leadership".</span></div>
+                        <div><span className="font-semibold text-espresso">Coach photo</span><br/><span className="text-text-mid">Upload your photo. It appears in the right column with a "Meet Your Coach" overlay. Current image is a placeholder.</span></div>
+                      </div>
+                    </div>
+                    )}
+
+                  {/* Services */}
+                  {activeTab === "services" && (
+                    <div className="px-5 py-4">
+                      <p className="text-text-mid mb-3">Your 4 coaching packages shown on the /services page. You can edit every detail.</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Display currency</span><br/><span className="text-text-mid">Toggle between KES and USD. Controls the "All prices in" badge. Switching to USD won't auto-convert prices — edit each price string too.</span></div>
+                        <div><span className="font-semibold text-espresso">Section image</span><br/><span className="text-text-mid">The photo at the top of the services page hero.</span></div>
+                      </div>
+                      <p className="font-semibold text-espresso text-sm mt-3 mb-2">Each package has:</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Badge</span><br/><span className="text-text-mid">Tag at top of card. E.g. "Discovery", "Journey", "★ Transformation"</span></div>
+                        <div><span className="font-semibold text-espresso">Price</span><br/><span className="text-text-mid">The big number. Format as "KES 40,000" or "From KES 40,000"</span></div>
+                        <div><span className="font-semibold text-espresso">Price label</span><br/><span className="text-text-mid">Small text below price. E.g. "5 sessions · 90 mins each"</span></div>
+                        <div><span className="font-semibold text-espresso">Title</span><br/><span className="text-text-mid">Package name shown below the price</span></div>
+                        <div><span className="font-semibold text-espresso">Description</span><br/><span className="text-text-mid">1-2 sentences about what's included</span></div>
+                        <div><span className="font-semibold text-espresso">CTA text</span><br/><span className="text-text-mid">Button text. E.g. "Book Free Session", "Start Journey"</span></div>
+                        <div><span className="font-semibold text-espresso">Featured</span><br/><span className="text-text-mid">Check for dark background card (stands out).</span></div>
+                      </div>
+                    </div>
+                    )}
+
+                  {/* Add-Ons */}
+                  {activeTab === "addons" && (
+                    <div className="px-5 py-4">
+                      <p className="text-text-mid mb-3">Extra items clients can add to any package. Shown on /services and in the booking modal.</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Name</span><br/><span className="text-text-mid">Add-on title. E.g. "Ikigai Toolkit PDF"</span></div>
+                        <div><span className="font-semibold text-espresso">Price</span><br/><span className="text-text-mid">Format as "KES 5,000"</span></div>
+                        <div><span className="font-semibold text-espresso">Description</span><br/><span className="text-text-mid">Brief explanation of what it includes.</span></div>
+                      </div>
+                      <p className="text-text-mid text-sm mt-2">Use <strong>"+ Add add-on"</strong> and <strong>"Remove last"</strong> at the bottom to add or remove items.</p>
+                    </div>
+                    )}
+
+                  {/* Corporate */}
+                  {activeTab === "corporate" && (
+                    <div className="px-5 py-4">
+                      <p className="text-text-mid mb-3">Group and organisational offerings. Shown on /services.</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Name</span><br/><span className="text-text-mid">E.g. "Keynote Speaking", "Corporate Masterclass"</span></div>
+                        <div><span className="font-semibold text-espresso">Price</span><br/><span className="text-text-mid">E.g. "From KES 40,000" or "Custom"</span></div>
+                        <div><span className="font-semibold text-espresso">Duration</span><br/><span className="text-text-mid">E.g. "30-60 min", "Half/Full Day", "2-3 Days"</span></div>
+                        <div><span className="font-semibold text-espresso">Description</span><br/><span className="text-text-mid">What the offering includes.</span></div>
+                      </div>
+                    </div>
+                    )}
+
+                  {/* Testimonials */}
+                  {activeTab === "testimonials" && (
+                    <div className="px-5 py-4">
+                      <p className="text-text-mid mb-3">Social proof quotes from clients. Displayed on the home page.</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Quote</span><br/><span className="text-text-mid">Full testimonial in the client's own words.</span></div>
+                        <div><span className="font-semibold text-espresso">Name</span><br/><span className="text-text-mid">First name (or full name with permission).</span></div>
+                        <div><span className="font-semibold text-espresso">Location</span><br/><span className="text-text-mid">E.g. "Nairobi" — adds credibility.</span></div>
+                        <div><span className="font-semibold text-espresso">Package</span><br/><span className="text-text-mid">Which package they used.</span></div>
+                      </div>
+                      <p className="text-text-mid text-sm mt-2">Currently 1 testimonial (Grace M.). Aim for 3-4 total.</p>
+                    </div>
+                    )}
+
+                  {/* Journal */}
+                  {activeTab === "journal" && (
+                    <div className="px-5 py-4">
+                      <p className="text-text-mid mb-3">Your articles. Listing at /journal, individual articles at /journal/[title]. Only featured articles show on the home page.</p>
+                      <p className="font-semibold text-espresso text-sm mb-2">Table columns (click a row to expand):</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Img</span><br/><span className="text-text-mid">Thumbnail of the cover image.</span></div>
+                        <div><span className="font-semibold text-espresso">Feat (★)</span><br/><span className="text-text-mid">★ = shows on home page. Click row to toggle.</span></div>
+                        <div><span className="font-semibold text-espresso">Tag</span><br/><span className="text-text-mid">Category like "Purpose", "Ubuntu", "Leadership"</span></div>
+                        <div><span className="font-semibold text-espresso">Date</span><br/><span className="text-text-mid">Display date. Format as "Jun 8, 2026"</span></div>
+                        <div><span className="font-semibold text-espresso">Cover image</span><br/><span className="text-text-mid">Upload a photo for the listing card and article hero.</span></div>
+                        <div><span className="font-semibold text-espresso">Excerpt</span><br/><span className="text-text-mid">Short preview on the listing card. 1-2 sentences.</span></div>
+                        <div><span className="font-semibold text-espresso">Full body</span><br/><span className="text-text-mid">Complete article. Separate paragraphs with blank lines.</span></div>
+                      </div>
+                      <p className="text-text-mid text-sm mt-3">The 3 current articles are placeholders with sample body text. Replace or rewrite freely.</p>
+                    </div>
+                    )}
+
+                  {/* Community */}
+                  {activeTab === "community" && (
+                    <div className="px-5 py-4">
+                      <p className="text-text-mid mb-3">Group programs displayed on the home page and /services.</p>
+                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                        <div><span className="font-semibold text-espresso">Icon (emoji)</span><br/><span className="text-text-mid">A single emoji like 🌸 👑 🌍 🎓</span></div>
+                        <div><span className="font-semibold text-espresso">Title</span><br/><span className="text-text-mid">Program name. E.g. "Ikigai Alignment Circles"</span></div>
+                        <div><span className="font-semibold text-espresso">Date</span><br/><span className="text-text-mid">Shown in saffron under the title. Free text — e.g. "Every Thursday at 6pm" or "Next session: July 10, 2026"</span></div>
+                        <div><span className="font-semibold text-espresso">Description</span><br/><span className="text-text-mid">What the program involves — frequency, format, audience.</span></div>
+                      </div>
+                    </div>
+                    )}
+                  </div>
+                </div>
+
+              {/* Not in admin yet */}
+              <div className="bg-white border border-saffron/20 rounded-xl px-5 py-4">
+                <p className="font-semibold text-espresso text-sm mb-1">Things not in this panel (yet)</p>
+                <p className="text-text-mid">These parts of the site are edited directly in the content file. I can update them for you on request, or add them to this admin panel:</p>
+                <div className="grid sm:grid-cols-3 gap-x-6 gap-y-2 text-sm mt-2">
+                  <div><span className="font-medium text-espresso">FAQ</span><br/><span className="text-text-mid">Questions on /services</span></div>
+                  <div><span className="font-medium text-espresso">Credentials</span><br/><span className="text-text-mid">Certification badges</span></div>
+                  <div><span className="font-medium text-espresso">Newsletter text</span><br/><span className="text-text-mid">Signup form heading</span></div>
+                  <div><span className="font-medium text-espresso">Pillars &amp; Elements</span><br/><span className="text-text-mid">3 pillars, 4 ikigai elements</span></div>
+                  <div><span className="font-medium text-espresso">Section images</span><br/><span className="text-text-mid">Pillars, community, journal photos</span></div>
+                </div>
+              </div>
+
+              {/* Placeholder alert */}
+              <div className="rounded-xl px-5 py-4" style={{ background: "#FFFBF0", border: "1px solid #D4860A" }}>
+                <p className="font-semibold text-sm" style={{ color: "#8A5700" }}>Everything here is placeholder content</p>
+                <p className="text-sm mt-1" style={{ color: "#7A5A00" }}>All the text, prices, images, and articles you see on the site are sample content I created to show the layout. Feel free to change anything — that's what this panel is for. If you're unsure what to put in a field, just ask.</p>
+              </div>
+
+              {/* Need help */}
+              <div className="bg-white border border-saffron/20 rounded-xl px-5 py-4">
+                <p className="font-semibold text-saffron text-sm mb-1">Need help?</p>
+                <p className="text-text-mid">If a field is unclear, or you want to add something that isn't here (like a new section or page), just reach out. I'm happy to walk you through anything.</p>
+              </div>
+            </>);
+            })()}
+          </div>
+          )}
         </div>
       </div>
     </div>
