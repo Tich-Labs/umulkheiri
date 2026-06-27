@@ -2,4 +2,4 @@
 :HL["/umulkheiri/_next/static/media/24b63db40a97cf97-s.p.0p3a4f87xckmd.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/umulkheiri/_next/static/media/2f19417f17ff8e58-s.p.0o~93sw~c_fqg.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/umulkheiri/uploads/1782476414369.jpeg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"journal","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"i-am-because-we-are-the-power-of-connection","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"herVcSot_vvruLcZPrUVm"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"journal","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"i-am-because-we-are-the-power-of-connection","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"NN5HXyKyTiZZgBcP2NICN"}

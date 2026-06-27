@@ -5,4 +5,4 @@
 :HL["/umulkheiri/uploads/1782476354553.jpeg","image"]
 :HL["/umulkheiri/uploads/1782476414369.jpeg","image"]
 :HL["/umulkheiri/uploads/1782476424350.jpeg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"journal","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"herVcSot_vvruLcZPrUVm"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"journal","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"NN5HXyKyTiZZgBcP2NICN"}
