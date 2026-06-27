@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, Fragment, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import ServiceCard from "@/components/ServiceCard";
 import { supabase } from "@/lib/supabase";
+import { img } from "@/lib/path";
 
 /* ── types ── */
 type Service = {
@@ -218,7 +219,7 @@ function AdminContent() {
                     </div>
                     <div className="relative rounded-xl overflow-hidden" style={{ aspectRatio: "3/4" }}>
                       {hero.image
-                        ? <img src={hero.image} alt="Coach" className="w-full h-full object-cover" style={{ objectPosition: "center 38%" }} />
+                        ? <img src={img(hero.image)} alt="Coach" className="w-full h-full object-cover" style={{ objectPosition: "center 38%" }} />
                         : <div className="w-full h-full bg-espresso/50 flex items-center justify-center text-white/30 text-sm">No photo</div>
                       }
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-4 pt-12">
@@ -247,7 +248,7 @@ function AdminContent() {
                   <input className={inp} value={hero.pills.join(", ")} onChange={e => setHero("pills", e.target.value.split(",").map(p => p.trim()).filter(Boolean))} placeholder="Purpose Discovery, Feminine Leadership…" />
                 </Field>
                 <Field label="Coach photo URL">
-                  {hero.image && <img src={hero.image} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" style={{ objectPosition: "center 38%" }} />}
+                  {hero.image && <img src={img(hero.image)} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" style={{ objectPosition: "center 38%" }} />}
                   <input className={inp} value={hero.image} readOnly placeholder="/images/Umulkheiri.jpg" />
                 </Field>
               </EditShell>
@@ -259,7 +260,7 @@ function AdminContent() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               <PreviewShell title="Services & Packages">
                 <div className="bg-white">
-                  <img src={servicesImage || "/images/services.png"} alt="Coaching conversation" className="w-full h-auto" />
+                  <img src={img(servicesImage || "/images/services.png")} alt="Coaching conversation" className="w-full h-auto" />
                   <div className="px-5 py-8">
                     <div style={{ maxWidth: 900, margin: "0 auto" }}>
                       <div className="flex items-center justify-center gap-2 mb-4">
@@ -290,7 +291,7 @@ function AdminContent() {
                     </div>
                   </Field>
                   <Field label="Section image URL">
-                    {servicesImage && <img src={servicesImage} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
+                    {servicesImage && <img src={img(servicesImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
                     <input className={inp} value={servicesImage} readOnly placeholder="/images/services.png" />
                   </Field>
                   {services.map((s, i) => (
@@ -466,7 +467,7 @@ function AdminContent() {
                       : blog.map((p, i) => (
                         <div key={i} style={{ background: "#fff", borderRadius: 12, overflow: "hidden", border: "1px solid #C4BAB0", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
                           {p.coverImage
-                            ? <div style={{ height: 120, overflow: "hidden" }}><img src={p.coverImage} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /></div>
+                            ? <div style={{ height: 120, overflow: "hidden" }}><img src={img(p.coverImage)} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /></div>
                             : <div style={{ height: 120, background: "linear-gradient(135deg, rgba(212,134,10,0.15) 0%, rgba(74,94,53,0.15) 100%)", display: "flex", alignItems: "flex-end", padding: 12 }}>
                                 <span style={{ background: "#D4860A", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 20 }}>{p.tag || "Tag"}</span>
                               </div>
@@ -486,7 +487,7 @@ function AdminContent() {
               {/* Section image */}
               <div className="bg-cream border border-saffron/20 rounded-xl px-6 py-5">
                 <Field label="Journal section image URL">
-                  {journalImage && <img src={journalImage} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" />}
+                  {journalImage && <img src={img(journalImage)} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" />}
                   <input className={inp} value={journalImage} readOnly placeholder="/images/journal.jpg" />
                 </Field>
               </div>
@@ -517,7 +518,7 @@ function AdminContent() {
                                 <td className="px-4 py-3 text-espresso/40">{i + 1}</td>
                                 <td className="px-4 py-3">
                                   {b.coverImage
-                                    ? <img src={b.coverImage} alt="" className="w-10 h-7 rounded object-cover border border-saffron/20" />
+                                    ? <img src={img(b.coverImage)} alt="" className="w-10 h-7 rounded object-cover border border-saffron/20" />
                                     : <div className="w-10 h-7 rounded bg-saffron/10" />
                                   }
                                 </td>
@@ -539,7 +540,7 @@ function AdminContent() {
                                     <Field label="Cover image">
                                       {b.coverImage
                                         ? <div className="relative mb-2 rounded-lg overflow-hidden border border-saffron/20" style={{ maxHeight: 260 }}>
-                                            <img src={b.coverImage} alt="" className="w-full h-auto object-cover" />
+                                            <img src={img(b.coverImage)} alt="" className="w-full h-auto object-cover" />
                                             <button onClick={() => setBlog(i, "coverImage", "")}
                                               className="absolute top-2 right-2 bg-espresso/60 text-white text-sm px-2 py-1 rounded hover:bg-espresso/80 cursor-pointer">Remove</button>
                                           </div>
@@ -615,7 +616,7 @@ function AdminContent() {
                     <p className="text-text-dark text-sm mb-6">Workshops for circles, ALX alumni, and community groups.</p>
                     <div className="grid md:grid-cols-2 gap-6 items-start">
                       <div className="rounded-2xl overflow-hidden">
-                        <img src={communityImage || "/images/community.jpeg"} alt="Circle of women in purpose exploration" className="w-full h-auto object-cover" />
+                        <img src={img(communityImage || "/images/community.jpeg")} alt="Circle of women in purpose exploration" className="w-full h-auto object-cover" />
                       </div>
                       <div className="grid gap-3">
                         {community.map((p, i) => (
@@ -635,7 +636,7 @@ function AdminContent() {
               </PreviewShell>
               <EditShell>
                 <Field label="Section image URL">
-                  {communityImage && <img src={communityImage} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
+                  {communityImage && <img src={img(communityImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
                   <input className={inp} value={communityImage} readOnly placeholder="/images/community.jpeg" />
                 </Field>
                 {community.map((cm, i) => (

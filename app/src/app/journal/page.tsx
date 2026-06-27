@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { supabaseAdmin } from "@/lib/supabase-server";
 import Link from "next/link";
 import { toSlug } from "@/lib/slug";
+import { img } from "@/lib/path";
 
 export const metadata: Metadata = {
   title: "Journal",
   description: "Reflections on Ikigai, Ubuntu, feminine leadership, and living a life aligned with your deepest calling.",
-  openGraph: { title: "The Ikigai Journal | Umulkheiri Jalo", images: ["/images/journal.jpg"] },
+  openGraph: { title: "The Ikigai Journal | Umulkheiri Jalo", images: [img("/images/journal.jpg")] },
 };
 
 type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string };
@@ -20,7 +21,7 @@ export default async function JournalPage() {
       {/* Hero */}
       <section className="relative" style={{ padding: "100px 40px 60px" }}>
         <div className="absolute inset-0 overflow-hidden">
-          <img src="/images/journal.jpg" alt="" className="w-full h-full object-cover object-top" aria-hidden="true" />
+          <img src={img("/images/journal.jpg")} alt="" className="w-full h-full object-cover object-top" aria-hidden="true" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,18,8,0.45) 0%, rgba(30,18,8,0.25) 100%)" }} />
         </div>
         <div className="relative z-10 max-w-[900px] mx-auto text-center">
@@ -48,7 +49,7 @@ export default async function JournalPage() {
                     {/* Cover image / gradient header */}
                     {post.coverImage ? (
                       <div className="h-48 overflow-hidden">
-                        <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={img(post.coverImage)} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       </div>
                     ) : (
                       <div className="h-48 flex items-end px-5 pb-5" style={{ background: "linear-gradient(135deg, rgba(212,134,10,0.15) 0%, rgba(74,94,53,0.15) 100%)" }}>

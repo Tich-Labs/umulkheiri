@@ -4,6 +4,7 @@ import { useState } from "react";
 import ServiceCard from "@/components/ServiceCard";
 import SectionHeading from "@/components/SectionHeading";
 import BookingModal from "@/components/BookingModal";
+import { img } from "@/lib/path";
 
 type Service   = { badge: string; badgeVariant?: string; price: string; priceLabel: string; title: string; description: string; cta: string; ctaVariant?: string; featured?: boolean };
 type Extra     = { name: string; price: string; desc: string };
@@ -28,7 +29,7 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       {/* Hero */}
       <section className="relative" style={{ padding: "100px 40px 60px", textAlign: "center" }}>
         <div className="absolute inset-0 overflow-hidden">
-          <img src={heroImage} alt="" className="w-full h-full object-cover" style={{ objectPosition: "center 33%" }} aria-hidden="true" />
+          <img src={img(heroImage)} alt="" className="w-full h-full object-cover" style={{ objectPosition: "center 33%" }} aria-hidden="true" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,18,8,0.50) 0%, rgba(30,18,8,0.30) 100%)" }} />
         </div>
         <div className="relative z-10 max-w-225 mx-auto text-center">
@@ -48,7 +49,7 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
           <SectionHeading label="How It Works" title="Three Steps to Begin" description="Booking is simple — no pressure, no complexity." />
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="rounded-2xl overflow-hidden max-w-xs mx-auto">
-              <img src="/images/hero_bg.png" alt="Woman in deep listening, surrounded by an indigenous garden" className="w-full h-auto" />
+              <img src={img("/images/hero_bg.png")} alt="Woman in deep listening, surrounded by an indigenous garden" className="w-full h-auto" />
             </div>
             <div className="grid sm:grid-cols-3 md:grid-cols-1 gap-6">
               {[

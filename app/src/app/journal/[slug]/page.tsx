@@ -3,6 +3,7 @@ import { supabaseAdmin } from "@/lib/supabase-server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { toSlug } from "@/lib/slug";
+import { img } from "@/lib/path";
 
 type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string; seoTitle?: string; seoDescription?: string };
 
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${metaTitle} | Umulkheiri Jalo`,
       description: metaDesc,
-      images: post.coverImage ? [{ url: post.coverImage }] : ["/images/journal.jpg"],
+      images: post.coverImage ? [{ url: img(post.coverImage) }] : [img("/images/journal.jpg")],
       type: "article",
     },
   };
@@ -59,7 +60,7 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
       {/* Hero — cover image or gradient fallback */}
       {post.coverImage ? (
         <section className="relative" style={{ height: 480 }}>
-          <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
+          <img src={img(post.coverImage)} alt={post.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,18,8,0.15) 0%, rgba(30,18,8,0.45) 100%)" }} />
           <div className="absolute inset-0 flex flex-col justify-end px-10 pb-12" style={{ maxWidth: 900, margin: "0 auto", left: 0, right: 0 }}>
             <span className="inline-block bg-saffron text-white text-sm font-semibold px-3 py-1 rounded-full mb-4 w-fit">{post.tag}</span>

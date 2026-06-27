@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { supabaseAdmin } from "@/lib/supabase-server";
 import ServicesClient from "./ServicesClient";
+import { img } from "@/lib/path";
 
 export const metadata: Metadata = {
   title: "Services",
   description: "Individual coaching packages, add-ons, and corporate programmes. From a free Discovery Session to a full Ikigai Transformation Path.",
-  openGraph: { title: "Services | Umulkheiri Jalo", images: ["/images/community.jpeg"] },
+  openGraph: { title: "Services | Umulkheiri Jalo", images: [img("/images/community.jpeg")] },
 };
 
 export default async function ServicesPage() {

@@ -7,6 +7,7 @@ import ServiceCard from "@/components/ServiceCard";
 import TestimonialCard from "@/components/TestimonialCard";
 import NewsletterForm from "@/components/NewsletterForm";
 import { toSlug } from "@/lib/slug";
+import { img } from "@/lib/path";
 
 async function getContent() {
   const { data } = await supabaseAdmin.from("content").select("data").single();
@@ -91,7 +92,7 @@ export default async function HomePage() {
             </div>
             {/* Right: coach photo with overlay */}
             <div className="w-full md:w-[45%] shrink-0 rounded-2xl overflow-hidden relative h-80 md:h-140">
-              <Image src={heroImage} alt="Umulkheiri Jalo, Ikigai Alignment Coach" fill className="object-cover" style={{ objectPosition: "center 38%" }} />
+              <Image src={img(heroImage)} alt="Umulkheiri Jalo, Ikigai Alignment Coach" fill className="object-cover" style={{ objectPosition: "center 38%" }} />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-6 pt-28">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-6 h-px bg-saffron shrink-0" />
@@ -131,7 +132,7 @@ export default async function HomePage() {
           <div className="flex flex-col md:flex-row gap-10 md:gap-14 items-stretch">
             {/* Left: image */}
             <div className="w-full md:w-[45%] shrink-0 rounded-2xl overflow-hidden">
-              <img src={pillarsImage} alt="Three botanical pillars: Ikigai bamboo, Ubuntu baobab, Kihooto leaf scales" className="w-full h-auto" />
+              <img src={img(pillarsImage)} alt="Three botanical pillars: Ikigai bamboo, Ubuntu baobab, Kihooto leaf scales" className="w-full h-auto" />
             </div>
             {/* Right: pillar cards */}
             <div className="flex-1 flex flex-col gap-4 justify-center">
@@ -174,7 +175,7 @@ export default async function HomePage() {
             </div>
             {/* Center col: Venn SVG */}
             <div className="w-full md:w-80 shrink-0 rounded-2xl overflow-hidden">
-              <Image src="/images/ikigai.jpg" alt="Ikigai Venn diagram" width={400} height={400} className="w-full h-auto" />
+              <Image src={img("/images/ikigai.jpg")} alt="Ikigai Venn diagram" width={400} height={400} className="w-full h-auto" />
             </div>
             {/* Right col: Skills + Livelihood */}
             <div className="flex flex-col gap-4 flex-1 w-full">
@@ -199,7 +200,7 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto px-6">
           <SectionHeading label="Services" title="Choose Your Path" description="From a free discovery session to a full transformation journey — find the container that fits where you are." />
           <div className="rounded-2xl overflow-hidden mb-10 max-w-2xl mx-auto">
-            <Image src={servicesImage} alt="Coaching conversation — intimate scene with coach and client" width={1200} height={800} className="w-full h-auto" />
+            <Image src={img(servicesImage)} alt="Coaching conversation — intimate scene with coach and client" width={1200} height={800} className="w-full h-auto" />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {cms.services.map((s: Parameters<typeof ServiceCard>[0]) => <ServiceCard key={s.title} {...s} />)}
@@ -238,7 +239,7 @@ export default async function HomePage() {
           <SectionHeading label="Community" title="We Grow Together" description="Purpose flourishes in community. Join a circle of women and leaders committed to living with alignment, belonging, and impact." />
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="rounded-2xl overflow-hidden relative h-full">
-              <Image src={communityImage} alt="Circle of women in purpose exploration" fill className="object-cover" />
+              <Image src={img(communityImage)} alt="Circle of women in purpose exploration" fill className="object-cover" />
             </div>
             <div className="flex flex-col gap-4">
               {cms.community.map((p: { icon: string; title: string; desc: string; date: string }, i: number) => (
@@ -295,7 +296,7 @@ export default async function HomePage() {
             </div>
             {/* Right: image */}
             <div className="rounded-2xl overflow-hidden">
-              <Image src={journalImage} alt="The Living Desk — open journals, chai, hands writing in afternoon light" width={1200} height={900} className="w-full h-auto" />
+              <Image src={img(journalImage)} alt="The Living Desk — open journals, chai, hands writing in afternoon light" width={1200} height={900} className="w-full h-auto" />
             </div>
           </div>
           <div className="text-center">

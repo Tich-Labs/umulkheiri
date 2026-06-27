@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Ojuju, Questrial } from "next/font/google";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import CookieNotice from "@/components/CookieNotice";
+import { img } from "@/lib/path";
 import "./globals.css";
 
 const ojuju = Ojuju({
@@ -19,6 +20,7 @@ const questrial = Questrial({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tich-labs.github.io"),
   title: {
     default: "Umulkheiri Jalo | Ikigai Alignment Coach",
     template: "%s | Umulkheiri Jalo",
@@ -31,13 +33,13 @@ export const metadata: Metadata = {
     title: "Umulkheiri Jalo | Ikigai Alignment Coach",
     description:
       "Align with your purpose through coaching rooted in African wisdom and Japanese Ikigai philosophy.",
-    images: [{ url: "/images/Umulkheiri.jpg", width: 1000, height: 750, alt: "Umulkheiri Jalo, Ikigai Alignment Coach" }],
+    images: [{ url: img("/images/Umulkheiri.jpg"), width: 1000, height: 750, alt: "Umulkheiri Jalo, Ikigai Alignment Coach" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Umulkheiri Jalo | Ikigai Alignment Coach",
     description: "Align with your purpose through coaching rooted in African wisdom and Japanese Ikigai philosophy.",
-    images: ["/images/Umulkheiri.jpg"],
+    images: [img("/images/Umulkheiri.jpg")],
   },
 };
 
