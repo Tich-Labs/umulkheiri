@@ -1,6 +1,8 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { supabaseAdmin } from "@/lib/supabase-server";
 import { toSlug } from "@/lib/slug";
+
+export const dynamic = "force-static";
 
 const BASE = "https://umulkheiri.com";
 

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, Fragment, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import ServiceCard from "@/components/ServiceCard";
+import { supabase } from "@/lib/supabase";
 
 /* ── types ── */
 type Service = {
@@ -104,8 +105,6 @@ function AdminContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [content, setContent]     = useState<Content>(EMPTY);
-  const [status, setStatus]       = useState<"idle" | "saving" | "saved" | "error">("idle");
-  const [uploading, setUploading] = useState(false);
   const [editing, setEditing]     = useState("");
   const [activeManualTab, setActiveManualTab] = useState("hero");
   const activeSection: SectionId  = (searchParams.get("section") as SectionId) || "hero";
@@ -115,48 +114,11 @@ function AdminContent() {
   }
 
   const fetchContent = useCallback(async () => {
-    const res = await fetch("/api/admin/content");
-    if (res.ok) setContent(await res.json());
+    const { data } = await supabase.from("content").select("data").single();
+    if (data?.data) setContent(data.data as Content);
   }, []);
 
   useEffect(() => { fetchContent(); }, [fetchContent]);
-
-  async function handleSave() {
-    setStatus("saving");
-    const res = await fetch("/api/admin/save", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content }),
-    });
-    setStatus(res.ok ? "saved" : "error");
-    if (res.ok) setTimeout(() => setStatus("idle"), 2500);
-  }
-
-  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>, onUrl: (url: string) => void) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-    if (res.ok) {
-      const { url } = await res.json();
-      onUrl(url);
-    }
-    setUploading(false);
-  }
-
-  async function handleCoverUpload(i: number, e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-    if (res.ok) {
-      const { url } = await res.json();
-      setBlog(i, "coverImage", url);
-    }
-  }
 
   function setHero(k: keyof Content["hero"], v: string | string[]) {
     setContent(c => ({ ...c, hero: { ...c.hero, [k]: v } }));
@@ -184,13 +146,6 @@ function AdminContent() {
   }
 
   const { hero, services, extras = [], corporate = [], testimonials, blog, community, faq = [], pillarsImage, servicesImage, communityImage, journalImage, currency } = content;
-
-  const saveBtn = (
-    <button onClick={handleSave} disabled={status === "saving"}
-      className="bg-saffron hover:bg-[#c97508] disabled:opacity-60 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap">
-      {status === "saving" ? "Saving…" : status === "saved" ? "✓ Saved" : status === "error" ? "Error — retry" : "Save Changes"}
-    </button>
-  );
 
   return (
     <div className="flex h-screen bg-white">
@@ -225,7 +180,7 @@ function AdminContent() {
           <h2 className="font-semibold text-espresso text-base">
             {SECTIONS.find(s => s.id === activeSection)?.label}
           </h2>
-          {saveBtn}
+          <span className="text-xs bg-cream border border-saffron/20 text-text-mid px-3 py-1.5 rounded-lg font-medium">Read-only — edit in Supabase</span>
         </div>
 
         {/* content */}
@@ -291,10 +246,9 @@ function AdminContent() {
                 <Field label="Pills — comma separated">
                   <input className={inp} value={hero.pills.join(", ")} onChange={e => setHero("pills", e.target.value.split(",").map(p => p.trim()).filter(Boolean))} placeholder="Purpose Discovery, Feminine Leadership…" />
                 </Field>
-                <Field label="Coach photo">
+                <Field label="Coach photo URL">
                   {hero.image && <img src={hero.image} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" style={{ objectPosition: "center 38%" }} />}
-                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e, url => setHero("image", url))}
-                    className="block text-sm text-espresso/50 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-saffron file:text-white hover:file:bg-cinnamon file:cursor-pointer" />
+                  <input className={inp} value={hero.image} readOnly placeholder="/images/Umulkheiri.jpg" />
                 </Field>
               </EditShell>
             </div>
@@ -335,10 +289,9 @@ function AdminContent() {
                       ))}
                     </div>
                   </Field>
-                  <Field label="Section image">
+                  <Field label="Section image URL">
                     {servicesImage && <img src={servicesImage} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
-                    <input type="file" accept="image/*" onChange={e => handleImageUpload(e, url => setContent(c => ({ ...c, servicesImage: url })))}
-                      className="block text-sm text-espresso/50 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-saffron file:text-white hover:file:bg-cinnamon file:cursor-pointer" />
+                    <input className={inp} value={servicesImage} readOnly placeholder="/images/services.png" />
                   </Field>
                   {services.map((s, i) => (
                   <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
@@ -532,10 +485,9 @@ function AdminContent() {
 
               {/* Section image */}
               <div className="bg-cream border border-saffron/20 rounded-xl px-6 py-5">
-                <Field label="Journal section image">
+                <Field label="Journal section image URL">
                   {journalImage && <img src={journalImage} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" />}
-                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e, url => setContent(c => ({ ...c, journalImage: url })))}
-                    className="block text-sm text-espresso/50 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-saffron file:text-white hover:file:bg-cinnamon file:cursor-pointer" />
+                  <input className={inp} value={journalImage} readOnly placeholder="/images/journal.jpg" />
                 </Field>
               </div>
 
@@ -593,8 +545,7 @@ function AdminContent() {
                                           </div>
                                         : <div className="w-full h-40 rounded-lg bg-saffron/5 border border-dashed border-saffron/30 flex items-center justify-center text-espresso/30 text-sm mb-2">No cover image</div>
                                       }
-                                      <input type="file" accept="image/*" onChange={e => handleCoverUpload(i, e)}
-                                        className="block w-full text-sm text-espresso/50 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-saffron file:text-white hover:file:bg-cinnamon file:cursor-pointer" />
+                                      <input className={inp} value={b.coverImage ?? ""} readOnly placeholder="Cover image URL" />
                                     </Field>
                                   </div>
                                   {/* Right column: featured, tag, date, title, excerpt */}
@@ -683,10 +634,9 @@ function AdminContent() {
                 </div>
               </PreviewShell>
               <EditShell>
-                <Field label="Section image">
+                <Field label="Section image URL">
                   {communityImage && <img src={communityImage} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
-                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e, url => setContent(c => ({ ...c, communityImage: url })))}
-                    className="block text-sm text-espresso/50 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-saffron file:text-white hover:file:bg-cinnamon file:cursor-pointer" />
+                  <input className={inp} value={communityImage} readOnly placeholder="/images/community.jpeg" />
                 </Field>
                 {community.map((cm, i) => (
                   <div key={i} className="mb-4 pb-4 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">

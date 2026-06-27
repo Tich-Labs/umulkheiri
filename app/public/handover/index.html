@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umulkheiri Jalo — Ikigai Alignment Coaching | Website Design Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@400;700&family=Sankofa+Display:wght@400;700&family=Questrial:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── SPICE PALETTE (5 colours only) ── */
+    --espresso:        #1E1208;   /* deepest dark — hero BG, footer */
+    --cinnamon:        #8B4513;   /* warm brown — secondary dark, headings, labels */
+    --saffron:         #D4860A;   /* amber orange — primary accent, CTAs */
+    --pine:            #4A5E35;   /* forest green — nature/growth accent */
+    --sand:            #D4AA78;   /* sand beige — warm highlight, badges */
+
+    /* ── NEUTRALS ONLY ── */
+    --white:           #FFFFFF;
+    --gray-lightest:   #F7F4F0;   /* page BG */
+    --gray-light:      #EDE8E1;   /* alt section BG, card borders */
+    --gray-mid:        #C4BAB0;   /* muted text, dividers */
+    --gray-text:       #5C4F42;   /* body text on light BG */
+
+    /* ── DERIVED (tints — white opacity over palette) ── */
+    --saffron-tint:    rgba(212,134,10,0.10);
+    --pine-tint:       rgba(74,94,53,0.10);
+    --sand-tint:       rgba(212,170,120,0.18);
+    --espresso-tint:   rgba(30,18,8,0.06);
+
+    --soft-white:      var(--gray-lightest);
+    --warm-sand:       var(--gray-light);
+    --text-dark:       var(--espresso);
+    --text-mid:        var(--gray-text);
+    --text-muted:      var(--gray-mid);
+    --border-soft:     rgba(212,134,10,0.20);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Questrial', sans-serif;
+    background: var(--gray-lightest);
+    color: var(--espresso);
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--espresso);
+    color: white;
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,134,10,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 40px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,94,53,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(212,134,10,0.18);
+    border: 1px solid rgba(212,134,10,0.35);
+    color: var(--saffron);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-family: 'Ojuju', cursive;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    color: white;
+  }
+  .cover h1 em { color: var(--saffron); font-style: italic; }
+  .cover-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+  .cover-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .cover-tag {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.70);
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 64px 60px;
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--white);
+  }
+  .section:nth-child(even) { background: var(--gray-lightest); }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cinnamon);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Questrial', sans-serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--espresso);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 16px;
+    color: var(--gray-text);
+    max-width: 700px;
+    margin-bottom: 40px;
+  }
+
+  /* ── COLOUR PALETTE ── */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--gray-light);
+  }
+  .swatch-color { height: 72px; }
+  .swatch-info {
+    padding: 10px 12px;
+    background: var(--white);
+  }
+  .swatch-name { font-size: 12px; font-weight: 500; color: var(--espresso); }
+  .swatch-hex { font-size: 10px; color: var(--gray-text); font-family: monospace; }
+  .swatch-role { font-size: 10px; color: var(--gray-mid); margin-top: 2px; }
+
+  /* ── TYPOGRAPHY ── */
+  .type-samples { display: flex; flex-direction: column; gap: 24px; }
+  .type-row {
+    padding: 20px 24px;
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--gray-light);
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .type-meta { font-size: 11px; color: var(--gray-mid); min-width: 140px; }
+  .type-sample-h1 { font-family: 'Ojuju', cursive; font-size: 42px; font-weight: 600; color: var(--espresso); }
+  .type-sample-h2 { font-family: 'Questrial', sans-serif; font-size: 28px; font-weight: 600; font-style: normal; color: var(--cinnamon); }
+  .type-sample-h3 { font-family: 'Questrial', sans-serif; font-size: 18px; font-weight: 500; color: var(--espresso); letter-spacing: 0.5px; }
+  .type-sample-body { font-family: 'Questrial', sans-serif; font-size: 16px; color: var(--gray-text); }
+  .type-sample-caption { font-family: 'Questrial', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--saffron); font-weight: 500; }
+
+  /* ── SITE STRUCTURE ── */
+  .site-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .page-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--gray-light);
+    padding: 20px;
+  }
+  .page-card.primary  { border-left: 3px solid var(--saffron); }
+  .page-card.secondary { border-left: 3px solid var(--pine); }
+  .page-card.tertiary  { border-left: 3px solid var(--cinnamon); }
+  .page-num { font-size: 10px; color: var(--gray-mid); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .page-name { font-weight: 500; font-size: 14px; color: var(--espresso); margin-bottom: 8px; }
+  .page-items { list-style: none; }
+  .page-items li {
+    font-size: 14px;
+    color: var(--gray-text);
+    padding: 3px 0 3px 12px;
+    position: relative;
+  }
+  .page-items li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--saffron);
+    font-size: 10px;
+    top: 4px;
+  }
+
+  /* ── FEATURES GRID ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .feature-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 24px;
+    border: 1px solid var(--gray-light);
+  }
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .icon-saffron  { background: var(--saffron-tint); }
+  .icon-pine     { background: var(--pine-tint); }
+  .icon-sand     { background: var(--sand-tint); }
+  .icon-espresso { background: var(--espresso-tint); }
+  .feature-title { font-weight: 500; font-size: 15px; color: var(--espresso); margin-bottom: 8px; }
+  .feature-desc  { font-size: 14px; color: var(--gray-text); line-height: 1.6; }
+  .feature-tags  { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .ftag {
+    font-size: 10px; padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--gray-light);
+    color: var(--gray-text);
+  }
+
+  /* ── HERO MOCKUP ── */
+  .hero-mockup {
+    background: var(--espresso);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    padding: 60px 48px 48px;
+    position: relative;
+    min-height: 320px;
+  }
+  .hero-mockup::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60%; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(212,134,10,0.07) 100%);
+  }
+  .hero-nav {
+    display: flex; gap: 20px; align-items: center;
+    margin-bottom: 48px; position: relative; z-index: 1;
+  }
+  .hero-logo { font-family: 'Ojuju', cursive; font-size: 15px; color: white; font-weight: 600; margin-right: auto; }
+  .hero-navlink { font-size: 11px; color: rgba(255,255,255,0.5); text-decoration: none; }
+  .hero-cta-nav {
+    background: var(--saffron); color: white;
+    font-size: 11px; padding: 7px 16px; border-radius: 20px; text-decoration: none;
+  }
+  .hero-headline {
+    font-family: 'Ojuju', cursive;
+    font-size: 38px; font-weight: 600; color: white;
+    line-height: 1.2; max-width: 540px; margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .hero-headline em { color: var(--saffron); font-style: italic; }
+  .hero-sub-text {
+    font-size: 14px; color: rgba(255,255,255,0.55);
+    max-width: 420px; margin-bottom: 28px;
+    position: relative; z-index: 1;
+  }
+  .hero-btns { display: flex; gap: 12px; position: relative; z-index: 1; }
+  .hero-btn-primary {
+    background: var(--saffron); color: white;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 13px; font-weight: 500; text-decoration: none; border: none;
+  }
+  .hero-btn-secondary {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 13px; text-decoration: none;
+  }
+  .hero-pills {
+    display: flex; gap: 10px; margin-top: 36px; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+  .hero-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.6);
+    font-size: 11px; padding: 5px 14px; border-radius: 20px;
+  }
+  .hero-pill span { color: var(--saffron); margin-right: 5px; }
+
+  /* ── SERVICES MOCKUP ── */
+  .services-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px; margin-bottom: 24px;
+  }
+  .service-card-mock {
+    background: var(--white);
+    border-radius: 14px; padding: 20px;
+    border: 1px solid var(--gray-light);
+    position: relative; overflow: hidden;
+  }
+  .service-card-mock.featured {
+    background: var(--espresso); color: white;
+  }
+  .service-badge {
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 1.5px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+    display: inline-block; margin-bottom: 12px;
+  }
+  .badge-saffron { background: var(--saffron-tint); color: #7A4A00; }
+  .badge-pine    { background: var(--pine-tint);    color: #2A3C1A; }
+  .badge-sand    { background: var(--sand-tint);    color: #6B4A1A; }
+  .badge-night   { background: rgba(212,134,10,0.15); color: var(--saffron); }
+  .mock-price {
+    font-family: 'Ojuju', cursive;
+    font-size: 26px; font-weight: 600; margin-bottom: 4px;
+  }
+  .mock-price-label { font-size: 11px; color: var(--gray-text); margin-bottom: 12px; }
+  .mock-price-label.light { color: rgba(255,255,255,0.5); }
+  .mock-service-name { font-weight: 500; font-size: 13px; margin-bottom: 8px; }
+  .mock-service-name.light { color: white; }
+  .mock-service-desc { font-size: 11px; color: var(--gray-text); line-height: 1.5; }
+  .mock-service-desc.light { color: rgba(255,255,255,0.55); }
+  .mock-btn {
+    display: block; text-align: center;
+    margin-top: 16px; padding: 9px;
+    border-radius: 8px; font-size: 11px; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
+  }
+  .mock-btn-saffron { background: var(--saffron); color: white; }
+  .mock-btn-outline { border: 1px solid rgba(255,255,255,0.25); color: white; background: transparent; }
+  .mock-btn-pine    { background: var(--pine); color: white; }
+  .mock-btn-ghost   { border: 1px solid var(--gray-light); color: var(--gray-text); background: transparent; }
+
+  /* ── UX FLOWS ── */
+  .flow-steps {
+    display: flex; position: relative;
+    margin-bottom: 40px; flex-wrap: wrap; gap: 2px;
+  }
+  .flow-step {
+    flex: 1; min-width: 140px;
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    padding: 20px 16px;
+  }
+  .flow-step:first-child { border-radius: 12px 0 0 12px; }
+  .flow-step:last-child  { border-radius: 0 12px 12px 0; }
+  .flow-step-num   { font-size: 10px; letter-spacing: 1px; color: var(--saffron); font-weight: 600; margin-bottom: 6px; }
+  .flow-step-title { font-weight: 500; font-size: 13px; color: var(--espresso); margin-bottom: 4px; }
+  .flow-step-desc  { font-size: 11px; color: var(--gray-text); }
+  .flow-arrow { display: flex; align-items: center; color: var(--saffron); font-size: 16px; padding: 0 4px; flex-shrink: 0; }
+
+  /* ── DESIGN TOKENS ── */
+  .tokens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .token-group {
+    background: var(--white);
+    border-radius: 12px; padding: 20px 24px;
+    border: 1px solid var(--gray-light);
+  }
+  .token-group h4 {
+    font-size: 12px; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--saffron);
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .token-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-lightest);
+    font-size: 12px;
+  }
+  .token-row:last-child { border-bottom: none; }
+  .token-name  { color: var(--gray-text); }
+  .token-value { font-weight: 500; color: var(--espresso); font-family: monospace; font-size: 11px; }
+
+  /* ── COMPONENTS ── */
+  .component-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .comp-group {
+    background: var(--white);
+    border-radius: 12px; padding: 20px;
+    border: 1px solid var(--gray-light);
+  }
+  .comp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-mid); margin-bottom: 14px; font-weight: 500; }
+  .btn-demo {
+    display: block; width: 100%; padding: 10px 16px;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    text-align: center; margin-bottom: 8px; border: none;
+    cursor: pointer; font-family: 'Questrial', sans-serif;
+  }
+  .btn-primary-demo   { background: var(--saffron);  color: white; }
+  .btn-secondary-demo { background: var(--espresso); color: white; }
+  .btn-ghost-demo     { background: transparent; border: 1px solid var(--saffron); color: var(--saffron); }
+  .btn-pine-demo      { background: var(--pine); color: white; }
+  .input-demo {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px; font-size: 14px;
+    font-family: 'Questrial', sans-serif;
+    color: var(--gray-text); margin-bottom: 8px; outline: none;
+  }
+  .select-demo {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px; font-size: 13px;
+    font-family: 'Questrial', sans-serif;
+    color: var(--espresso); background: white; outline: none;
+  }
+  .tag-demo { display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 20px; margin: 2px; }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-mock {
+    background: var(--espresso);
+    border-radius: 16px; padding: 40px 48px;
+    position: relative; overflow: hidden;
+  }
+  .testimonial-mock::before {
+    content: '"';
+    font-family: 'Ojuju', cursive;
+    font-size: 160px;
+    color: rgba(212,134,10,0.12);
+    position: absolute; top: -20px; left: 30px; line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'Ojuju', cursive;
+    font-size: 20px; font-style: italic;
+    color: white; max-width: 580px;
+    position: relative; z-index: 1;
+    margin-bottom: 20px; line-height: 1.55;
+  }
+  .testimonial-source { font-size: 13px; color: rgba(255,255,255,0.45); position: relative; z-index: 1; }
+  .testimonial-source strong { color: var(--saffron); }
+
+  /* ── SPACING ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 700px) {
+    .two-col, .tokens-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    background: var(--espresso);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 32px 60px;
+    font-size: 12px;
+  }
+  .doc-footer strong { color: var(--saffron); }
+
+  /* ── FEEDBACK ── */
+  .feedback-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px; margin-bottom: 10px;
+  }
+  .feedback-actions { display: flex; align-items: center; gap: 6px; }
+  .fb-like, .fb-improve {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 500;
+    padding: 4px 10px;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px; cursor: pointer;
+    background: transparent;
+    font-family: 'Questrial', sans-serif;
+    transition: all .25s; color: var(--gray-text); line-height: 1.4;
+  }
+  .fb-like:hover   { color: var(--pine);    border-color: var(--pine);    background: var(--pine-tint); }
+  .fb-like.liked   { color: var(--pine);    border-color: var(--pine);    background: var(--pine-tint); cursor: default; }
+  .fb-improve:hover { color: var(--saffron); border-color: var(--saffron); background: var(--saffron-tint); }
+
+  .feedback-fab {
+    position: fixed; bottom: 32px; right: 32px; z-index: 1000;
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 20px;
+    background: var(--espresso); color: white;
+    border: none; border-radius: 30px;
+    font-size: 13px; font-weight: 500;
+    font-family: 'Questrial', sans-serif;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 4px 20px rgba(30,18,8,0.25);
+    transition: all .2s;
+  }
+  .feedback-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(30,18,8,0.35);
+    background: var(--cinnamon);
+  }
+  .feedback-area {
+    background: var(--gray-lightest);
+    padding: 48px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .feedback-area h3 {
+    font-family: 'Ojuju', cursive;
+    font-size: 24px; color: var(--espresso); margin-bottom: 8px;
+  }
+  .feedback-area p { font-size: 14px; color: var(--gray-text); margin-bottom: 24px; }
+  .feedback-area .fb-improve {
+    font-size: 14px; padding: 10px 24px; border-radius: 8px;
+    color: white; background: var(--espresso); border: none;
+  }
+  .feedback-area .fb-improve:hover { background: var(--cinnamon); color: white; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 90px; right: 32px; z-index: 3000;
+    background: var(--pine); color: white;
+    padding: 12px 20px; border-radius: 12px;
+    font-size: 13px; font-weight: 500;
+    font-family: 'Questrial', sans-serif;
+    box-shadow: 0 4px 20px rgba(74,94,53,0.3);
+    opacity: 0; transform: translateY(10px);
+    transition: all .3s ease; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ── FEEDBACK MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(30,18,8,0.6);
+    z-index: 2000; justify-content: center; align-items: center; padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white; border-radius: 16px;
+    max-width: 520px; width: 100%; padding: 36px;
+    box-shadow: 0 20px 60px rgba(30,18,8,0.25);
+    position: relative; max-height: 90vh; overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; font-size: 24px;
+    cursor: pointer; color: var(--gray-mid); line-height: 1; padding: 4px;
+  }
+  .modal-close:hover { color: var(--espresso); }
+  .modal-box h3 { font-family: 'Ojuju', cursive; font-size: 22px; color: var(--espresso); margin-bottom: 4px; }
+  .modal-box .modal-section-name { font-size: 13px; color: var(--saffron); margin-bottom: 4px; font-weight: 500; }
+  .modal-box .modal-sub { font-size: 13px; color: var(--gray-text); margin-bottom: 20px; }
+  .modal-box label { display: block; font-size: 13px; font-weight: 500; color: var(--espresso); margin-bottom: 6px; }
+  .modal-box textarea, .modal-box input {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    font-family: 'Questrial', sans-serif; font-size: 14px;
+    color: var(--espresso); background: var(--gray-lightest);
+    transition: border .2s; box-sizing: border-box;
+  }
+  .modal-box textarea:focus, .modal-box input:focus { outline: none; border-color: var(--saffron); }
+  .modal-box textarea { resize: vertical; min-height: 110px; }
+  .modal-box .form-group { margin-bottom: 16px; }
+  .modal-box .form-row { display: flex; gap: 16px; }
+  .modal-box .form-row .form-group { flex: 1; }
+  .modal-submit {
+    width: 100%; padding: 12px; border: none; border-radius: 8px;
+    background: var(--espresso); color: white;
+    font-size: 15px; font-weight: 500;
+    font-family: 'Questrial', sans-serif; cursor: pointer; transition: background .2s;
+  }
+  .modal-submit:hover { background: var(--cinnamon); }
+  .modal-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .modal-success { display: none; text-align: center; padding: 32px 0; }
+  .modal-success .check { font-size: 48px; margin-bottom: 12px; }
+  .modal-success h4 { font-family: 'Ojuju', cursive; font-size: 20px; color: var(--pine); }
+  .modal-success p { font-size: 14px; color: var(--gray-text); margin-top: 8px; }
+
+  @media (max-width: 768px) {
+    .cover { padding: 36px 20px 32px; }
+    .cover h1 { font-size: 42px; }
+    .section { padding: 36px 20px; }
+    .section-title { font-size: 28px; }
+    .palette-grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; }
+    .swatch-color { height: 50px; }
+    .type-row { flex-direction: column; gap: 4px; padding: 14px 16px; }
+    .type-sample-h1 { font-size: 28px; }
+    .type-sample-h2 { font-size: 20px; }
+    .site-map { grid-template-columns: 1fr; }
+    .hero-mockup { padding: 20px 16px; min-height: auto; }
+    .hero-headline { font-size: 22px; }
+    .hero-btns { flex-direction: column; gap: 8px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .services-row { grid-template-columns: 1fr; }
+    .flow-steps { flex-direction: column; gap: 2px; }
+    .flow-step:first-child { border-radius: 12px 12px 0 0; }
+    .flow-step:last-child  { border-radius: 0 0 12px 12px; }
+    .flow-arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+    .testimonial-mock { padding: 40px 20px; }
+    .testimonial-text { font-size: 18px; }
+    .component-showcase { grid-template-columns: 1fr; }
+    .tokens-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .feedback-area { padding: 32px 20px; }
+    .feedback-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .feedback-fab { bottom: 16px; right: 16px; padding: 10px 16px; font-size: 12px; }
+    .modal-box { padding: 20px; margin: 12px; }
+    .modal-box .form-row { flex-direction: column; gap: 0; }
+    .doc-footer { padding: 20px; font-size: 11px; }
+  }
+
+  *:focus-visible { outline: 2px solid var(--cinnamon); outline-offset: 2px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">Website Design Brief · 2026</div>
+  <h1>Your Sacred Garden<br><em>Awaits</em></h1>
+  <p class="cover-sub">Website UI/UX Design Outline for Umulkheiri Jalo — Certified Ikigai Alignment Coach integrating Ikigai + Ubuntu + Kihooto into purpose-led transformation.</p>
+  <div class="cover-tags">
+    <span class="cover-tag">🌸 Ikigai Alignment Coaching</span>
+    <span class="cover-tag">🌍 Ubuntu Philosophy</span>
+    <span class="cover-tag">⚖️ Kihooto Justice</span>
+    <span class="cover-tag">✦ Purpose Discovery</span>
+    <span class="cover-tag">👑 Feminine Leadership</span>
+    <span class="cover-tag">🌿 Sacred Garden Metaphor</span>
+  </div>
+</div>
+
+<!-- COLOUR PALETTE -->
+<div class="section">
+  <div class="section-label">01 — Colour System</div>
+  <h2 class="section-title">The Spice Garden Palette</h2>
+  <p class="section-desc">Five colours drawn directly from the client's inspiration image — espresso, cinnamon, saffron, pine, and sand — anchored by clean white and light gray neutrals. No additional colours used anywhere on the site.</p>
+  <div class="palette-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1E1208;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Espresso</div>
+        <div class="swatch-hex">#1E1208</div>
+        <div class="swatch-role">Primary BG · Hero · Footer</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8B4513;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cinnamon</div>
+        <div class="swatch-hex">#8B4513</div>
+        <div class="swatch-role">Secondary dark · Hover states</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D4860A;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Saffron</div>
+        <div class="swatch-hex">#D4860A</div>
+        <div class="swatch-role">Primary accent · CTAs</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#4A5E35;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Pine</div>
+        <div class="swatch-hex">#4A5E35</div>
+        <div class="swatch-role">Growth · Ubuntu · Nature</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D4AA78;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Sand Beige</div>
+        <div class="swatch-hex">#D4AA78</div>
+        <div class="swatch-role">Warm highlights · Badges</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFFFFF; border: 1px solid #EDE8E1;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">White</div>
+        <div class="swatch-hex">#FFFFFF</div>
+        <div class="swatch-role">Card surfaces</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F7F4F0;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Ivory Gray</div>
+        <div class="swatch-hex">#F7F4F0</div>
+        <div class="swatch-role">Page background</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#EDE8E1;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Warm Gray</div>
+        <div class="swatch-hex">#EDE8E1</div>
+        <div class="swatch-role">Borders · Alt section BG</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="section">
+  <div class="section-label">02 — Typography</div>
+  <h2 class="section-title">Voice in Type</h2>
+  <p class="section-desc">Ojuju for bold hero headlines. Questrial for strong section titles and body copy—clean, modern, accessible.</p>
+  <div class="type-samples">
+    <div class="type-row">
+      <span class="type-meta">H1 · Ojuju 600 · 42px</span>
+      <span class="type-sample-h1">Your Sacred Garden</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">H2 · Questrial 600 · 28px</span>
+      <span class="type-sample-h2">Align with your Ikigai</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">H3 · Questrial 500 · 18px</span>
+      <span class="type-sample-h3">Purpose Discovery & Feminine Leadership</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">Body · Questrial 400 · 16px</span>
+      <span class="type-sample-body">I don't just help you find purpose — I help you design a life that feels aligned, abundant, and alive.</span>
+    </div>
+    <div class="type-row">
+      <span class="type-meta">Caption · Questrial 500 · 11px UC</span>
+      <span class="type-sample-caption">Ikigai · Ubuntu · Kihooto</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO MOCKUP -->
+<div class="section">
+  <div class="section-label">03 — Page Structure</div>
+  <h2 class="section-title">Hero Section Concept</h2>
+  <p class="section-desc">Espresso dark immersive entry with the coach's name, guiding metaphor, and immediate calls-to-action.</p>
+  <div class="hero-mockup">
+    <nav class="hero-nav">
+      <span class="hero-logo">Umulkheiri Jalo</span>
+      <a href="#" class="hero-navlink">About</a>
+      <a href="#" class="hero-navlink">Services</a>
+      <a href="#" class="hero-navlink">Philosophy</a>
+      <a href="#" class="hero-navlink">Blog</a>
+      <a href="#" class="hero-navlink">Contact</a>
+      <a href="#" class="hero-cta-nav">Book a Session</a>
+    </nav>
+    <h1 class="hero-headline">Your Sacred Garden<br>Awaits — <em>Align</em> with<br>your Ikigai</h1>
+    <p class="hero-sub-text">Certified Ikigai Alignment Coach blending Japanese purpose philosophy, Ubuntu belonging, and Kihooto justice into your transformation.</p>
+    <div class="hero-btns">
+      <a href="#" class="hero-btn-primary">Begin Your Journey</a>
+      <a href="#" class="hero-btn-secondary">Explore Services</a>
+    </div>
+    <div class="hero-pills">
+      <span class="hero-pill"><span>✦</span>Purpose Discovery</span>
+      <span class="hero-pill"><span>🌿</span>Feminine Leadership</span>
+      <span class="hero-pill"><span>⚖️</span>Authentic Life Design</span>
+      <span class="hero-pill"><span>🌍</span>Ubuntu & Community</span>
+    </div>
+  </div>
+</div>
+
+<!-- SITE MAP -->
+<div class="section">
+  <div class="section-label">04 — Site Architecture</div>
+  <h2 class="section-title">Pages & Navigation</h2>
+  <p class="section-desc">Seven core pages adapted to the Ikigai + Ubuntu + Kihooto philosophy.</p>
+  <div class="site-map">
+    <div class="page-card primary">
+      <div class="page-num">Page 01</div>
+      <div class="page-name">Home</div>
+      <ul class="page-items">
+        <li>Hero — Sacred Garden headline</li>
+        <li>Coach intro snippet</li>
+        <li>3 pillars (Ikigai / Ubuntu / Kihooto)</li>
+        <li>Featured packages teaser</li>
+        <li>Testimonial highlight</li>
+        <li>Blog preview</li>
+        <li>CTA strip</li>
+      </ul>
+    </div>
+    <div class="page-card primary">
+      <div class="page-num">Page 02</div>
+      <div class="page-name">About Umulkheiri</div>
+      <ul class="page-items">
+        <li>Story & philosophy</li>
+        <li>Ikigai + Ubuntu + Kihooto framework</li>
+        <li>Credentials & certification</li>
+        <li>Why it works section</li>
+        <li>Values visual diagram</li>
+      </ul>
+    </div>
+    <div class="page-card secondary">
+      <div class="page-num">Page 03</div>
+      <div class="page-name">Services / Packages</div>
+      <ul class="page-items">
+        <li>Individual coaching packages</li>
+        <li>Group & corporate offerings</li>
+        <li>Add-ons & extras</li>
+        <li>Pricing cards with booking CTA</li>
+        <li>Signature Promise statement</li>
+      </ul>
+    </div>
+    <div class="page-card secondary">
+      <div class="page-num">Page 04</div>
+      <div class="page-name">Philosophy</div>
+      <ul class="page-items">
+        <li>Inner Garden metaphor explained</li>
+        <li>4 elements: Passion / Skills / Service / Livelihood</li>
+        <li>Ubuntu — "I am because we are"</li>
+        <li>Kihooto — Justice & right action</li>
+        <li>The Triangle of Wholeness</li>
+      </ul>
+    </div>
+    <div class="page-card tertiary">
+      <div class="page-num">Page 05</div>
+      <div class="page-name">The Ikigai Journal</div>
+      <ul class="page-items">
+        <li>Blog / wisdom writings</li>
+        <li>Category filter tags</li>
+        <li>Featured post hero</li>
+        <li>Newsletter signup</li>
+      </ul>
+    </div>
+    <div class="page-card tertiary">
+      <div class="page-num">Page 06</div>
+      <div class="page-name">Community / Circles</div>
+      <ul class="page-items">
+        <li>Ikigai Alignment Circles info</li>
+        <li>Women's program details</li>
+        <li>ALX alumni / youth programs</li>
+        <li>Group booking flow</li>
+      </ul>
+    </div>
+    <div class="page-card primary">
+      <div class="page-num">Page 07</div>
+      <div class="page-name">Book & Contact</div>
+      <ul class="page-items">
+        <li>Discovery session booking widget</li>
+        <li>Session type selector</li>
+        <li>M-Pesa / PayPal info</li>
+        <li>Contact form</li>
+        <li>FAQ accordion</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT METHODS CTA -->
+<div class="section">
+  <div class="section-label">04.5 — Primary CTA</div>
+  <h2 class="section-title">How to Reach Umulkheiri</h2>
+  <p class="section-desc">Clients can connect via email or WhatsApp. Both are immediate channels for booking, inquiries, and connection.</p>
+  <div class="services-row" style="gap: 40px; justify-content: center;">
+    <div class="service-card-mock" style="flex: 0 1 calc(50% - 20px); max-width: 400px;">
+      <span class="service-badge badge-saffron">Email</span>
+      <div class="mock-service-name">Direct Email</div>
+      <div class="mock-service-desc" style="font-size: 14px; margin-top: 12px;">
+        <a href="mailto:umulkheiri@yahoo.com" style="color: var(--saffron); font-weight: 600; text-decoration: none;">umulkheiri@yahoo.com</a><br>
+        <span style="font-size: 12px; color: #666;">Response within 24 hours</span>
+      </div>
+      <button class="mock-btn mock-btn-saffron" onclick="window.location.href='mailto:umulkheiri@yahoo.com'">Send Email</button>
+    </div>
+    <div class="service-card-mock" style="flex: 0 1 calc(50% - 20px); max-width: 400px;">
+      <span class="service-badge badge-pine">WhatsApp</span>
+      <div class="mock-service-name">Quick Connect</div>
+      <div class="mock-service-desc" style="font-size: 14px; margin-top: 12px;">
+        <a href="https://wa.me/254140565335" style="color: var(--pine); font-weight: 600; text-decoration: none;">+254 140 565 335</a><br>
+        <span style="font-size: 12px; color: #666;">Instant messaging available</span>
+      </div>
+      <button class="mock-btn mock-btn-pine" onclick="window.location.href='https://wa.me/254140565335'">Message on WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES MOCKUP -->
+<div class="section">
+  <div class="section-label">05 — Services UI</div>
+  <h2 class="section-title">Pricing Cards Concept</h2>
+  <p class="section-desc">Clean cards using only the spice palette — the Transformation Path featured on the espresso dark card.</p>
+  <div class="services-row">
+    <div class="service-card-mock">
+      <span class="service-badge badge-saffron">Discovery</span>
+      <div class="mock-price">$50</div>
+      <div class="mock-price-label">Waived · Currently Free</div>
+      <div class="mock-service-name">Ikigai Discovery Session</div>
+      <div class="mock-service-desc">30 min deep dive into life purpose, core values & next direction. Perfect for clarity seekers.</div>
+      <button class="mock-btn mock-btn-ghost">Book Free Session</button>
+    </div>
+    <div class="service-card-mock">
+      <span class="service-badge badge-pine">Journey</span>
+      <div class="mock-price">$555</div>
+      <div class="mock-price-label">5 sessions · 90 mins each</div>
+      <div class="mock-service-name">Ikigai Alignment Journey</div>
+      <div class="mock-service-desc">Purpose alignment, goal clarity & lifestyle design. Worksheets & follow-up included.</div>
+      <button class="mock-btn mock-btn-pine">Start Journey</button>
+    </div>
+    <div class="service-card-mock featured">
+      <span class="service-badge badge-night">★ Transformation</span>
+      <div class="mock-price" style="color:white;">$1,000</div>
+      <div class="mock-price-label light">12 sessions · 1 hr each</div>
+      <div class="mock-service-name light">Ikigai Transformation Path</div>
+      <div class="mock-service-desc light">Full integration of purpose, mindset, habits & embodiment practices. Includes custom toolkit.</div>
+      <button class="mock-btn mock-btn-saffron">Begin Transformation</button>
+    </div>
+    <div class="service-card-mock">
+      <span class="service-badge badge-sand">VIP Day</span>
+      <div class="mock-price">$400</div>
+      <div class="mock-price-label">1 Full Day · 4 Hours</div>
+      <div class="mock-service-name">Ikigai Intensive VIP Day</div>
+      <div class="mock-service-desc">Private immersion — vision mapping, energy work & strategy for your next life chapter.</div>
+      <button class="mock-btn mock-btn-ghost">Reserve Your Day</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-label">06 — Key Features & Functionalities</div>
+  <h2 class="section-title">What the Website Does</h2>
+  <p class="section-desc">Every feature designed to convert visitors into clients, build trust through philosophy, and make booking frictionless.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon icon-saffron">🌸</div>
+      <div class="feature-title">Ikigai Venn Diagram — Interactive</div>
+      <div class="feature-desc">Animated SVG diagram showing the 4 elements with hover tooltips explaining each quadrant.</div>
+      <div class="feature-tags"><span class="ftag">SVG Animation</span><span class="ftag">Interactive</span><span class="ftag">Philosophy Page</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-pine">📅</div>
+      <div class="feature-title">Session Booking Widget</div>
+      <div class="feature-desc">Integrated Calendly or Cal.com embed. Auto-sends confirmation with session prep guide.</div>
+      <div class="feature-tags"><span class="ftag">Calendly Embed</span><span class="ftag">Auto-email</span><span class="ftag">Booking Page</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-sand">✦</div>
+      <div class="feature-title">Ikigai Self-Assessment Quiz</div>
+      <div class="feature-desc">6–8 question quiz revealing which element needs tending — leads into a personalised coaching recommendation.</div>
+      <div class="feature-tags"><span class="ftag">Lead Magnet</span><span class="ftag">Email Capture</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-espresso">🌍</div>
+      <div class="feature-title">Philosophy Scroll Story</div>
+      <div class="feature-desc">Scroll-triggered narrative that unfolds the Ikigai + Ubuntu + Kihooto triangle as the user reads down.</div>
+      <div class="feature-tags"><span class="ftag">Scroll Animation</span><span class="ftag">Storytelling</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-saffron">💬</div>
+      <div class="feature-title">Testimonials Carousel</div>
+      <div class="feature-desc">Rotating client testimonials on the espresso brand background — name, location, and package included.</div>
+      <div class="feature-tags"><span class="ftag">Social Proof</span><span class="ftag">Auto-rotate</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-pine">📝</div>
+      <div class="feature-title">The Ikigai Journal (Blog)</div>
+      <div class="feature-desc">Filterable blog by topic. Newsletter opt-in strips within posts. SEO-optimised for organic discovery.</div>
+      <div class="feature-tags"><span class="ftag">Blog CMS</span><span class="ftag">Newsletter</span><span class="ftag">SEO</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-sand">💳</div>
+      <div class="feature-title">Multi-Currency Payment</div>
+      <div class="feature-desc">PayPal, M-Pesa, and Bank Transfer supported. 50% deposit flow with sliding scale for students.</div>
+      <div class="feature-tags"><span class="ftag">PayPal</span><span class="ftag">M-Pesa</span><span class="ftag">Deposit Flow</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-espresso">🎤</div>
+      <div class="feature-title">Speaking & Corporate Enquiry</div>
+      <div class="feature-desc">Dedicated form for keynote and corporate masterclass bookings. Selectable duration and organisation type.</div>
+      <div class="feature-tags"><span class="ftag">B2B Lead Form</span><span class="ftag">Services Page</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-saffron">🌿</div>
+      <div class="feature-title">Credentials Trust Strip</div>
+      <div class="feature-desc">IPHM / IAOTH / CMA badge bar displayed near the hero and on the About page.</div>
+      <div class="feature-tags"><span class="ftag">Trust Signals</span><span class="ftag">Accreditation</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-pine">📦</div>
+      <div class="feature-title">Downloadable Toolkit Upsell</div>
+      <div class="feature-desc">$75 PDF toolkit as a standalone add-on — Gumroad or PayPal payment with automatic file delivery.</div>
+      <div class="feature-tags"><span class="ftag">Digital Product</span><span class="ftag">Add-On</span><span class="ftag">$75</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-sand">🔔</div>
+      <div class="feature-title">Email List / Newsletter</div>
+      <div class="feature-desc">Mailchimp or ConvertKit. Opt-in via quiz, blog sidebar, and footer. Welcome guide to Inner Garden philosophy.</div>
+      <div class="feature-tags"><span class="ftag">Email Marketing</span><span class="ftag">Lead Nurture</span></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon icon-espresso">📱</div>
+      <div class="feature-title">Mobile-First Responsive Design</div>
+      <div class="feature-desc">All pages optimised for mobile with collapsible nav, touch-friendly booking flow, and readable typography.</div>
+      <div class="feature-tags"><span class="ftag">Mobile-first</span><span class="ftag">Accessible</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- UX FLOW -->
+<div class="section">
+  <div class="section-label">07 — UX Flows</div>
+  <h2 class="section-title">Core User Journeys</h2>
+  <p class="section-desc">Two primary flows designed to convert: the self-discovery seeker and the corporate/community buyer.</p>
+
+  <p style="font-size:13px;font-weight:500;color:var(--gray-mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow A — Individual Client</p>
+  <div class="flow-steps" style="margin-bottom:28px;">
+    <div class="flow-step">
+      <div class="flow-step-num">01</div>
+      <div class="flow-step-title">Lands on Home</div>
+      <div class="flow-step-desc">Hero resonates. Reads philosophy pills.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">02</div>
+      <div class="flow-step-title">Takes Quiz</div>
+      <div class="flow-step-desc">Identifies which garden element needs tending.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">03</div>
+      <div class="flow-step-title">Gets Result</div>
+      <div class="flow-step-desc">Personalised package recommendation shown.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">04</div>
+      <div class="flow-step-title">Books Session</div>
+      <div class="flow-step-desc">Free Discovery or chosen package. 50% deposit.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">05</div>
+      <div class="flow-step-title">Confirmation</div>
+      <div class="flow-step-desc">Welcome email + prep guide sent automatically.</div>
+    </div>
+  </div>
+
+  <p style="font-size:13px;font-weight:500;color:var(--gray-mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Flow B — Corporate / Group Buyer</p>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-step-num">01</div>
+      <div class="flow-step-title">Finds Site</div>
+      <div class="flow-step-desc">Via LinkedIn, referral, or search.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">02</div>
+      <div class="flow-step-title">Reads Services</div>
+      <div class="flow-step-desc">Masterclass, workshop, retreat options clear.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">03</div>
+      <div class="flow-step-title">Sees Credentials</div>
+      <div class="flow-step-desc">IPHM / IAOTH badges + philosophy depth.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">04</div>
+      <div class="flow-step-title">Submits Enquiry</div>
+      <div class="flow-step-desc">Corporate form with org details & date.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step">
+      <div class="flow-step-num">05</div>
+      <div class="flow-step-title">Proposal Sent</div>
+      <div class="flow-step-desc">Custom scope + booking confirmed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<div class="section">
+  <div class="section-label">08 — Social Proof</div>
+  <h2 class="section-title">Testimonial Design</h2>
+  <p class="section-desc">Espresso dark background with large italic quote and saffron source accent.</p>
+  <div class="testimonial-mock">
+    <p class="testimonial-text">Working with Umulkheiri didn't just bring clarity — it brought me home to myself. The weaving of Ikigai, Ubuntu, and Kihooto created a compass I carry with me every single day.</p>
+    <div class="testimonial-source"><strong>Client, Nairobi</strong> · Ikigai Transformation Path</div>
+  </div>
+</div>
+
+<!-- COMPONENTS -->
+<div class="section">
+  <div class="section-label">09 — UI Components</div>
+  <h2 class="section-title">Component Library</h2>
+  <p class="section-desc">All components use only the five spice colours plus white and light gray — no exceptions.</p>
+  <div class="component-showcase">
+    <div class="comp-group">
+      <div class="comp-label">Buttons</div>
+      <button class="btn-demo btn-primary-demo">Begin Your Journey</button>
+      <button class="btn-demo btn-secondary-demo">Explore Philosophy</button>
+      <button class="btn-demo btn-ghost-demo">Learn More</button>
+      <button class="btn-demo btn-pine-demo">Book Group Circle</button>
+    </div>
+    <div class="comp-group">
+      <div class="comp-label">Form Inputs</div>
+      <input class="input-demo" type="text" placeholder="Your full name" readonly>
+      <input class="input-demo" type="email" placeholder="Your email address" readonly>
+      <select class="select-demo">
+        <option>Select a coaching package</option>
+        <option>Ikigai Discovery Session</option>
+        <option>Alignment Journey ($555)</option>
+        <option>Transformation Path ($1,000)</option>
+        <option>VIP Intensive Day ($400)</option>
+      </select>
+    </div>
+    <div class="comp-group">
+      <div class="comp-label">Tags & Badges</div>
+      <span class="tag-demo" style="background:rgba(212,134,10,0.12);color:#7A4A00;">Purpose</span>
+      <span class="tag-demo" style="background:rgba(74,94,53,0.12);color:#2A3C1A;">Ubuntu</span>
+      <span class="tag-demo" style="background:rgba(212,170,120,0.25);color:#6B4A1A;">Livelihood</span>
+      <span class="tag-demo" style="background:rgba(139,69,19,0.10);color:#5C2A08;">Kihooto</span>
+      <span class="tag-demo" style="background:var(--espresso);color:var(--saffron);">★ Certified</span>
+      <br><br>
+      <div style="background:rgba(212,134,10,0.10);border-radius:8px;padding:12px;font-size:12px;color:#7A4A00;border-left:3px solid var(--saffron);">
+        <strong>Signature Promise</strong><br>I don't just help you find purpose — I help you design a life that feels aligned, abundant, and alive.
+      </div>
+    </div>
+    <div class="comp-group">
+      <div class="comp-label">Design Tokens</div>
+      <div class="token-row"><span class="token-name">Border Radius</span><span class="token-value">8px / 14px</span></div>
+      <div class="token-row"><span class="token-name">Body Font Size</span><span class="token-value">16px</span></div>
+      <div class="token-row"><span class="token-name">H1 Display Size</span><span class="token-value">52px</span></div>
+      <div class="token-row"><span class="token-name">Line Height</span><span class="token-value">1.7</span></div>
+      <div class="token-row"><span class="token-name">Section Padding</span><span class="token-value">80px 60px</span></div>
+      <div class="token-row"><span class="token-name">Card Border</span><span class="token-value">1px solid #EDE8E1</span></div>
+      <div class="token-row"><span class="token-name">CTA Radius</span><span class="token-value">8px / pill 20px</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT WE KEPT -->
+<div class="section">
+  <div class="section-label">10 — Inspired By Mystical Journeys</div>
+  <h2 class="section-title">What We've Kept & Elevated</h2>
+  <p class="section-desc">Structural patterns from mystical-journeys.online, infused entirely with the Spice Garden palette.</p>
+  <div class="two-col">
+    <div>
+      <div class="token-group" style="margin-bottom:16px;">
+        <h4>Borrowed from Mystical Journeys</h4>
+        <div class="token-row"><span class="token-name">Coach personality hero section</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Soul Coaching Packages layout</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Blog / journal as wisdom space</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Testimonial pullquote style</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Private community / inner circle</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+        <div class="token-row"><span class="token-name">Corporate / intuitive coaching page</span><span style="color:var(--pine);font-size:18px;">✓</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="token-group">
+        <h4>Uniquely Umulkheiri's Own</h4>
+        <div class="token-row"><span class="token-name">Espresso + Saffron palette</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Sacred Garden metaphor throughout</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Ubuntu / Kihooto philosophy section</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Ikigai Triangle interactive diagram</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">M-Pesa payment integration</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Self-assessment quiz + lead nurture</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+        <div class="token-row"><span class="token-name">Nairobi / African diaspora context</span><span style="color:var(--saffron);font-size:18px;">★</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEEDBACK AREA -->
+<div class="feedback-area">
+  <h3>Got Thoughts on the Full Brief?</h3>
+  <p>Click the button below to share general feedback that doesn't fit a specific section.</p>
+  <button class="fb-improve" onclick="openModal('General Feedback')">💡 Share Feedback</button>
+</div>
+
+<div class="doc-footer">
+  <strong>Umulkheiri Jalo · Ikigai Alignment Coaching</strong> &nbsp;|&nbsp; Website Design Brief · May 2026 &nbsp;|&nbsp; Certified Ikigai Coach with Distinction · ID45632-28225<br>
+  <strong>Connect:</strong> <a href="mailto:umulkheiri@yahoo.com" style="color: var(--saffron); text-decoration: none;">umulkheiri@yahoo.com</a> &nbsp;|&nbsp; <a href="https://wa.me/254140565335" style="color: var(--pine); text-decoration: none;">WhatsApp +254 140 565 335</a>
+</div>
+
+<!-- FLOATING FAB -->
+<button class="feedback-fab" onclick="openModal('General Feedback')">💬 Feedback</button>
+
+<!-- FEEDBACK MODAL -->
+<div class="modal-overlay" id="feedbackModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Help Me Improve This</h3>
+    <div class="modal-section-name" id="modalSection">Section</div>
+    <p class="modal-sub">What could be better about this section?</p>
+    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+      <input type="hidden" name="section" id="formSection">
+      <div class="form-group">
+        <label for="formFeedback">Your Feedback *</label>
+        <textarea id="formFeedback" name="feedback" required placeholder="What do you think? What works, what could change..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="formName">Your Name</label>
+          <input id="formName" name="name" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="formEmail">Email (for reply)</label>
+          <input id="formEmail" name="email" type="email" placeholder="Optional">
+        </div>
+      </div>
+      <button class="modal-submit" type="submit" id="submitBtn">Send Feedback</button>
+    </form>
+    <div class="modal-success" id="modalSuccess">
+      <div class="check">✓</div>
+      <h4>Thank You!</h4>
+      <p>Your feedback has been sent. I'll review it and get back to you.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var SUPABASE_URL = 'https://srpiijgniyvlzfktaaie.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
+  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function thumbsUp(section, btn) {
+    if (btn.classList.contains('liked')) return;
+    sb.from('feedback').insert({ section: section, reaction: 'thumbs_up', feedback: null, name: null, email: null, source: 'umu' }).then(function(result) {
+      if (!result.error) { btn.classList.add('liked'); showToast('👍 Got it! Thanks for the love on ' + section); }
+    });
+  }
+
+  function openModal(section) {
+    document.getElementById('modalSection').textContent = section;
+    document.getElementById('formSection').value = section;
+    document.getElementById('formFeedback').value = '';
+    document.getElementById('formName').value = '';
+    document.getElementById('formEmail').value = '';
+    document.getElementById('modalSuccess').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'block';
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').textContent = 'Send Feedback';
+    document.getElementById('feedbackModal').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('feedbackModal').classList.remove('open'); }
+
+  function submitFeedback(e) {
+    e.preventDefault();
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    sb.from('feedback').insert({
+      section: document.getElementById('formSection').value,
+      reaction: 'could_be_better',
+      feedback: document.getElementById('formFeedback').value,
+      name: document.getElementById('formName').value || null,
+      email: document.getElementById('formEmail').value || null,
+      source: 'umu'
+    }).then(function(result) {
+      if (result.error) {
+        alert('Something went wrong. Please try again.');
+        btn.disabled = false; btn.textContent = 'Send Feedback';
+      } else {
+        document.getElementById('feedbackForm').style.display = 'none';
+        document.getElementById('modalSuccess').style.display = 'block';
+        showToast('💡 Thanks! Your feedback has been noted.');
+      }
+    });
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(t._hide);
+    t._hide = setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
+
+  document.getElementById('feedbackModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+  (function() {
+    var sections = document.querySelectorAll('.section');
+    sections.forEach(function(section) {
+      var label = section.querySelector('.section-label');
+      var title = section.querySelector('.section-title');
+      if (!label || !title) return;
+      var header = document.createElement('div');
+      header.className = 'feedback-header';
+      var textGroup = document.createElement('div');
+      label.parentNode.insertBefore(textGroup, label);
+      textGroup.appendChild(label);
+      textGroup.appendChild(title);
+      header.appendChild(textGroup);
+      var actions = document.createElement('div');
+      actions.className = 'feedback-actions';
+      var sectionName = label.textContent.trim();
+      var likeBtn = document.createElement('button');
+      likeBtn.className = 'fb-like';
+      likeBtn.innerHTML = '👍';
+      likeBtn.onclick = function() { thumbsUp(sectionName, likeBtn); };
+      var improveBtn = document.createElement('button');
+      improveBtn.className = 'fb-improve';
+      improveBtn.textContent = '💡 Could Be Better';
+      improveBtn.onclick = function() { openModal(sectionName); };
+      actions.appendChild(likeBtn);
+      actions.appendChild(improveBtn);
+      header.appendChild(actions);
+      section.insertBefore(header, section.firstChild);
+    });
+  })();
+</script>
+
+<div class="toast" id="toast"></div>
+</body>
+</html>

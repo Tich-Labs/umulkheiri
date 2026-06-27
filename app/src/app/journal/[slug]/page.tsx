@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import type { Metadata } from "next";
 import { supabaseAdmin } from "@/lib/supabase-server";
 import Link from "next/link";
@@ -11,6 +9,11 @@ type Post = { tag: string; title: string; excerpt: string; date: string; coverIm
 async function getPosts(): Promise<Post[]> {
   const { data } = await supabaseAdmin.from("content").select("data").single();
   return data?.data?.blog ?? [];
+}
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ slug: toSlug(post.title) }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umulkheiri Jalo — Ikigai Alignment Coaching</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@400;500;600;700&family=Questrial&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --espresso: #1E1208;
+            --cinnamon: #8B4513;
+            --saffron: #D4860A;
+            --pine: #4A5E35;
+            --sand: #D4AA78;
+            --cream: #F9F7F2;
+            --text-dark: #5C4F42;
+            --text-muted: #C4BAB0;
+            --border-light: #EDE8E1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Questrial', sans-serif;
+            color: var(--espresso);
+            background: var(--cream);
+            line-height: 1.6;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(30, 18, 8, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(212, 134, 10, 0.2);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Ojuju', cursive;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--saffron);
+            cursor: pointer;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: var(--saffron);
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--saffron);
+        }
+
+        .nav-cta {
+            background: var(--saffron);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: #c97508;
+        }
+
+        /* ── PAGE CONTAINER ── */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ── SECTION ── */
+        section {
+            width: 100%;
+            padding: 80px 40px;
+        }
+
+        section:nth-child(even) {
+            background: white;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cinnamon);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-family: 'Questrial', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--espresso);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin-bottom: 50px;
+        }
+
+        /* ── HERO ── */
+        #hero {
+            background: linear-gradient(135deg, var(--espresso) 0%, rgba(30, 18, 8, 0.95) 100%);
+            color: white;
+            padding: 160px 40px 100px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Ojuju', cursive;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h1 em {
+            color: var(--saffron);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-family: 'Questrial', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--saffron);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c97508;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--saffron);
+            border: 2px solid var(--saffron);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 134, 10, 0.1);
+        }
+
+        .hero-pills {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            background: rgba(212, 134, 10, 0.15);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* ── GRID LAYOUTS ── */
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .four-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 50px;
+            align-items: start;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        h3, .card h3 {
+            font-family: 'Questrial', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--saffron);
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-dark);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: rgba(212, 134, 10, 0.1);
+            color: var(--saffron);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        /* ── SERVICE CARDS ── */
+        .service-card {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border-top: 4px solid var(--saffron);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .service-card.featured {
+            background: var(--espresso);
+            color: white;
+            border-top-color: var(--espresso);
+            transform: scale(1.02);
+        }
+
+        .service-price {
+            font-family: 'Ojuju', cursive;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--saffron);
+            margin: 12px 0;
+        }
+
+        .service-card.featured .service-price {
+            color: var(--saffron);
+        }
+
+        .service-duration {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .service-card.featured .service-duration {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .service-card h3 {
+            font-family: 'Questrial', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 12px 0;
+            color: var(--espresso);
+        }
+
+        .service-card.featured h3 {
+            color: white;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .service-card.featured p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ── FORM ── */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--espresso);
+            font-size: 14px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Questrial', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--saffron);
+            box-shadow: 0 0 0 3px rgba(212, 134, 10, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--saffron);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background: #c97508;
+        }
+
+        .form-message {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(74, 94, 53, 0.1);
+            color: var(--pine);
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(212, 134, 10, 0.1);
+            color: var(--saffron);
+            display: block;
+        }
+
+        /* ── TESTIMONIAL ── */
+        .testimonial {
+            background: var(--espresso);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 50px;
+        }
+
+        .testimonial p {
+            font-family: 'Ojuju', cursive;
+            font-size: 20px;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .testimonial-source {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .testimonial-source strong {
+            color: var(--saffron);
+        }
+
+        /* ── BLOG ── */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 50px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .blog-header {
+            background: linear-gradient(135deg, rgba(212, 134, 10, 0.1) 0%, rgba(74, 94, 53, 0.1) 100%);
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: var(--saffron);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .blog-title {
+            font-family: 'Questrial', sans-serif;
+            font-size: 18px;
+            color: var(--espresso);
+            font-weight: 500;
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-excerpt {
+            font-size: 13px;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .blog-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ── FAQ ── */
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 16px;
+            cursor: pointer;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--espresso);
+        }
+
+        .faq-question:hover {
+            background: var(--cream);
+        }
+
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--saffron);
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 16px;
+            background: var(--cream);
+            border-top: 1px solid var(--border-light);
+            color: var(--text-dark);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--espresso);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 40px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: var(--saffron);
+            text-decoration: none;
+        }
+
+        /* ── TABLET & BELOW ── */
+        @media (max-width: 768px) {
+            section {
+                padding: 48px 20px !important;
+            }
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(30, 18, 8, 0.99);
+                padding: 20px 24px;
+                gap: 4px;
+                border-bottom: 1px solid rgba(212, 134, 10, 0.2);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .nav-menu a,
+            .nav-menu .nav-cta {
+                width: 100%;
+                padding: 12px 16px;
+                font-size: 15px;
+                text-align: left;
+            }
+
+            .nav-cta {
+                margin-top: 8px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .hero-subtitle {
+                font-size: 15px;
+            }
+
+            #hero {
+                padding: 120px 20px 60px !important;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .pill {
+                font-size: 12px;
+                padding: 8px 14px;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .four-col {
+                grid-template-columns: 1fr;
+            }
+
+            .three-col {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card.featured {
+                transform: scale(1);
+            }
+
+            .testimonial p {
+                font-size: 17px;
+            }
+
+            .testimonial {
+                padding: 28px 20px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                padding: 32px 20px;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+        }
+
+        /* ── SMALL PHONES ── */
+        @media (max-width: 480px) {
+            section {
+                padding: 36px 16px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .section-subtitle {
+                font-size: 14px;
+                margin-bottom: 32px;
+            }
+
+            #hero {
+                padding: 100px 16px 40px;
+            }
+
+            .hero-pills {
+                gap: 8px;
+            }
+
+            .pill {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .service-card,
+            .card {
+                padding: 24px 20px;
+            }
+
+            .service-price {
+                font-size: 28px;
+            }
+
+            .service-card.featured {
+                padding: 24px 20px;
+            }
+
+            .four-col,
+            .three-col {
+                gap: 16px;
+                margin-top: 32px;
+            }
+
+            .testimonial p {
+                font-size: 15px;
+            }
+
+            footer {
+                padding: 24px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <div class="logo" onclick="goToPage('home')">Umulkheiri Jalo</div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+            <div class="nav-menu" id="navMenu">
+                <a onclick="goToPage('home')" class="nav-link active" data-page="home">Home</a>
+                <a onclick="goToPage('about')" class="nav-link" data-page="about">About</a>
+                <a onclick="goToPage('services')" class="nav-link" data-page="services">Services</a>
+                <a onclick="goToPage('philosophy')" class="nav-link" data-page="philosophy">Philosophy</a>
+                <a onclick="goToPage('blog')" class="nav-link" data-page="blog">Journal</a>
+                <a onclick="goToPage('community')" class="nav-link" data-page="community">Community</a>
+                <button class="nav-cta" onclick="goToPage('contact')">Book Now</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- PAGE: HOME -->
+    <div id="home" class="page active">
+        <!-- HERO -->
+        <section id="hero">
+            <div class="section-content hero-container">
+                <h1>Your Sacred Garden<br>Awaits — <em>Align</em> with<br>your Ikigai</h1>
+                <p class="hero-subtitle">Certified Ikigai Alignment Coach blending Japanese purpose philosophy, Ubuntu belonging, and Kihooto justice into your transformation.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="goToPage('contact')">Begin Your Journey</button>
+                    <button class="btn btn-secondary" onclick="goToPage('services')">Explore Services</button>
+                </div>
+                <div class="hero-pills">
+                    <div class="pill">✦ Purpose Discovery</div>
+                    <div class="pill">🌿 Feminine Leadership</div>
+                    <div class="pill">⚖️ Authentic Life Design</div>
+                    <div class="pill">🌍 Ubuntu & Community</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3 PILLARS -->
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>The Three Pillars</h2>
+                <p class="section-subtitle">Your transformation is built on three interconnected philosophies.</p>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>🎋 Ikigai</h3>
+                        <p>The Japanese concept of finding your reason for being — the intersection of what you love, what you're good at, what the world needs, and what sustains you.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🤝 Ubuntu</h3>
+                        <p>"I am because we are." This African philosophy emphasizes interconnectedness, community, and the belief that our well-being is tied to others' well-being.</p>
+                    </div>
+                    <div class="card">
+                        <h3>⚖️ Kihooto</h3>
+                        <p>Authenticity and justice. Living in alignment with your truth, making decisions rooted in integrity, and honoring both yourself and others.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED PACKAGES TEASER -->
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>Explore Our Services</h2>
+                <p class="section-subtitle">Choose a path that resonates with where you are.</p>
+                <div class="three-col">
+                    <div class="service-card">
+                        <span class="card-badge">Discovery</span>
+                        <h3>Discovery Session</h3>
+                        <p>30-minute deep dive into your life purpose and core values.</p>
+                        <button class="btn btn-primary" onclick="goToPage('contact')" style="width: 100%;">Learn More</button>
+                    </div>
+                    <div class="service-card">
+                        <span class="card-badge">Journey</span>
+                        <h3>Alignment Journey</h3>
+                        <p>Purpose alignment, goal clarity & lifestyle design with full support.</p>
+                        <button class="btn btn-primary" onclick="goToPage('contact')" style="width: 100%;">Learn More</button>
+                    </div>
+                    <div class="service-card featured">
+                        <span class="card-badge">★ Featured</span>
+                        <h3>Transformation Path</h3>
+                        <p>Full integration of purpose, mindset, habits & embodiment practices.</p>
+                        <button class="btn btn-primary" onclick="goToPage('contact')" style="width: 100%;">Learn More</button>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="goToPage('services')" style="margin-top: 40px; display: block; margin-left: auto; margin-right: auto;">View All Services</button>
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL -->
+        <section style="background: white;">
+            <div class="section-content">
+                <div class="testimonial">
+                    <p>"Working with Umulkheiri helped me connect with my deeper purpose. Her blend of African philosophy and practical coaching transformed not just my career, but my entire approach to life."</p>
+                    <div class="testimonial-source"><strong>— Amara K.</strong>, Impact Entrepreneur, Nairobi</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG PREVIEW -->
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>From the Ikigai Journal</h2>
+                <p class="section-subtitle">Wisdom, insights, and reflections on purpose and transformation.</p>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <div class="blog-header">
+                            <span class="blog-category">Purpose</span>
+                            <h3 class="blog-title">The Four Quadrants</h3>
+                        </div>
+                        <div class="blog-content">
+                            <p class="blog-excerpt">Understanding the intersection of passion, skills, service, and livelihood.</p>
+                            <p class="blog-meta">June 8, 2026 • 8 min read</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-header">
+                            <span class="blog-category">Community</span>
+                            <h3 class="blog-title">Ubuntu in Action</h3>
+                        </div>
+                        <div class="blog-content">
+                            <p class="blog-excerpt">How collective wisdom and shared values shape transformation.</p>
+                            <p class="blog-meta">June 1, 2026 • 10 min read</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-header">
+                            <span class="blog-category">Leadership</span>
+                            <h3 class="blog-title">Feminine Power</h3>
+                        </div>
+                        <div class="blog-content">
+                            <p class="blog-excerpt">Reclaiming authentic leadership rooted in presence and integrity.</p>
+                            <p class="blog-meta">May 25, 2026 • 12 min read</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="goToPage('blog')" style="margin-top: 40px; display: block; margin-left: auto; margin-right: auto;">Read the Full Journal</button>
+            </div>
+        </section>
+
+        <!-- CTA STRIP -->
+        <section style="background: var(--espresso); color: white; text-align: center; padding: 60px 40px;">
+            <div class="section-content">
+                <h2 style="color: white; margin-bottom: 16px;">Ready to Align with Your Purpose?</h2>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 16px; margin-bottom: 32px;">Let's explore how coaching can serve your transformation.</p>
+                <button class="btn btn-primary" onclick="goToPage('contact')">Book a Discovery Session</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: ABOUT -->
+    <div id="about" class="page">
+        <section style="background: var(--espresso); color: white; padding: 100px 40px 60px; margin-top: 60px;">
+            <div class="section-content">
+                <h2 style="color: white;">About Umulkheiri</h2>
+                <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8);">Your guide to purpose-led transformation.</p>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Story & Philosophy</h2>
+                <div class="two-col">
+                    <div>
+                        <p style="font-size: 16px; margin-bottom: 16px;">Umulkheiri is a certified Ikigai Alignment Coach based in Nairobi, bringing together three transformative philosophies: Japanese Ikigai, African Ubuntu, and Kihooto (authentic justice).</p>
+                        <p style="font-size: 16px;">Her coaching integrates mindfulness, embodiment practices, and community connection to help you discover and live your unique purpose.</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 16px; margin-bottom: 16px;">With a background in personal development and community leadership, Umulkheiri works with individuals, women's circles, and corporate teams to align vision, values, and action.</p>
+                        <p style="font-size: 16px;">Every coaching relationship is rooted in the belief that your transformation ripples outward, creating impact in your family, community, and world.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>Credentials & Certification</h2>
+                <p class="section-subtitle">Certified Ikigai Coach with Distinction • ID45632-28225</p>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Ikigai Training</h3>
+                        <p>Advanced certification in Japanese Ikigai philosophy and coaching methodology.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Ubuntu & Community</h3>
+                        <p>Specialized training in African philosophy and collective transformation practices.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Embodiment Practice</h3>
+                        <p>Certification in somatic practices, mindfulness, and integrated transformation work.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Why This Works</h2>
+                <p class="section-subtitle">The integration of three powerful frameworks creates lasting transformation.</p>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Ikigai Clarity</h3>
+                        <p>You gain crystal-clear understanding of your unique purpose at the intersection of passion, skill, service, and livelihood.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Community Support</h3>
+                        <p>Ubuntu principles remind you that transformation isn't solo—you're held by community, values, and collective wisdom.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Authentic Living</h3>
+                        <p>Kihooto ensures your path is rooted in integrity, justice, and alignment with what truly matters to you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>The Triangle of Wholeness</h2>
+                <p class="section-subtitle">Every transformation integrates three essential dimensions:</p>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Mind</h3>
+                        <p>Clarity of purpose, aligned beliefs, and cognitive reframing around possibility.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Heart</h3>
+                        <p>Emotional alignment, values clarity, and connection to what truly matters.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Body</h3>
+                        <p>Embodied practices, energy alignment, and physical integration of transformation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: SERVICES -->
+    <div id="services" class="page">
+        <section style="background: var(--espresso); color: white; padding: 100px 40px 60px; margin-top: 60px;">
+            <div class="section-content">
+                <h2 style="color: white;">Services & Packages</h2>
+                <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8);">Choose the path that resonates with your current season of life.</p>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Individual Coaching Packages</h2>
+                <div class="four-col">
+                    <div class="service-card">
+                        <span class="card-badge">Discovery</span>
+                        <h3>Discovery Session</h3>
+                        <p>Deep dive into your life purpose, core values, and next direction. Perfect for those seeking clarity.</p>
+                        <button class="btn btn-primary" onclick="goToPage('contact')" style="width: 100%; margin-top: 16px;">Book Session</button>
+                    </div>
+                    <div class="service-card">
+                        <span class="card-badge">Journey</span>
+                        <h3>Alignment Journey</h3>
+                        <p>Purpose alignment, goal clarity, and lifestyle design with worksheets and follow-up support.</p>
+                        <button class="btn btn-primary" onclick="goToPage('contact')" style="width: 100%; margin-top: 16px;">Start Journey</button>
+                    </div>
+                    <div class="service-card featured">
+                        <span class="card-badge">★ Transformation</span>
+                        <h3>Transformation Path</h3>
+                        <p>Full integration of purpose, mindset, habits, embodiment practices, and custom toolkit.</p>
+                        <button class="btn btn-primary" onclick="goToPage('contact')" style="width: 100%; margin-top: 16px;">Begin Transformation</button>
+                    </div>
+                    <div class="service-card">
+                        <span class="card-badge">VIP Day</span>
+                        <h3>Intensive VIP Day</h3>
+                        <p>Private immersion—vision mapping, energy work, strategy, and complete roadmap for your next chapter.</p>
+                        <button class="btn btn-primary" onclick="goToPage('contact')" style="width: 100%; margin-top: 16px;">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>Group & Corporate Offerings</h2>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Women's Circles</h3>
+                        <p>Monthly aligned community for women exploring purpose, leadership, and collective wisdom. Small, intimate groups.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Corporate Workshops</h3>
+                        <p>Tailored team sessions on purpose-led leadership, authentic communication, and aligned performance.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Community Programs</h3>
+                        <p>Workshops for ALX alumni, youth programs, and community groups seeking purpose alignment and leadership development.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Add-ons & Extras</h2>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Accountability Check-ins</h3>
+                        <p>Monthly 30-minute sessions to track progress and maintain alignment with your vision.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Custom Toolkit</h3>
+                        <p>Personalized workbook, journaling prompts, and resources designed for your unique journey.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Group Intensives</h3>
+                        <p>Retreat-style experiences combining individual coaching with community wisdom and embodiment practices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--espresso); color: white; text-align: center; padding: 60px 40px;">
+            <div class="section-content">
+                <h2 style="color: white;">Our Signature Promise</h2>
+                <p style="color: rgba(255, 255, 255, 0.85); font-size: 16px; max-width: 600px; margin: 0 auto;">Every coaching relationship is rooted in genuine partnership, African wisdom, and your full transformation—not just career shifts, but a realignment of your entire relationship with purpose, community, and self.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: PHILOSOPHY -->
+    <div id="philosophy" class="page">
+        <section style="background: var(--espresso); color: white; padding: 100px 40px 60px; margin-top: 60px;">
+            <div class="section-content">
+                <h2 style="color: white;">The Philosophy</h2>
+                <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8);">Understanding the framework that guides transformation.</p>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>The Inner Garden Metaphor</h2>
+                <p class="section-subtitle">Your Ikigai is like a sacred garden—it requires tending, nourishment, and community to flourish.</p>
+                <p style="font-size: 16px; color: var(--text-dark); line-height: 1.8;">Just as a garden needs water, sunlight, soil, and care, your purpose needs clarity, practice, community, and alignment. When you tend to your Inner Garden with intention and wisdom, everything in your life—career, relationships, health, impact—grows naturally from that rooted place.</p>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>The Four Elements of Ikigai</h2>
+                <p class="section-subtitle">Your purpose exists at the intersection of these four dimensions.</p>
+                <div class="four-col">
+                    <div class="card">
+                        <h3>🔥 Passion</h3>
+                        <p>What you love doing. The activities that energize you, make you lose track of time, and feel deeply meaningful.</p>
+                    </div>
+                    <div class="card">
+                        <h3>💎 Skill</h3>
+                        <p>What you're good at. Your natural abilities, learned expertise, and unique strengths that set you apart.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🌍 Service</h3>
+                        <p>What the world needs. The gap you uniquely fill, the impact you're called to make, the contribution only you can offer.</p>
+                    </div>
+                    <div class="card">
+                        <h3>💰 Livelihood</h3>
+                        <p>What sustains you. The economic reality that allows you to show up fully—fair compensation and material security.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Ubuntu — "I am because we are"</h2>
+                <p class="section-subtitle">African philosophy rooted in interconnection and community.</p>
+                <div class="two-col">
+                    <div>
+                        <p style="font-size: 16px; color: var(--text-dark); line-height: 1.8;">Ubuntu teaches us that our humanity is defined by our relationships with others. Your transformation isn't a solo journey—it's woven into the fabric of your family, your community, your networks.</p>
+                        <p style="margin-top: 16px; font-size: 16px; color: var(--text-dark); line-height: 1.8;">When you align with your Ikigai through an Ubuntu lens, you honor that your purpose ripples outward, creating impact beyond yourself.</p>
+                    </div>
+                    <div style="background: var(--cream); padding: 30px; border-radius: 12px;">
+                        <h3 style="color: var(--saffron); margin-bottom: 16px;">Principles of Ubuntu</h3>
+                        <ul style="list-style: none; color: var(--text-dark);">
+                            <li style="margin-bottom: 12px;">• Shared humanity and dignity</li>
+                            <li style="margin-bottom: 12px;">• Communal responsibility</li>
+                            <li style="margin-bottom: 12px;">• Collective well-being</li>
+                            <li style="margin-bottom: 12px;">• Interdependence over independence</li>
+                            <li>• Reciprocal respect and honor</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>Kihooto — Justice & Right Action</h2>
+                <p class="section-subtitle">Living with authenticity, integrity, and alignment to what truly matters.</p>
+                <p style="font-size: 16px; color: var(--text-dark); line-height: 1.8;">Kihooto is about living in truth. It means making choices rooted in integrity, honoring both yourself and others, and ensuring your path aligns with justice—for yourself, your community, and the world.</p>
+                <p style="margin-top: 16px; font-size: 16px; color: var(--text-dark); line-height: 1.8;">When you align with Kihooto, you ask: "Is this authentic? Does this honor my values? Does this serve the greater good?" These questions anchor your purpose and keep you grounded.</p>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>The Triangle of Wholeness</h2>
+                <p class="section-subtitle">Integration across mind, heart, and body creates lasting transformation.</p>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Mind</h3>
+                        <p>Clarity, strategy, aligned thinking, and cognitive reframing around what's possible for you.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Heart</h3>
+                        <p>Emotional alignment, values clarity, compassion, and deep connection to what truly matters.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Body</h3>
+                        <p>Embodied practice, somatic awareness, energy alignment, and physical integration of your transformation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: BLOG -->
+    <div id="blog" class="page">
+        <section style="background: var(--espresso); color: white; padding: 100px 40px 60px; margin-top: 60px;">
+            <div class="section-content">
+                <h2 style="color: white;">The Ikigai Journal</h2>
+                <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8);">Wisdom, insights, and reflections on purpose, leadership, and transformation.</p>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <div style="margin-bottom: 40px;">
+                    <label style="color: var(--espresso); font-weight: 600; margin-bottom: 12px; display: block;">Filter by Category</label>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button class="btn" style="background: var(--saffron); color: white; padding: 8px 16px;">All</button>
+                        <button class="btn" style="background: transparent; color: var(--saffron); border: 1px solid var(--saffron); padding: 8px 16px;">Purpose</button>
+                        <button class="btn" style="background: transparent; color: var(--saffron); border: 1px solid var(--saffron); padding: 8px 16px;">Community</button>
+                        <button class="btn" style="background: transparent; color: var(--saffron); border: 1px solid var(--saffron); padding: 8px 16px;">Leadership</button>
+                        <button class="btn" style="background: transparent; color: var(--saffron); border: 1px solid var(--saffron); padding: 8px 16px;">Ubuntu</button>
+                    </div>
+                </div>
+
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <div class="blog-header">
+                            <span class="blog-category">Purpose</span>
+                            <h3 class="blog-title">The Four Quadrants</h3>
+                        </div>
+                        <div class="blog-content">
+                            <p class="blog-excerpt">Understanding the intersection of passion, skills, service, and livelihood in discovering your unique Ikigai.</p>
+                            <p class="blog-meta">June 8, 2026 • 8 min read</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-header">
+                            <span class="blog-category">Community</span>
+                            <h3 class="blog-title">Ubuntu in Action</h3>
+                        </div>
+                        <div class="blog-content">
+                            <p class="blog-excerpt">How collective wisdom and shared values shape transformation for individuals and communities alike.</p>
+                            <p class="blog-meta">June 1, 2026 • 10 min read</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-header">
+                            <span class="blog-category">Leadership</span>
+                            <h3 class="blog-title">Feminine Power</h3>
+                        </div>
+                        <div class="blog-content">
+                            <p class="blog-excerpt">Reclaiming authentic leadership rooted in presence, integrity, and connection rather than domination.</p>
+                            <p class="blog-meta">May 25, 2026 • 12 min read</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>Subscribe to the Journal</h2>
+                <p class="section-subtitle">Receive monthly wisdom, reflections, and invitations to aligned living.</p>
+                <div class="two-col" style="align-items: center;">
+                    <form style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                    <div>
+                        <p style="color: var(--text-dark); font-size: 14px;">✓ Monthly purpose reflections</p>
+                        <p style="color: var(--text-dark); font-size: 14px; margin-top: 8px;">✓ Exclusive coaching insights</p>
+                        <p style="color: var(--text-dark); font-size: 14px; margin-top: 8px;">✓ Community updates & invitations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: COMMUNITY -->
+    <div id="community" class="page">
+        <section style="background: var(--espresso); color: white; padding: 100px 40px 60px; margin-top: 60px;">
+            <div class="section-content">
+                <h2 style="color: white;">Community & Circles</h2>
+                <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8);">Transformation happens in relationship. Join our aligned community.</p>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Ikigai Alignment Circles</h2>
+                <p class="section-subtitle">Monthly gatherings for purpose exploration, wisdom sharing, and collective growth.</p>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Women's Circles</h3>
+                        <p>Intimate monthly gatherings for women exploring purpose, leadership, authentic power, and community impact through an Ubuntu lens.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Youth Programs</h3>
+                        <p>Workshops and circles for young adults (18-30) discovering their purpose, building leadership skills, and aligning with their values.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Alumni Programs</h3>
+                        <p>For ALX and other tech/entrepreneurship alumni seeking purpose alignment and authentic leadership beyond the hustle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>How Circles Work</h2>
+                <div class="two-col">
+                    <div>
+                        <h3 style="color: var(--saffron); margin-bottom: 16px;">What to Expect</h3>
+                        <ul style="list-style: none; color: var(--text-dark);">
+                            <li style="margin-bottom: 12px;">• Facilitated purpose explorations</li>
+                            <li style="margin-bottom: 12px;">• Peer wisdom and feedback</li>
+                            <li style="margin-bottom: 12px;">• Embodiment and reflection practices</li>
+                            <li style="margin-bottom: 12px;">• Accountability partnerships</li>
+                            <li>• Community connection and support</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--saffron); margin-bottom: 16px;">Meeting Details</h3>
+                        <p style="color: var(--text-dark); margin-bottom: 12px;"><strong>When:</strong> Monthly (dates vary by circle)</p>
+                        <p style="color: var(--text-dark); margin-bottom: 12px;"><strong>Where:</strong> Nairobi + Online options</p>
+                        <p style="color: var(--text-dark); margin-bottom: 12px;"><strong>Size:</strong> 6-12 committed members</p>
+                        <p style="color: var(--text-dark);"><strong>Cost:</strong> Sliding scale, community-supported</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Corporate & Group Programs</h2>
+                <p class="section-subtitle">Tailored workshops and team experiences for organizations seeking authentic alignment.</p>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Team Workshops</h3>
+                        <p>Half-day or full-day sessions exploring purpose, authentic communication, and aligned leadership for your team.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Leadership Retreats</h3>
+                        <p>Multi-day immersive experiences combining strategy, embodiment practices, and community wisdom for leadership development.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Custom Programs</h3>
+                        <p>Tailored offerings for organizations looking to integrate Ikigai, Ubuntu, and authentic leadership into their culture.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>Group Booking Flow</h2>
+                <p class="section-subtitle">Ready to bring aligned coaching to your community or team?</p>
+                <div style="background: white; padding: 40px; border-radius: 12px; border: 1px solid var(--border-light);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center;">
+                        <div>
+                            <div style="font-family: 'Ojuju', cursive; font-size: 32px; color: var(--saffron); margin-bottom: 12px;">1</div>
+                            <h3 style="font-size: 16px; color: var(--espresso); margin-bottom: 8px;">Inquiry</h3>
+                            <p style="font-size: 13px; color: var(--text-dark);">Tell us about your group, size, and what you're seeking.</p>
+                        </div>
+                        <div>
+                            <div style="font-family: 'Ojuju', cursive; font-size: 32px; color: var(--saffron); margin-bottom: 12px;">2</div>
+                            <h3 style="font-size: 16px; color: var(--espresso); margin-bottom: 8px;">Consultation</h3>
+                            <p style="font-size: 13px; color: var(--text-dark);">We design a custom program tailored to your needs.</p>
+                        </div>
+                        <div>
+                            <div style="font-family: 'Ojuju', cursive; font-size: 32px; color: var(--saffron); margin-bottom: 12px;">3</div>
+                            <h3 style="font-size: 16px; color: var(--espresso); margin-bottom: 8px;">Experience</h3>
+                            <p style="font-size: 13px; color: var(--text-dark);">We deliver transformation for your group or organization.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="goToPage('contact')" style="margin-top: 32px; display: block; margin-left: auto; margin-right: auto;">Request a Consultation</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: CONTACT -->
+    <div id="contact" class="page">
+        <section style="background: var(--espresso); color: white; padding: 100px 40px 60px; margin-top: 60px;">
+            <div class="section-content">
+                <h2 style="color: white;">Book & Contact</h2>
+                <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8);">Let's explore how coaching can serve your transformation.</p>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <div class="two-col">
+                    <div>
+                        <h2>Direct Connection</h2>
+                        <p style="font-size: 16px; color: var(--text-dark); line-height: 1.8; margin-bottom: 24px;">Reach out via email or WhatsApp. I respond within 24 hours and would love to explore how we can work together.</p>
+
+                        <div style="background: var(--cream); padding: 24px; border-radius: 12px; margin-bottom: 24px;">
+                            <h3 style="color: var(--saffron); font-size: 16px; margin-bottom: 12px;">📧 Email</h3>
+                            <a href="mailto:umulkheiri@yahoo.com" style="color: var(--saffron); text-decoration: none; font-weight: 600; font-size: 15px;">umulkheiri@yahoo.com</a>
+                        </div>
+
+                        <div style="background: var(--cream); padding: 24px; border-radius: 12px; margin-bottom: 24px;">
+                            <h3 style="color: var(--pine); font-size: 16px; margin-bottom: 12px;">💬 WhatsApp</h3>
+                            <a href="https://wa.me/254140565335" style="color: var(--pine); text-decoration: none; font-weight: 600; font-size: 15px;">+254 140 565 335</a>
+                        </div>
+
+                        <div style="background: var(--cream); padding: 24px; border-radius: 12px;">
+                            <h3 style="color: var(--cinnamon); font-size: 16px; margin-bottom: 8px;">📍 Location</h3>
+                            <p style="color: var(--text-dark); font-size: 14px;">Nairobi, Kenya</p>
+                            <p style="color: var(--text-dark); font-size: 14px; margin-top: 4px;">Available for local and global coaching</p>
+                        </div>
+                    </div>
+
+                    <form id="bookingForm">
+                        <h2 style="margin-bottom: 24px;">Send a Message</h2>
+
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Your Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Interested In *</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select an option</option>
+                                <option value="Discovery">Discovery Session</option>
+                                <option value="Journey">Alignment Journey</option>
+                                <option value="Transformation">Transformation Path</option>
+                                <option value="VIP Day">VIP Intensive Day</option>
+                                <option value="Women's Circle">Women's Circle</option>
+                                <option value="Corporate Workshop">Corporate Workshop</option>
+                                <option value="Other">Other / Not Sure</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Tell Me About Your Journey *</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+
+                        <button type="submit" class="form-submit">Send My Message</button>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: var(--cream);">
+            <div class="section-content">
+                <h2>Payment & Logistics</h2>
+                <div class="three-col">
+                    <div class="card">
+                        <h3>Payment Methods</h3>
+                        <p>M-Pesa, PayPal, bank transfer. We're flexible and will work with you to make coaching accessible.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Session Formats</h3>
+                        <p>Individual sessions, group circles, workshops, and retreats. Available in-person in Nairobi and online globally.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Booking & Cancellation</h3>
+                        <p>Sessions held weekly or bi-weekly depending on package. 48-hour cancellation notice appreciated.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: white;">
+            <div class="section-content">
+                <h2>Frequently Asked Questions</h2>
+                <div style="max-width: 800px;">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What if I've never done coaching before?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Coaching is a partnership. You bring your experiences and questions; I bring framework, wisdom, and accountability. No prior experience needed—just openness and commitment to your transformation.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How long does transformation take?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Clarity can come in one session. Deep integration typically takes 3-6 months of consistent work. The Transformation Path (12 sessions over 3 months) is designed for lasting change.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Is coaching only for people in career transition?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            No. Coaching serves anyone seeking deeper purpose alignment—whether you're changing careers, deepening your current work, exploring leadership, or redesigning your life approach.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What's the difference between individual coaching and circles?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Individual coaching is personalized 1-on-1 work tailored to your unique journey. Circles are small group gatherings where you benefit from collective wisdom, peer support, and shared exploration.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can I do coaching alongside therapy?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Absolutely. Coaching and therapy serve different purposes. Therapy often addresses healing; coaching builds possibility. Both together create powerful transformation.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer group discounts?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. For groups of 4+ individuals or corporate teams, I offer custom pricing. Contact me directly to discuss your group's needs and budget.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>Umulkheiri Jalo · Ikigai Alignment Coaching</strong></p>
+        <p>Certified Ikigai Coach with Distinction · ID45632-28225</p>
+        <p style="margin-top: 16px;">
+            <a href="mailto:umulkheiri@yahoo.com">umulkheiri@yahoo.com</a> | 
+            <a href="https://wa.me/254140565335">WhatsApp +254 140 565 335</a>
+        </p>
+        <p style="margin-top: 16px; font-size: 12px;">© 2026 Umulkheiri Jalo. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Supabase
+        const SUPABASE_URL = 'https://srpiijgniyvlzfktaaie.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycGlpamduaXl2bHpma3RhYWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTQ1NTUsImV4cCI6MjA5Mzg5MDU1NX0.wim65uvYr-j12iFo_sha_GDR2kBqsKG7c1pVxAC1tL8';
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Mobile menu
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            navToggle.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+        });
+
+        // Page routing
+        function goToPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+
+            navMenu.classList.remove('open');
+            navToggle.textContent = '☰';
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value.trim();
+            const submitBtn = document.querySelector('.form-submit');
+            const messageDiv = document.getElementById('formMessage');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                const { error } = await sb.from('feedback').insert({
+                    section: `Booking - ${service}`,
+                    reaction: 'booking_request',
+                    feedback: message,
+                    name: name,
+                    email: email,
+                    source: 'site'
+                });
+
+                if (error) throw error;
+
+                messageDiv.textContent = '✓ Thank you! I\'ve received your message and will be in touch within 24 hours.';
+                messageDiv.className = 'form-message success';
+                document.getElementById('bookingForm').reset();
+                submitBtn.textContent = 'Send My Message';
+                submitBtn.disabled = false;
+            } catch (error) {
+                messageDiv.textContent = '✗ Something went wrong. Please email me directly: umulkheiri@yahoo.com';
+                messageDiv.className = 'form-message error';
+                submitBtn.textContent = 'Send My Message';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>
