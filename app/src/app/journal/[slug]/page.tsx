@@ -8,8 +8,8 @@ import { img } from "@/lib/path";
 type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string; seoTitle?: string; seoDescription?: string };
 
 async function getPosts(): Promise<Post[]> {
-  const { data } = await supabaseAdmin.from("content").select("data").single();
-  return data?.data?.blog ?? [];
+  const { data: rows } = await supabaseAdmin.from("content").select("data").limit(1);
+  return rows?.[0]?.data?.blog ?? [];
 }
 
 export async function generateStaticParams() {

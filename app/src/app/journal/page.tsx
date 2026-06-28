@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 type Post = { tag: string; title: string; excerpt: string; date: string; coverImage?: string; body?: string };
 
 export default async function JournalPage() {
-  const { data } = await supabaseAdmin.from("content").select("data").single();
-  const posts: Post[] = (data?.data?.blog ?? []);
+  const { data: rows } = await supabaseAdmin.from("content").select("data").limit(1);
+  const posts: Post[] = (rows?.[0]?.data?.blog ?? []);
 
   return (
     <>
@@ -69,6 +69,12 @@ export default async function JournalPage() {
               })}
             </div>
           )}
+
+          <div className="mt-16 pt-8 border-t border-warm-sand">
+            <Link href="/" className="text-saffron text-sm font-medium hover:text-cinnamon transition-colors">
+              ← Back to Home
+            </Link>
+          </div>
         </div>
       </section>
     </>
