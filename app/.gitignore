@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# uploaded client images (committed separately if needed)
-# /public/uploads/ — tracked for static export deployment
+# uploaded client images — migrated to Supabase Storage
+/public/uploads/
