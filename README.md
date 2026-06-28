@@ -2,109 +2,103 @@
 
 Brand & website for **Umulkheiri Jalo**, a certified Ikigai Alignment Coach (ID45632-28225) based in Nairobi, Kenya.
 
-**Live (GitHub Pages):** [https://tich-labs.github.io/umulkheiri/site.html](https://tich-labs.github.io/umulkheiri/site.html)
+| Environment | URL |
+|---|---|
+| **Production** | [https://umumotherofgoodness-cpu.github.io/Ikigai-Babe/](https://umumotherofgoodness-cpu.github.io/Ikigai-Babe/) |
+| **Staging** | [https://tich-labs.github.io/umulkheiri/](https://tich-labs.github.io/umulkheiri/) |
+| **Admin** | `/admin/` on either environment (Supabase Auth) |
 
 ---
 
-## Overview
-
-This monorepo contains two generations of the coaching website:
-
-| Version | Location | Stack |
-|---------|----------|-------|
-| **Current (Next.js)** | `app/` | Next.js 16 + React 19 + TypeScript 5 + Tailwind CSS v4 |
-| **Legacy (GitHub Pages)** | Root level (`index.html`, `site.html`, etc.) | Vanilla HTML/CSS/JS + Supabase |
-
----
-
-## Next.js App (`app/`)
-
-### Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | Next.js 16.2.6 (App Router) |
-| UI Library | React 19.2.4 |
+| Framework | Next.js 16 (App Router, static export) |
+| UI Library | React 19 |
 | Language | TypeScript 5 |
 | Styling | Tailwind CSS v4 |
-| Fonts | Playfair Display (serif), DM Sans (sans-serif) via `next/font` |
-| Linting | ESLint + Prettier |
+| Fonts | Ojuju (headings), Questrial (body) via `next/font` |
+| Database | Supabase (Postgres) |
+| Storage | Supabase Storage (image uploads) |
+| Auth | Supabase Auth (email + password) |
+| CI/CD | GitHub Actions → GitHub Pages |
 
-### Project Structure
+---
+
+## Project Structure
 
 ```
 app/
-├── public/                    # Static assets (SVGs)
+├── public/                    # Static assets, handover docs
 ├── src/
 │   ├── app/
-│   │   ├── globals.css        # Tailwind v4 theme tokens & base styles
-│   │   ├── layout.tsx         # Root layout (fonts, Navbar, Footer)
-│   │   ├── page.tsx           # Home page (hero, pillars, venn, features, services, blog, newsletter)
-│   │   └── services/
-│   │       └── page.tsx       # Services page (packages, add-ons, corporate, FAQ, booking modal)
+│   │   ├── globals.css        # Tailwind v4 theme tokens
+│   │   ├── layout.tsx         # Root layout (fonts, Navbar, Footer, metadata)
+│   │   ├── page.tsx           # Home page (hero, pillars, ikigai elements, services, community, blog)
+│   │   ├── services/          # Services page (packages, add-ons, corporate, FAQ)
+│   │   ├── journal/           # Blog page + individual article pages
+│   │   └── admin/             # Admin panel (password-gated Supabase Auth)
 │   ├── components/
-│   │   ├── BookingModal.tsx   # 3-step booking modal with package/add-on/payment/discount flow
-│   │   ├── Button.tsx         # Reusable button/link (primary/secondary/ghost/teal variants)
-│   │   ├── FeatureCard.tsx    # Feature card with icon, title, description, tags
-│   │   ├── Footer.tsx         # Site footer with nav, philosophy, booking CTA
-│   │   ├── Navbar.tsx         # Sticky navbar with mobile menu & booking CTA
-│   │   ├── SectionHeading.tsx # Reusable section heading (label, title, description)
-│   │   ├── ServiceCard.tsx    # Package card (badge, price, title, description, CTA)
-│   │   └── TestimonialCard.tsx# Testimonial card with quote and attribution
+│   │   ├── Navbar.tsx         # Sticky navbar with active link
+│   │   ├── Footer.tsx         # Site footer
+│   │   ├── ServiceCard.tsx    # Package card (compact & full variants)
+│   │   ├── SectionHeading.tsx # Reusable section heading (font-display)
+│   │   ├── TestimonialCard.tsx
+│   │   ├── EmojiPicker.tsx    # Emoji palette picker for admin
+│   │   └── ...
 │   └── lib/
-│       └── utils.ts           # cn() class name utility
-├── package.json
-├── tsconfig.json
+│       ├── supabase.ts        # Anon client (client-side)
+│       ├── supabase-server.ts # Service-role client (build-time)
+│       ├── path.ts            # Image path helper (basePath-aware)
+│       └── slug.ts            # URL slugify
+├── scripts/                   # Migration & utility scripts
 ├── next.config.ts
-├── eslint.config.mjs
-└── postcss.config.mjs
+├── package.json
+└── tailwind.config.ts
 ```
 
-### Pages
+---
 
-- **`/` (Home)** — Hero section with 3 pillars (Ikigai, Ubuntu, Kihooto), SVG Ikigai Venn diagram, feature cards, service cards, testimonial, community offerings, blog preview, newsletter signup
-- **`/services`** — Coaching packages (Discovery/Journey/Transformation/VIP Day), add-ons, corporate offerings, payment info, FAQ accordion, booking modal
-
-### Design System
-
-#### Colour Palette
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `deep-night` | `#1a1028` | Hero backgrounds, footer, dark cards |
-| `midnight-bloom` | `#2e1a47` | Secondary dark |
-| `bloom-pink` | `#f47bb4` | Primary accent, CTAs |
-| `sunset-gold` | `#f5a623` | Highlights |
-| `garden-teal` | `#1d9e75` | Success states, secondary accents |
-| `warm-sand` | `#f5efe6` | Alt section background |
-| `soft-white` | `#fdfaf7` | Primary page background |
-
-#### Typography
-
-- **Playfair Display** (serif) — Headings, featured text
-- **DM Sans** (sans-serif) — Body copy, UI text
-
-### Development
+## Development
 
 ```bash
 cd app
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # Production build
-npm run lint     # ESLint
+cp .env.example .env.local   # Fill in your Supabase credentials
+npm run dev                   # http://localhost:3000
+npm run build                 # Static export to out/
+npm run lint
 ```
+
+> **Note:** This app uses `output: "export"`. API routes are unavailable. Admin writes happen client-side via Supabase anon key with RLS policies.
 
 ---
 
-## Legacy Site (GitHub Pages)
+## Deployment
 
-The root-level files form the original coaching website deployed via `gh-pages`:
+### Workflow (`.github/workflows/deploy.yml`)
 
-| Page | URL |
-|------|-----|
-| Coaching Website | [https://tich-labs.github.io/umulkheiri/site.html](https://tich-labs.github.io/umulkheiri/site.html) |
-| Design Concept | [https://tich-labs.github.io/umulkheiri/](https://tich-labs.github.io/umulkheiri/) |
-| Admin Dashboard | [https://tich-labs.github.io/umulkheiri/dashboard.html](https://tich-labs.github.io/umulkheiri/dashboard.html) |
+On push to `main`, GitHub Actions:
+1. Checks out code
+2. Installs dependencies
+3. Builds with `npm run build` (injects env vars from Secrets)
+4. Deploys `out/` to the `gh-pages` branch via `peaceiris/actions-gh-pages`
+
+### Required GitHub Secrets
+
+| Secret | Source |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Dashboard → Project Settings → API |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same page (anon/public key) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Same page (service_role key — build-time only) |
+
+### Required Supabase Setup
+
+1. **RLS Policies** on `content` table — allow anon SELECT and UPDATE
+2. **Storage bucket** `uploads` — public, allow anon INSERT
+3. **Auth** → Providers → Email enabled
+4. **Auth** → Users → Add User for admin login
 
 ---
 
@@ -114,11 +108,8 @@ The root-level files form the original coaching website deployed via `gh-pages`:
 Certified Ikigai Alignment Coach · ID45632-28225
 
 📧 [umulkheiri@yahoo.com](mailto:umulkheiri@yahoo.com)
-💬 [+254 140 565 335](https://wa.me/254140565335)
 📍 Nairobi, Kenya
 
 ---
-
-## License
 
 © 2026 Umulkheiri Jalo. All rights reserved.
