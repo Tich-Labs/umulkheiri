@@ -207,13 +207,13 @@ export default async function HomePage() {
               <div className="rounded-2xl overflow-hidden">
                 <Image src={img(servicesImage)} alt="Coaching conversation — intimate scene with coach and client" width={1200} height={800} className="w-full h-auto" />
               </div>
-              <div className="text-center">
-                <Button href="/services" variant="ghost">View All Packages &amp; Details</Button>
-              </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               {cms.services.map((s: Parameters<typeof ServiceCard>[0]) => <ServiceCard key={s.title} compact {...s} />)}
             </div>
+          </div>
+          <div className="mt-8 text-center">
+            <Button href="/services" variant="ghost">View All Packages &amp; Details</Button>
           </div>
         </div>
       </section>
