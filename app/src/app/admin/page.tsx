@@ -66,16 +66,17 @@ const EMPTY: Content = {
 const SECTIONS = [
   { id: "manual",      label: "⭐ Start Here" },
   { id: "hero",        label: "Hero" },
+  { id: "credentials", label: "Credentials" },
   { id: "pillars",     label: "Three Pillars" },
   { id: "elements",    label: "Ikigai Elements" },
   { id: "services",    label: "Services" },
   { id: "extras",      label: "Add-Ons" },
   { id: "corporate",   label: "Corporate" },
   { id: "testimonials",label: "Testimonials" },
-  { id: "blog",        label: "Journal" },
   { id: "community",   label: "Community" },
+  { id: "blog",        label: "Journal" },
   { id: "faq",         label: "FAQ" },
-  { id: "site",        label: "Site Settings" },
+  { id: "newsletter",  label: "Newsletter" },
 ] as const;
 
 type SectionId = (typeof SECTIONS)[number]["id"];
@@ -966,8 +967,8 @@ function AdminContent() {
             </div>
           )}
 
-          {/* ─── SITE SETTINGS ─── */}
-          {activeSection === "site" && (
+          {/* ─── CREDENTIALS ─── */}
+          {activeSection === "credentials" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               <PreviewShell title="Credentials strip — as shown on home page">
                 <div className="bg-cream py-8 px-6">
@@ -990,17 +991,34 @@ function AdminContent() {
                     onChange={e => setContent(c => ({ ...c, credentials: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) }))}
                     placeholder="IPHM&#10;IAOTH&#10;CMA" />
                 </Field>
-                <p className="text-xs text-text-mid mb-4">Each line becomes a badge in the credentials strip below the hero.</p>
-                <div className="border-t border-saffron/10 pt-4">
-                  <p className="text-sm font-semibold text-espresso mb-3">Newsletter — &quot;The Inner Garden Letter&quot;</p>
-                  <Field label="Heading">
-                    <input className={inp} value={newsletter.heading} onChange={e => setContent(c => ({ ...c, newsletter: { ...c.newsletter, heading: e.target.value } }))} placeholder="The Inner Garden Letter" />
-                  </Field>
-                  <Field label="Body / tagline">
-                    <textarea className={ta} value={newsletter.body} onChange={e => setContent(c => ({ ...c, newsletter: { ...c.newsletter, body: e.target.value } }))}
-                      placeholder="Weekly reflections on purpose, belonging, and right action — delivered to your inbox." />
-                  </Field>
+                <p className="text-xs text-text-mid">Each line becomes a badge in the gold strip below the hero.</p>
+              </EditShell>
+            </div>
+          )}
+
+          {/* ─── NEWSLETTER ─── */}
+          {activeSection === "newsletter" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <PreviewShell title="Newsletter — as shown on home page">
+                <div className="bg-cream px-8 py-10">
+                  <div className="max-w-md mx-auto text-center">
+                    <h3 className="font-display text-2xl font-semibold text-espresso mb-2">{newsletter.heading || <span className="opacity-30">The Inner Garden Letter</span>}</h3>
+                    <p className="text-text-dark text-sm leading-relaxed mb-6">{newsletter.body || <span className="opacity-30">Tagline…</span>}</p>
+                    <div className="flex gap-2">
+                      <div className="flex-1 h-10 rounded-lg bg-white border border-saffron/20" />
+                      <div className="bg-espresso text-white text-sm font-medium px-5 py-2 rounded-lg">Subscribe</div>
+                    </div>
+                  </div>
                 </div>
+              </PreviewShell>
+              <EditShell>
+                <Field label="Heading">
+                  <input className={inp} value={newsletter.heading} onChange={e => setContent(c => ({ ...c, newsletter: { ...c.newsletter, heading: e.target.value } }))} placeholder="The Inner Garden Letter" />
+                </Field>
+                <Field label="Body / tagline">
+                  <textarea className={ta} value={newsletter.body} onChange={e => setContent(c => ({ ...c, newsletter: { ...c.newsletter, body: e.target.value } }))}
+                    placeholder="Weekly reflections on purpose, belonging, and right action — delivered to your inbox." />
+                </Field>
               </EditShell>
             </div>
           )}
