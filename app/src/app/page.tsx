@@ -197,13 +197,17 @@ export default async function HomePage() {
       {/* ── SERVICES ── */}
       <section className="bg-warm-sand py-16 md:py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <SectionHeading label="Services" title="Choose Your Path" description="From a free discovery session to a full transformation journey — find the container that fits where you are." />
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div>
+            <div className="flex flex-col gap-6">
+              <div>
+                <p className="text-pine text-sm uppercase font-medium mb-2.5" style={{ letterSpacing: "3px" }}>Services</p>
+                <h2 className="font-display text-[28px] font-semibold text-espresso leading-snug">Choose Your Path</h2>
+                <p className="mt-4 text-text-dark text-base max-w-[700px]" style={{ lineHeight: "1.7" }}>From a free discovery session to a full transformation journey — find the container that fits where you are.</p>
+              </div>
               <div className="rounded-2xl overflow-hidden">
                 <Image src={img(servicesImage)} alt="Coaching conversation — intimate scene with coach and client" width={1200} height={800} className="w-full h-auto" />
               </div>
-              <div className="mt-4 text-center">
+              <div className="text-center">
                 <Button href="/services" variant="ghost">View All Packages &amp; Details</Button>
               </div>
             </div>
