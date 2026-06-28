@@ -410,10 +410,6 @@ function AdminContent() {
                   {hero.image && <img src={img(hero.image)} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" style={{ objectPosition: "center 38%" }} />}
                   <ImageUpload value={hero.image} onChange={v => setHero("image", v)} placeholder="/images/Umulkheiri.jpg" />
                 </Field>
-                <Field label="Pillars section image">
-                  {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
-                  <ImageUpload value={pillarsImage} onChange={v => setContent(c => ({ ...c, pillarsImage: v }))} placeholder="/images/pillars.jpg" />
-                </Field>
               </EditShell>
             </div>
           )}
