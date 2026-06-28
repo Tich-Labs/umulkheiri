@@ -73,6 +73,7 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
             </div>
           </div>
         </div>
+      </div>
       </section>
 
       {/* Individual packages */}
