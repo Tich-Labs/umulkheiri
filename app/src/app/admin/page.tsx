@@ -18,6 +18,9 @@ type CommunityItem = { icon: string; title: string; desc: string; date: string }
 type Faq          = { q: string; a: string };
 type Extra         = { name: string; price: string; desc: string };
 type Corporate     = { name: string; price: string; duration: string; desc: string };
+type Pillar        = { icon: string; title: string; subtitle: string; desc: string };
+type Element       = { icon: string; title: string; subtitle: string; desc: string };
+type Newsletter    = { heading: string; body: string };
 type Content = {
   currency:   string;
   hero:       { badge: string; headline: string; subtitle: string; emotionalHook: string; pills: string[]; image: string };
@@ -29,6 +32,10 @@ type Content = {
   blog:       BlogPost[];
   community:  CommunityItem[];
   faq:        Faq[];
+  pillars:    Pillar[];
+  elements:   Element[];
+  credentials: string[];
+  newsletter: Newsletter;
   pillarsImage: string;
   servicesImage: string;
   communityImage: string;
@@ -40,12 +47,27 @@ const EMPTY: Content = {
   hero: { badge: "", headline: "", subtitle: "", emotionalHook: "", pills: [], image: "" },
   coachIntro: { label: "", heading: "", body: "", photo: "" },
   services: [], extras: [], corporate: [], testimonials: [], blog: [], community: [], faq: [],
+  pillars: [
+    { icon: "🌸", title: "Ikigai", subtitle: "Purpose & Passion", desc: "" },
+    { icon: "🌍", title: "Ubuntu", subtitle: "Belonging & Community", desc: "" },
+    { icon: "⚖️", title: "Kihooto", subtitle: "Justice & Right Action", desc: "" },
+  ],
+  elements: [
+    { icon: "❤️", title: "Passion", subtitle: "What you love", desc: "" },
+    { icon: "⭐", title: "Skills", subtitle: "What you're good at", desc: "" },
+    { icon: "🌍", title: "Service", subtitle: "What the world needs", desc: "" },
+    { icon: "💰", title: "Livelihood", subtitle: "What you can be rewarded for", desc: "" },
+  ],
+  credentials: [],
+  newsletter: { heading: "The Inner Garden Letter", body: "" },
   pillarsImage: "", servicesImage: "", communityImage: "", journalImage: "",
 };
 
 const SECTIONS = [
   { id: "manual",      label: "⭐ Start Here" },
   { id: "hero",        label: "Hero" },
+  { id: "pillars",     label: "Three Pillars" },
+  { id: "elements",    label: "Ikigai Elements" },
   { id: "services",    label: "Services" },
   { id: "extras",      label: "Add-Ons" },
   { id: "corporate",   label: "Corporate" },
@@ -53,6 +75,7 @@ const SECTIONS = [
   { id: "blog",        label: "Journal" },
   { id: "community",   label: "Community" },
   { id: "faq",         label: "FAQ" },
+  { id: "site",        label: "Site Settings" },
 ] as const;
 
 type SectionId = (typeof SECTIONS)[number]["id"];
@@ -262,8 +285,17 @@ function AdminContent() {
   function setFaq(i: number, k: keyof Faq, v: string) {
     setContent(c => { const f = [...(c.faq ?? [])]; f[i] = { ...f[i], [k]: v }; return { ...c, faq: f }; });
   }
+  function setPillar(i: number, k: keyof Pillar, v: string) {
+    setContent(c => { const p = [...c.pillars]; p[i] = { ...p[i], [k]: v }; return { ...c, pillars: p }; });
+  }
+  function setElement(i: number, k: keyof Element, v: string) {
+    setContent(c => { const e = [...c.elements]; e[i] = { ...e[i], [k]: v }; return { ...c, elements: e }; });
+  }
+  function setCredential(i: number, v: string) {
+    setContent(c => { const cr = [...c.credentials]; cr[i] = v; return { ...c, credentials: cr }; });
+  }
 
-  const { hero, services, extras = [], corporate = [], testimonials, blog, community, faq = [], pillarsImage, servicesImage, communityImage, journalImage, currency } = content;
+  const { hero, services, extras = [], corporate = [], testimonials, blog, community, faq = [], pillars, elements, credentials = [], newsletter = { heading: "", body: "" }, pillarsImage, servicesImage, communityImage, journalImage, currency } = content;
 
   return (
     <div className="flex h-screen bg-white">
@@ -382,6 +414,102 @@ function AdminContent() {
                   {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
                   <ImageUpload value={pillarsImage} onChange={v => setContent(c => ({ ...c, pillarsImage: v }))} placeholder="/images/pillars.jpg" />
                 </Field>
+              </EditShell>
+            </div>
+          )}
+
+          {/* ─── PILLARS ─── */}
+          {activeSection === "pillars" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <PreviewShell title="Three Pillars — as shown on home page">
+                <div className="bg-warm-sand px-6 py-8">
+                  <p className="text-pine text-sm uppercase font-medium mb-2 tracking-widest">The Framework</p>
+                  <h2 className="font-sans text-[22px] font-semibold text-espresso mb-1">Three Pillars of Transformation</h2>
+                  <p className="text-text-dark text-sm mb-6">Ikigai, Ubuntu, and Kihooto — purpose, belonging, and right action.</p>
+                  <div className="flex flex-col gap-4">
+                    {pillars.length === 0
+                      ? <p className="text-espresso/30 text-sm">No pillars defined</p>
+                      : pillars.map((p, i) => {
+                          const colors = [
+                            { color: "text-saffron", bg: "bg-saffron-tint" },
+                            { color: "text-pine", bg: "bg-pine-tint" },
+                            { color: "text-cinnamon", bg: "bg-sand-tint" },
+                          ][i] ?? { color: "text-espresso", bg: "bg-sand-tint" };
+                          return (
+                            <div key={i} className="bg-white rounded-xl p-5 border border-black/6 flex gap-4 items-start">
+                              <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 ${colors.bg}`}>{p.icon || "✦"}</div>
+                              <div>
+                                <h3 className={`font-display text-lg font-semibold ${colors.color}`}>{p.title || <span className="opacity-30">Title…</span>}</h3>
+                                <p className="text-sm uppercase tracking-wider text-text-muted mb-1">{p.subtitle || <span className="opacity-30">Subtitle…</span>}</p>
+                                <p className="text-base text-text-mid leading-relaxed">{p.desc || <span className="opacity-30">Description…</span>}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                  </div>
+                </div>
+              </PreviewShell>
+              <EditShell>
+                <Field label="Section image">
+                  {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
+                  <input className={inp} value={pillarsImage} readOnly placeholder="/images/pillars.jpg" />
+                </Field>
+                {pillars.map((p, i) => (
+                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
+                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Pillar {i + 1}</p>
+                    <div className="grid grid-cols-4 gap-3">
+                      <Field label="Icon (emoji)"><input className={inp} value={p.icon} onChange={e => setPillar(i, "icon", e.target.value)} /></Field>
+                      <div className="col-span-3"><Field label="Title"><input className={inp} value={p.title} onChange={e => setPillar(i, "title", e.target.value)} /></Field></div>
+                    </div>
+                    <Field label="Subtitle"><input className={inp} value={p.subtitle} onChange={e => setPillar(i, "subtitle", e.target.value)} placeholder="Purpose & Passion" /></Field>
+                    <Field label="Description"><textarea className={ta} value={p.desc} onChange={e => setPillar(i, "desc", e.target.value)} /></Field>
+                  </div>
+                ))}
+              </EditShell>
+            </div>
+          )}
+
+          {/* ─── IKIGAI ELEMENTS ─── */}
+          {activeSection === "elements" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <PreviewShell title="Ikigai Elements — as shown on home page">
+                <div className="bg-white px-6 py-8">
+                  <h2 className="font-sans text-[22px] font-semibold text-espresso mb-1">Four Elements of Ikigai</h2>
+                  <p className="text-text-dark text-sm mb-6">Passion, Skills, Service, Livelihood — the four circles.</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    {elements.length === 0
+                      ? <p className="text-espresso/30 text-sm col-span-2">No elements defined</p>
+                      : elements.map((el, i) => {
+                          const colors = [
+                            { color: "text-saffron", bg: "bg-saffron-tint" },
+                            { color: "text-cinnamon", bg: "bg-sand-tint" },
+                            { color: "text-pine", bg: "bg-pine-tint" },
+                            { color: "text-espresso", bg: "bg-espresso-tint" },
+                          ][i] ?? { color: "text-espresso", bg: "bg-sand-tint" };
+                          return (
+                            <div key={i} className="bg-white rounded-xl p-5 border border-black/6">
+                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3 ${colors.bg}`}>{el.icon || "✦"}</div>
+                              <h3 className={`font-display text-base font-semibold ${colors.color}`}>{el.title || <span className="opacity-30">Title…</span>}</h3>
+                              <p className="text-sm uppercase tracking-wider text-text-muted mb-1">{el.subtitle || <span className="opacity-30">Subtitle…</span>}</p>
+                              <p className="text-sm text-text-mid leading-relaxed">{el.desc || <span className="opacity-30">Description…</span>}</p>
+                            </div>
+                          );
+                        })}
+                  </div>
+                </div>
+              </PreviewShell>
+              <EditShell>
+                {elements.map((el, i) => (
+                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
+                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Element {i + 1}</p>
+                    <div className="grid grid-cols-4 gap-3">
+                      <Field label="Icon (emoji)"><input className={inp} value={el.icon} onChange={e => setElement(i, "icon", e.target.value)} /></Field>
+                      <div className="col-span-3"><Field label="Title"><input className={inp} value={el.title} onChange={e => setElement(i, "title", e.target.value)} /></Field></div>
+                    </div>
+                    <Field label="Subtitle"><input className={inp} value={el.subtitle} onChange={e => setElement(i, "subtitle", e.target.value)} placeholder="What you love" /></Field>
+                    <Field label="Description"><textarea className={ta} value={el.desc} onChange={e => setElement(i, "desc", e.target.value)} /></Field>
+                  </div>
+                ))}
               </EditShell>
             </div>
           )}
@@ -835,6 +963,45 @@ function AdminContent() {
             </div>
           )}
 
+          {/* ─── SITE SETTINGS ─── */}
+          {activeSection === "site" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <PreviewShell title="Credentials strip — as shown on home page">
+                <div className="bg-cream py-8 px-6">
+                  <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm text-text-dark uppercase tracking-wider">
+                    <span className="font-semibold text-text-dark">Certified Excellence</span>
+                    {credentials.length === 0
+                      ? <span className="text-espresso/30">No credentials set</span>
+                      : credentials.map((cred, i) => (
+                          <span key={i} className="flex items-center gap-x-2">
+                            <span className="text-saffron">✦</span>
+                            <span>{cred}</span>
+                          </span>
+                        ))}
+                  </div>
+                </div>
+              </PreviewShell>
+              <EditShell>
+                <Field label="Credentials — one per line">
+                  <textarea className={ta + " min-h-[100px]"} value={credentials.join("\n")}
+                    onChange={e => setContent(c => ({ ...c, credentials: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) }))}
+                    placeholder="IPHM&#10;IAOTH&#10;CMA" />
+                </Field>
+                <p className="text-xs text-text-mid mb-4">Each line becomes a badge in the credentials strip below the hero.</p>
+                <div className="border-t border-saffron/10 pt-4">
+                  <p className="text-sm font-semibold text-espresso mb-3">Newsletter — &quot;The Inner Garden Letter&quot;</p>
+                  <Field label="Heading">
+                    <input className={inp} value={newsletter.heading} onChange={e => setContent(c => ({ ...c, newsletter: { ...c.newsletter, heading: e.target.value } }))} placeholder="The Inner Garden Letter" />
+                  </Field>
+                  <Field label="Body / tagline">
+                    <textarea className={ta} value={newsletter.body} onChange={e => setContent(c => ({ ...c, newsletter: { ...c.newsletter, body: e.target.value } }))}
+                      placeholder="Weekly reflections on purpose, belonging, and right action — delivered to your inbox." />
+                  </Field>
+                </div>
+              </EditShell>
+            </div>
+          )}
+
           {/* ─── MANUAL ─── */}
           {activeSection === "manual" && (
             <div className="space-y-6 text-sm leading-relaxed">
@@ -1004,10 +1171,6 @@ function AdminContent() {
                 <p className="font-semibold text-espresso text-sm mb-1">Things not in this panel — reach out to update</p>
                 <p className="text-text-mid text-sm mb-2">These parts of the site exist but aren&apos;t editable here yet. Send me the new content and I&apos;ll update them:</p>
                 <div className="grid sm:grid-cols-3 gap-x-6 gap-y-2 text-sm">
-                  <div><span className="font-medium text-espresso">Credentials strip</span><br/><span className="text-text-mid">IPHM, IAOTH, CMA badges</span></div>
-                  <div><span className="font-medium text-espresso">Three Pillars</span><br/><span className="text-text-mid">Ikigai, Ubuntu, Kihooto cards</span></div>
-                  <div><span className="font-medium text-espresso">Ikigai Elements</span><br/><span className="text-text-mid">Passion, Skills, Service, Livelihood</span></div>
-                  <div><span className="font-medium text-espresso">Newsletter copy</span><br/><span className="text-text-mid">&quot;Inner Garden Letter&quot; heading &amp; body</span></div>
                   <div><span className="font-medium text-espresso">Contact email</span><br/><span className="text-text-mid">Update once domain email is ready</span></div>
                 </div>
               </div>
