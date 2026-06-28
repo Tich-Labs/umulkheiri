@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef, Fragment, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import ServiceCard from "@/components/ServiceCard";
-import { supabaseAdminClient } from "@/lib/supabase-admin-client";
+import EmojiPicker from "@/components/EmojiPicker";
 import { supabase } from "@/lib/supabase";
 import { img } from "@/lib/path";
 
@@ -61,20 +61,27 @@ const EMPTY: Content = {
 };
 
 const SECTIONS = [
-  { id: "manual",      label: "⭐ Start Here" },
-  { id: "hero",        label: "Hero" },
-  { id: "pillars",     label: "Three Pillars" },
-  { id: "elements",    label: "Ikigai Elements" },
-  { id: "services",    label: "Services" },
-  { id: "extras",      label: "Add-Ons" },
-  { id: "corporate",   label: "Corporate" },
-  { id: "testimonials",label: "Testimonials" },
-  { id: "community",   label: "Community" },
-  { id: "blog",        label: "Journal" },
-  { id: "faq",         label: "FAQ" },
+  { id: "manual",       label: "⭐ Start Here" },
+  { id: "hero",         label: "Hero" },
+  { id: "pillars",      label: "Three Pillars" },
+  { id: "elements",     label: "Ikigai Elements" },
+  { id: "services",     label: "Services" },
+  { id: "extras",       label: "Add-Ons" },
+  { id: "corporate",    label: "Corporate" },
+  { id: "testimonials", label: "Testimonials" },
+  { id: "community",    label: "Community" },
+  { id: "blog",         label: "Journal" },
+  { id: "faq",          label: "FAQ" },
 ] as const;
 
 type SectionId = (typeof SECTIONS)[number]["id"];
+
+const NAV_GROUPS: { label: string | null; ids: SectionId[] }[] = [
+  { label: null,       ids: ["manual"] },
+  { label: "Pages",    ids: ["hero", "pillars", "elements", "community"] },
+  { label: "Services", ids: ["services", "extras", "corporate"] },
+  { label: "Content",  ids: ["testimonials", "blog", "faq"] },
+];
 
 /* ── UI components ── */
 function PreviewShell({ title, children }: { title: string; children: React.ReactNode }) {
@@ -113,6 +120,33 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 const inp = "w-full bg-white border border-saffron/20 rounded-lg px-3 py-2 text-sm text-espresso placeholder-espresso/30 focus:outline-none focus:border-saffron transition-colors";
 const ta  = inp + " resize-y min-h-[80px]";
 
+/* ── TabbedItems ── */
+function TabbedItems({ items, tabLabel, children }: {
+  items: unknown[];
+  tabLabel: (i: number) => string;
+  children: (i: number) => React.ReactNode;
+}) {
+  const [tab, setTab] = useState(0);
+  const active = Math.min(tab, items.length - 1);
+  return (
+    <div>
+      <div className="flex gap-1 mb-4 flex-wrap border-b border-saffron/10 pb-2">
+        {items.map((_, i) => (
+          <button key={i} type="button" onClick={() => setTab(i)}
+            className={`px-3 py-1.5 text-xs font-medium rounded-t-lg transition-colors cursor-pointer ${
+              active === i
+                ? "bg-white text-saffron border-b-2 border-saffron"
+                : "text-espresso/40 hover:text-espresso hover:bg-espresso/5"
+            }`}>
+            {tabLabel(i)}
+          </button>
+        ))}
+      </div>
+      {items.length > 0 && children(active)}
+    </div>
+  );
+}
+
 /* ── ImageUpload ── */
 function ImageUpload({ value, onChange, placeholder }: { value: string; onChange: (url: string) => void; placeholder?: string }) {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -125,11 +159,11 @@ function ImageUpload({ value, onChange, placeholder }: { value: string; onChange
     try {
       const ext = file.name.split(".").pop() ?? "jpg";
       const name = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabaseAdminClient.storage
+      const { error: upErr } = await supabase.storage
         .from("uploads")
         .upload(name, file, { upsert: false });
       if (upErr) throw upErr;
-      const { data: { publicUrl } } = supabaseAdminClient.storage
+      const { data: { publicUrl } } = supabase.storage
         .from("uploads")
         .getPublicUrl(name);
       onChange(publicUrl);
@@ -156,62 +190,80 @@ function ImageUpload({ value, onChange, placeholder }: { value: string; onChange
   );
 }
 
-/* ── PasswordGate ── */
-function PasswordGate({ children }: { children: React.ReactNode }) {
-  const required = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+/* ── AuthGate (Supabase email + password) ── */
+function AuthGate({ children }: { children: React.ReactNode }) {
+  const [session, setSession] = useState<boolean | null>(null);
+  const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
-  const [authed, setAuthed] = useState(!required);
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (required && sessionStorage.getItem("admin-authed") === "1") setAuthed(true);
-  }, [required]);
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(!!data.session);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(!!session);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (pw === required) {
-      setAuthed(true);
-      sessionStorage.setItem("admin-authed", "1");
-    } else {
-      setErr(true);
-      setTimeout(() => setErr(false), 2000);
+    setLoading(true);
+    setErr("");
+    const { error } = await supabase.auth.signInWithPassword({ email, password: pw });
+    if (error) {
+      setErr(error.message);
+      setLoading(false);
     }
   }
 
-  if (!required || authed) return <>{children}</>;
+  async function signOut() {
+    await supabase.auth.signOut();
+  }
 
-  return (
+  if (session === null) return (
+    <div className="flex h-screen bg-white items-center justify-center text-espresso/50">Loading…</div>
+  );
+
+  if (!session) return (
     <div className="flex h-screen bg-cream items-center justify-center">
       <div className="bg-white rounded-2xl p-10 w-80 shadow-lg border border-saffron/20">
         <h1 className="font-display text-xl font-semibold text-espresso mb-1">Umulkheiri Jalo</h1>
-        <p className="text-sm text-espresso/40 mb-6">Site Editor</p>
-          <form onSubmit={submit} className="space-y-3">
-            <div className="relative">
-              <input type={showPw ? "text" : "password"} className={inp + " pr-10"} placeholder="Password" value={pw}
-                onChange={e => { setPw(e.target.value); setErr(false); }} autoFocus />
-              <button type="button" onClick={() => setShowPw(!showPw)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-espresso/40 hover:text-espresso/70 cursor-pointer">
-                {showPw ? "🙈" : "👁️"}
-              </button>
-            </div>
-          {err && <p className="text-red-500 text-xs">Incorrect password</p>}
-          <button type="submit" className="w-full bg-espresso text-white text-sm font-medium py-2.5 rounded-lg hover:bg-espresso/90 transition-colors cursor-pointer">
-            Enter
+        <p className="text-sm text-espresso/40 mb-6">Site Editor — Sign in</p>
+        <form onSubmit={submit} className="space-y-3">
+          <input type="email" className={inp} placeholder="Email" value={email}
+            onChange={e => { setEmail(e.target.value); setErr(""); }} required autoFocus />
+          <div className="relative">
+            <input type={showPw ? "text" : "password"} className={inp + " pr-10"} placeholder="Password" value={pw}
+              onChange={e => { setPw(e.target.value); setErr(""); }} required />
+            <button type="button" onClick={() => setShowPw(!showPw)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-espresso/40 hover:text-espresso/70 cursor-pointer">
+              {showPw ? "🙈" : "👁️"}
+            </button>
+          </div>
+          {err && <p className="text-red-500 text-xs">{err}</p>}
+          <button type="submit" disabled={loading}
+            className="w-full bg-espresso text-white text-sm font-medium py-2.5 rounded-lg hover:bg-espresso/90 transition-colors cursor-pointer disabled:opacity-50">
+            {loading ? "Signing in…" : "Sign in"}
           </button>
         </form>
       </div>
     </div>
   );
+
+  return <>{children}</>;
 }
 
 /* ── main ── */
 export default function AdminPage() {
   return (
     <Suspense fallback={<div className="flex h-screen bg-white items-center justify-center text-espresso/50">Loading…</div>}>
-      <PasswordGate>
+      <AuthGate>
         <AdminContent />
-      </PasswordGate>
+      </AuthGate>
     </Suspense>
   );
 }
@@ -233,8 +285,7 @@ function AdminContent() {
 
   const fetchContent = useCallback(async () => {
     setLoadErr(null);
-    const client = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY ? supabaseAdminClient : supabase;
-    const { data: rows, error } = await client.from("content").select("data").limit(1);
+    const { data: rows, error } = await supabase.from("content").select("data").limit(1);
     if (error) {
       console.error("Content load error:", error.message);
       setLoadErr(error.message);
@@ -247,11 +298,11 @@ function AdminContent() {
     setSaving(true);
     setSaved(false);
     try {
-      const { data: rows, error: readErr } = await supabaseAdminClient.from("content").select("id").limit(1);
+      const { data: rows, error: readErr } = await supabase.from("content").select("id").limit(1);
       if (readErr) throw readErr;
       const existing = rows?.[0];
       if (!existing) throw new Error("No content row found to update");
-      const { error } = await supabaseAdminClient.from("content").update({ data: content }).eq("id", existing.id);
+      const { error } = await supabase.from("content").update({ data: content }).eq("id", existing.id);
       if (error) throw error;
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
@@ -308,21 +359,18 @@ function AdminContent() {
         <div className="h-14 flex items-center gap-2.5 px-5 border-b border-saffron/20">
           <span className="font-display font-semibold text-sm leading-tight text-espresso">Umulkheiri<br/>Jalo</span>
         </div>
-        <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+        <nav className="flex-1 px-3 pt-2">
           {SECTIONS.map(s => (
             <button key={s.id} onClick={() => goToSection(s.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors cursor-pointer ${
+              className={`w-full flex items-center px-3 py-2.5 rounded-lg text-sm transition-colors cursor-pointer ${
                 activeSection === s.id
                   ? "bg-espresso/10 text-espresso font-medium"
                   : "text-espresso/50 hover:text-espresso hover:bg-espresso/5"
               }`}>
-              <span>{s.label}</span>
+              {s.label}
             </button>
           ))}
         </nav>
-        <div className="p-3 border-t border-saffron/20">
-          <div className="text-sm text-espresso/30 px-3">Site Editor</div>
-        </div>
       </aside>
 
       {/* ── MAIN ── */}
@@ -463,17 +511,19 @@ function AdminContent() {
                   {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
                   <input className={inp} value={pillarsImage} readOnly placeholder="/images/pillars.jpg" />
                 </Field>
-                {pillars.map((p, i) => (
-                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Pillar {i + 1}</p>
+                <TabbedItems items={pillars} tabLabel={i => `Pillar ${i + 1}`}>
+                  {i => {
+                    const p = pillars[i];
+                    return (<>
                     <div className="grid grid-cols-4 gap-3">
-                      <Field label="Icon (emoji)"><input className={inp} value={p.icon} onChange={e => setPillar(i, "icon", e.target.value)} /></Field>
+                      <Field label="Icon (emoji)"><EmojiPicker value={p.icon} onChange={v => setPillar(i, "icon", v)} /></Field>
                       <div className="col-span-3"><Field label="Title"><input className={inp} value={p.title} onChange={e => setPillar(i, "title", e.target.value)} /></Field></div>
                     </div>
                     <Field label="Subtitle"><input className={inp} value={p.subtitle} onChange={e => setPillar(i, "subtitle", e.target.value)} placeholder="Purpose & Passion" /></Field>
                     <Field label="Description"><textarea className={ta} value={p.desc} onChange={e => setPillar(i, "desc", e.target.value)} /></Field>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
               </EditShell>
             </div>
           )}
@@ -508,17 +558,19 @@ function AdminContent() {
                 </div>
               </PreviewShell>
               <EditShell>
-                {elements.map((el, i) => (
-                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Element {i + 1}</p>
+                <TabbedItems items={elements} tabLabel={i => `Element ${i + 1}`}>
+                  {i => {
+                    const el = elements[i];
+                    return (<>
                     <div className="grid grid-cols-4 gap-3">
-                      <Field label="Icon (emoji)"><input className={inp} value={el.icon} onChange={e => setElement(i, "icon", e.target.value)} /></Field>
+                      <Field label="Icon (emoji)"><EmojiPicker value={el.icon} onChange={v => setElement(i, "icon", v)} /></Field>
                       <div className="col-span-3"><Field label="Title"><input className={inp} value={el.title} onChange={e => setElement(i, "title", e.target.value)} /></Field></div>
                     </div>
                     <Field label="Subtitle"><input className={inp} value={el.subtitle} onChange={e => setElement(i, "subtitle", e.target.value)} placeholder="What you love" /></Field>
                     <Field label="Description"><textarea className={ta} value={el.desc} onChange={e => setElement(i, "desc", e.target.value)} /></Field>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
               </EditShell>
             </div>
           )}
@@ -562,9 +614,10 @@ function AdminContent() {
                     {servicesImage && <img src={img(servicesImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
                     <ImageUpload value={servicesImage} onChange={v => setContent(c => ({ ...c, servicesImage: v }))} placeholder="/images/services.png" />
                   </Field>
-                  {services.map((s, i) => (
-                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Package {i + 1}{s.featured ? " ★ Featured" : ""}</p>
+                <TabbedItems items={services} tabLabel={i => `Package ${i + 1}${services[i]?.featured ? " ★" : ""}`}>
+                  {i => {
+                    const s = services[i];
+                    return (<>
                     <div className="grid grid-cols-2 gap-3">
                       <Field label="Badge"><input className={inp} value={s.badge} onChange={e => setService(i, "badge", e.target.value)} /></Field>
                       <Field label="Price"><input className={inp} value={s.price} onChange={e => setService(i, "price", e.target.value)} /></Field>
@@ -577,8 +630,9 @@ function AdminContent() {
                       <input type="checkbox" checked={!!s.featured} onChange={e => setService(i, "featured", e.target.checked)} className="accent-saffron" />
                       Featured card (dark background)
                     </label>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
               </EditShell>
             </div>
           )}
@@ -605,16 +659,18 @@ function AdminContent() {
                 </div>
               </PreviewShell>
               <EditShell>
-                {extras.map((ex, i) => (
-                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Add-On {i + 1}</p>
+                <TabbedItems items={extras} tabLabel={i => `Add-On ${i + 1}`}>
+                  {i => {
+                    const ex = extras[i];
+                    return (<>
                     <div className="grid grid-cols-2 gap-3">
                       <Field label="Name"><input className={inp} value={ex.name} onChange={e => setExtra(i, "name", e.target.value)} /></Field>
                       <Field label="Price"><input className={inp} value={ex.price} onChange={e => setExtra(i, "price", e.target.value)} /></Field>
                     </div>
                     <Field label="Description"><textarea className={ta} value={ex.desc} onChange={e => setExtra(i, "desc", e.target.value)} /></Field>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
                 <div className="flex gap-4 pt-1">
                   <button onClick={() => setContent(c => ({ ...c, extras: [...(c.extras ?? []), { name: "", price: "", desc: "" }] }))}
                     className="text-sm text-saffron hover:text-cinnamon transition-colors cursor-pointer">+ Add add-on</button>
@@ -650,17 +706,19 @@ function AdminContent() {
                 </div>
               </PreviewShell>
               <EditShell>
-                {corporate.map((co, i) => (
-                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Offering {i + 1}</p>
+                <TabbedItems items={corporate} tabLabel={i => `Offering ${i + 1}`}>
+                  {i => {
+                    const co = corporate[i];
+                    return (<>
                     <div className="grid grid-cols-2 gap-3">
                       <Field label="Name"><input className={inp} value={co.name} onChange={e => setCorporate(i, "name", e.target.value)} /></Field>
                       <Field label="Price"><input className={inp} value={co.price} onChange={e => setCorporate(i, "price", e.target.value)} placeholder="From KES 40,000 / Custom" /></Field>
                       <Field label="Duration"><input className={inp} value={co.duration} onChange={e => setCorporate(i, "duration", e.target.value)} placeholder="30-60 min / Half Day / 2-3 Days" /></Field>
                     </div>
                     <Field label="Description"><textarea className={ta} value={co.desc} onChange={e => setCorporate(i, "desc", e.target.value)} /></Field>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
                 <div className="flex gap-4 pt-1">
                   <button onClick={() => setContent(c => ({ ...c, corporate: [...(c.corporate ?? []), { name: "", price: "", duration: "", desc: "" }] }))}
                     className="text-sm text-saffron hover:text-cinnamon transition-colors cursor-pointer">+ Add offering</button>
@@ -699,17 +757,19 @@ function AdminContent() {
                 </div>
               </PreviewShell>
               <EditShell>
-                {testimonials.map((t, i) => (
-                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Testimonial {i + 1}</p>
+                <TabbedItems items={testimonials} tabLabel={i => `Testimonial ${i + 1}`}>
+                  {i => {
+                    const t = testimonials[i];
+                    return (<>
                     <Field label="Quote"><textarea className={ta + " min-h-[100px]"} value={t.quote} onChange={e => setTestimonial(i, "quote", e.target.value)} /></Field>
                     <div className="grid grid-cols-3 gap-3">
                       <Field label="Name"><input className={inp} value={t.name} onChange={e => setTestimonial(i, "name", e.target.value)} /></Field>
                       <Field label="Location"><input className={inp} value={t.location} onChange={e => setTestimonial(i, "location", e.target.value)} /></Field>
                       <Field label="Package"><input className={inp} value={t.package} onChange={e => setTestimonial(i, "package", e.target.value)} /></Field>
                     </div>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
                 <div className="flex gap-4 pt-1">
                   <button onClick={() => setContent(c => ({ ...c, testimonials: [...c.testimonials, { quote: "", name: "", location: "", package: "" }] }))}
                     className="text-sm text-saffron hover:text-cinnamon transition-colors cursor-pointer">+ Add testimonial</button>
@@ -907,18 +967,20 @@ function AdminContent() {
                   {communityImage && <img src={img(communityImage)} alt="" className="w-full h-24 object-cover rounded-lg mb-2 border border-saffron/20" />}
                   <ImageUpload value={communityImage} onChange={v => setContent(c => ({ ...c, communityImage: v }))} placeholder="/images/community.jpeg" />
                 </Field>
-                {community.map((cm, i) => (
-                  <div key={i} className="mb-4 pb-4 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">Program {i + 1}</p>
+                <TabbedItems items={community} tabLabel={i => `Program ${i + 1}`}>
+                  {i => {
+                    const cm = community[i];
+                    return (<>
                     <div className="grid grid-cols-4 gap-3">
-                      <Field label="Icon (emoji)"><input className={inp} value={cm.icon} onChange={e => setCommunity(i, "icon", e.target.value)} /></Field>
+                      <Field label="Icon (emoji)"><EmojiPicker value={cm.icon} onChange={v => setCommunity(i, "icon", v)} /></Field>
                       <div className="col-span-3"><Field label="Title"><input className={inp} value={cm.title} onChange={e => setCommunity(i, "title", e.target.value)} /></Field></div>
                     </div>
                     <Field label="Date"><input className={inp} value={cm.date} onChange={e => setCommunity(i, "date", e.target.value)} placeholder='e.g. "Every Thursday" or "July 10, 2026"' />
                       <p className="text-xs text-text-mid mt-1">Leave blank to hide. Shows in saffron under the title on the home page.</p></Field>
                     <Field label="Description"><textarea className={ta} value={cm.desc} onChange={e => setCommunity(i, "desc", e.target.value)} /></Field>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
                 <div className="flex gap-4 pt-1">
                   <button onClick={() => setContent(c => ({ ...c, community: [...c.community, { icon: "", title: "", desc: "", date: "" }] }))}
                     className="text-sm text-saffron hover:text-cinnamon transition-colors cursor-pointer">+ Add program</button>
@@ -953,13 +1015,15 @@ function AdminContent() {
                 </div>
               </PreviewShell>
               <EditShell>
-                {faq.map((item, i) => (
-                  <div key={i} className="mb-5 pb-5 border-b border-saffron/10 last:border-0 last:mb-0 last:pb-0">
-                    <p className="text-sm font-semibold text-saffron uppercase tracking-wider mb-3">FAQ {i + 1}</p>
+                <TabbedItems items={faq} tabLabel={i => `FAQ ${i + 1}`}>
+                  {i => {
+                    const item = faq[i];
+                    return (<>
                     <Field label="Question"><input className={inp} value={item.q} onChange={e => setFaq(i, "q", e.target.value)} placeholder="What happens in a Discovery Session?" /></Field>
                     <Field label="Answer"><textarea className={ta + " min-h-[100px]"} value={item.a} onChange={e => setFaq(i, "a", e.target.value)} placeholder="A relaxed, no-pressure 30-minute conversation…" /></Field>
-                  </div>
-                ))}
+                    </>);
+                  }}
+                </TabbedItems>
                 <div className="flex gap-4 pt-1">
                   <button onClick={() => setContent(c => ({ ...c, faq: [...(c.faq ?? []), { q: "", a: "" }] }))}
                     className="text-sm text-saffron hover:text-cinnamon transition-colors cursor-pointer">+ Add FAQ</button>
