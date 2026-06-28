@@ -66,7 +66,6 @@ const EMPTY: Content = {
 const SECTIONS = [
   { id: "manual",      label: "⭐ Start Here" },
   { id: "hero",        label: "Hero" },
-  { id: "credentials", label: "Credentials" },
   { id: "pillars",     label: "Three Pillars" },
   { id: "elements",    label: "Ikigai Elements" },
   { id: "services",    label: "Services" },
@@ -418,6 +417,13 @@ function AdminContent() {
                   {hero.image && <img src={img(hero.image)} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-saffron/20" style={{ objectPosition: "center 38%" }} />}
                   <ImageUpload value={hero.image} onChange={v => setHero("image", v)} placeholder="/images/Umulkheiri.jpg" />
                 </Field>
+                <div className="border-t border-saffron/10 pt-4 mt-4">
+                  <p className="text-sm font-semibold text-espresso mb-3">Credentials strip (below hero)</p>
+                  <textarea className={ta + " min-h-[80px]"} value={credentials.join("\n")}
+                    onChange={e => setContent(c => ({ ...c, credentials: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) }))}
+                    placeholder="IPHM&#10;IAOTH&#10;CMA" />
+                  <p className="text-xs text-text-mid mt-1">Each line becomes a badge in the gold strip.</p>
+                </div>
               </EditShell>
             </div>
           )}
@@ -963,35 +969,6 @@ function AdminContent() {
                       className="text-sm text-espresso/40 hover:text-saffron transition-colors cursor-pointer">Remove last</button>
                   )}
                 </div>
-              </EditShell>
-            </div>
-          )}
-
-          {/* ─── CREDENTIALS ─── */}
-          {activeSection === "credentials" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-              <PreviewShell title="Credentials strip — as shown on home page">
-                <div className="bg-cream py-8 px-6">
-                  <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm text-text-dark uppercase tracking-wider">
-                    <span className="font-semibold text-text-dark">Certified Excellence</span>
-                    {credentials.length === 0
-                      ? <span className="text-espresso/30">No credentials set</span>
-                      : credentials.map((cred, i) => (
-                          <span key={i} className="flex items-center gap-x-2">
-                            <span className="text-saffron">✦</span>
-                            <span>{cred}</span>
-                          </span>
-                        ))}
-                  </div>
-                </div>
-              </PreviewShell>
-              <EditShell>
-                <Field label="Credentials — one per line">
-                  <textarea className={ta + " min-h-[100px]"} value={credentials.join("\n")}
-                    onChange={e => setContent(c => ({ ...c, credentials: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) }))}
-                    placeholder="IPHM&#10;IAOTH&#10;CMA" />
-                </Field>
-                <p className="text-xs text-text-mid">Each line becomes a badge in the gold strip below the hero.</p>
               </EditShell>
             </div>
           )}
