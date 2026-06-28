@@ -47,16 +47,15 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       <section style={{ background: "#fff", padding: "80px 40px" }}>
         <div className="max-w-[1200px] mx-auto">
           <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div className="rounded-2xl overflow-hidden max-w-xs mx-auto">
+              <img src={img("/images/hero_bg.png")} alt="Woman in deep listening, surrounded by an indigenous garden" className="w-full h-auto" />
+            </div>
             <div className="flex flex-col gap-6">
               <div>
                 <p className="text-saffron font-semibold tracking-[3px] uppercase text-sm mb-3">How It Works</p>
                 <h2 className="font-display text-[28px] font-semibold text-espresso mb-3">Three Steps to Begin</h2>
                 <p className="text-text-dark">Booking is simple — no pressure, no complexity.</p>
               </div>
-              <div className="rounded-2xl overflow-hidden max-w-xs">
-                <img src={img("/images/hero_bg.png")} alt="Woman in deep listening, surrounded by an indigenous garden" className="w-full h-auto" />
-              </div>
-            </div>
             <div className="grid sm:grid-cols-3 md:grid-cols-1 gap-6">
               {[
                 { step: "1", title: "Explore Your Options", desc: "Browse packages, compare paths, and choose what resonates." },
