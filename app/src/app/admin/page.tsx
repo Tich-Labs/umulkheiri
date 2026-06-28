@@ -164,6 +164,7 @@ function ImageUpload({ value, onChange, placeholder }: { value: string; onChange
 function PasswordGate({ children }: { children: React.ReactNode }) {
   const required = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
   const [pw, setPw] = useState("");
+  const [showPw, setShowPw] = useState(false);
   const [authed, setAuthed] = useState(!required);
   const [err, setErr] = useState(false);
 
@@ -189,9 +190,15 @@ function PasswordGate({ children }: { children: React.ReactNode }) {
       <div className="bg-white rounded-2xl p-10 w-80 shadow-lg border border-saffron/20">
         <h1 className="font-display text-xl font-semibold text-espresso mb-1">Umulkheiri Jalo</h1>
         <p className="text-sm text-espresso/40 mb-6">Site Editor</p>
-        <form onSubmit={submit} className="space-y-3">
-          <input type="password" className={inp} placeholder="Password" value={pw}
-            onChange={e => { setPw(e.target.value); setErr(false); }} autoFocus />
+          <form onSubmit={submit} className="space-y-3">
+            <div className="relative">
+              <input type={showPw ? "text" : "password"} className={inp + " pr-10"} placeholder="Password" value={pw}
+                onChange={e => { setPw(e.target.value); setErr(false); }} autoFocus />
+              <button type="button" onClick={() => setShowPw(!showPw)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-espresso/40 hover:text-espresso/70 cursor-pointer">
+                {showPw ? "🙈" : "👁️"}
+              </button>
+            </div>
           {err && <p className="text-red-500 text-xs">Incorrect password</p>}
           <button type="submit" className="w-full bg-espresso text-white text-sm font-medium py-2.5 rounded-lg hover:bg-espresso/90 transition-colors cursor-pointer">
             Enter
