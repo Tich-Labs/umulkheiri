@@ -429,7 +429,7 @@ function AdminContent() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               <PreviewShell title="Three Pillars — as shown on home page">
                 <div className="bg-warm-sand">
-                  {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-32 object-cover" />}
+                  {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-auto" />}
                   <div className="px-6 py-8">
                     <p className="text-pine text-sm uppercase font-medium mb-2 tracking-widest">The Framework</p>
                     <h2 className="font-display text-[22px] font-semibold text-espresso mb-1">Three Pillars of Transformation</h2>
@@ -545,7 +545,6 @@ function AdminContent() {
                     </div>
                   </div>
                 </div>
-              </div>
               </PreviewShell>
                 <EditShell>
                   <Field label="Display currency">
