@@ -35,7 +35,7 @@ export default function ServiceCard({
       style={{ boxShadow: featured ? undefined : "0 4px 12px rgba(0,0,0,0.08)" }}
     >
       <span className="inline-block bg-saffron/10 text-saffron text-sm font-semibold px-4 py-1.5 rounded-full mb-4 w-fit">
-        {badge}
+        {featured ? "★ " : ""}{badge}
       </span>
       <p className={cn("font-display text-[36px] font-semibold mb-0.5", featured ? "text-saffron" : "text-saffron")}>
         {price}
