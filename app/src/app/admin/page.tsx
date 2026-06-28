@@ -1167,9 +1167,23 @@ function AdminContent() {
               {/* Not in admin yet */}
               <div className="bg-white border border-saffron/20 rounded-xl px-5 py-4">
                 <p className="font-semibold text-espresso text-sm mb-1">Things not in this panel — reach out to update</p>
-                <p className="text-text-mid text-sm mb-2">These parts of the site exist but aren&apos;t editable here yet. Send me the new content and I&apos;ll update them:</p>
-                <div className="grid sm:grid-cols-3 gap-x-6 gap-y-2 text-sm">
-                  <div><span className="font-medium text-espresso">Contact email</span><br/><span className="text-text-mid">Update once domain email is ready</span></div>
+                <p className="text-text-mid text-sm mb-3">These parts of the site exist but aren&apos;t editable here yet. Send me the new content and I&apos;ll update them:</p>
+                <div className="space-y-3 text-sm">
+                  <div className="p-3 rounded-lg border border-saffron/10" style={{ background: "#FFFBF0" }}>
+                    <p className="font-medium text-espresso">Custom domain (e.g. umulkheiri.com)</p>
+                    <ol className="text-text-mid mt-1 ml-4 list-decimal space-y-0.5">
+                      <li>Buy the domain from Namecheap / GoDaddy / any registrar.</li>
+                      <li>Tell me the domain name or share registrar access.</li>
+                      <li>I&apos;ll configure DNS and update GitHub Pages settings.</li>
+                    </ol>
+                  </div>
+                  <div className="p-3 rounded-lg border border-saffron/10" style={{ background: "#FFFBF0" }}>
+                    <p className="font-medium text-espresso">Contact email</p>
+                    <ol className="text-text-mid mt-1 ml-4 list-decimal space-y-0.5">
+                      <li>Set up a professional email (e.g. hello@umulkheiri.com) or share the one you want to use.</li>
+                      <li>I&apos;ll update the contact email throughout the site — &quot;Join the Waitlist&quot; buttons, footer links, and the booking modal will all point to it.</li>
+                    </ol>
+                  </div>
                 </div>
               </div>
             </>);
