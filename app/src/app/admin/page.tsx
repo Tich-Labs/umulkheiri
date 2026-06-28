@@ -428,30 +428,33 @@ function AdminContent() {
           {activeSection === "pillars" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               <PreviewShell title="Three Pillars — as shown on home page">
-                <div className="bg-warm-sand px-6 py-8">
-                  <p className="text-pine text-sm uppercase font-medium mb-2 tracking-widest">The Framework</p>
-                  <h2 className="font-display text-[22px] font-semibold text-espresso mb-1">Three Pillars of Transformation</h2>
-                  <p className="text-text-dark text-sm mb-6">Ikigai, Ubuntu, and Kihooto — purpose, belonging, and right action.</p>
-                  <div className="flex flex-col gap-4">
-                    {pillars.length === 0
-                      ? <p className="text-espresso/30 text-sm">No pillars defined</p>
-                      : pillars.map((p, i) => {
-                          const colors = [
-                            { color: "text-saffron", bg: "bg-saffron-tint" },
-                            { color: "text-pine", bg: "bg-pine-tint" },
-                            { color: "text-cinnamon", bg: "bg-sand-tint" },
-                          ][i] ?? { color: "text-espresso", bg: "bg-sand-tint" };
-                          return (
-                            <div key={i} className="bg-white rounded-xl p-5 border border-black/6 flex gap-4 items-start">
-                              <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 ${colors.bg}`}>{p.icon || "✦"}</div>
-                              <div>
-                                <h3 className={`font-display text-lg font-semibold ${colors.color}`}>{p.title || <span className="opacity-30">Title…</span>}</h3>
-                                <p className="text-sm uppercase tracking-wider text-text-muted mb-1">{p.subtitle || <span className="opacity-30">Subtitle…</span>}</p>
-                                <p className="text-base text-text-mid leading-relaxed">{p.desc || <span className="opacity-30">Description…</span>}</p>
+                <div className="bg-warm-sand">
+                  {pillarsImage && <img src={img(pillarsImage)} alt="" className="w-full h-32 object-cover" />}
+                  <div className="px-6 py-8">
+                    <p className="text-pine text-sm uppercase font-medium mb-2 tracking-widest">The Framework</p>
+                    <h2 className="font-display text-[22px] font-semibold text-espresso mb-1">Three Pillars of Transformation</h2>
+                    <p className="text-text-dark text-sm mb-6">Ikigai, Ubuntu, and Kihooto — purpose, belonging, and right action.</p>
+                    <div className="flex flex-col gap-4">
+                      {pillars.length === 0
+                        ? <p className="text-espresso/30 text-sm">No pillars defined</p>
+                        : pillars.map((p, i) => {
+                            const colors = [
+                              { color: "text-saffron", bg: "bg-saffron-tint" },
+                              { color: "text-pine", bg: "bg-pine-tint" },
+                              { color: "text-cinnamon", bg: "bg-sand-tint" },
+                            ][i] ?? { color: "text-espresso", bg: "bg-sand-tint" };
+                            return (
+                              <div key={i} className="bg-white rounded-xl p-5 border border-black/6 flex gap-4 items-start">
+                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 ${colors.bg}`}>{p.icon || "✦"}</div>
+                                <div>
+                                  <h3 className={`font-display text-lg font-semibold ${colors.color}`}>{p.title || <span className="opacity-30">Title…</span>}</h3>
+                                  <p className="text-sm uppercase tracking-wider text-text-muted mb-1">{p.subtitle || <span className="opacity-30">Subtitle…</span>}</p>
+                                  <p className="text-base text-text-mid leading-relaxed">{p.desc || <span className="opacity-30">Description…</span>}</p>
+                                </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
+                    </div>
                   </div>
                 </div>
               </PreviewShell>
@@ -541,8 +544,9 @@ function AdminContent() {
                     </div>
                     </div>
                   </div>
-                  </div>
-                </PreviewShell>
+                </div>
+              </div>
+              </PreviewShell>
                 <EditShell>
                   <Field label="Display currency">
                     <div className="flex gap-3">
