@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
 import SectionHeading from "@/components/SectionHeading";
 import BookingModal from "@/components/BookingModal";
@@ -79,22 +80,15 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       {/* Individual packages */}
       <section style={{ background: "var(--color-cream, #F9F7F2)", padding: "80px 40px" }}>
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid md:grid-cols-2 gap-10 items-start">
-            <div className="rounded-2xl overflow-hidden">
-              <img src={img("/images/hero_bg.png")} alt="" className="w-full h-auto" />
-            </div>
-            <div>
-              <SectionHeading label="For Individuals" title="Choose Your Path" description="From a free discovery session to a full transformation journey — find the container that fits where you are." />
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <span className="text-sm text-espresso/50">All prices in</span>
-                <span className="text-sm font-semibold text-pine bg-pine/10 px-3 py-1 rounded-full">{currency}</span>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-6">
-                {services.map(pkg => (
-                  <ServiceCard key={pkg.title} {...(pkg as Parameters<typeof ServiceCard>[0])} onSelect={() => openModal(pkg.title)} />
-                ))}
-              </div>
-            </div>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="text-sm text-espresso/50">All prices in</span>
+            <span className="text-sm font-semibold text-pine bg-pine/10 px-3 py-1 rounded-full">{currency}</span>
+          </div>
+          <SectionHeading label="For Individuals" title="Choose Your Path" description="From a free discovery session to a full transformation journey — find the container that fits where you are." />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map(pkg => (
+              <ServiceCard key={pkg.title} {...(pkg as Parameters<typeof ServiceCard>[0])} onSelect={() => openModal(pkg.title)} />
+            ))}
           </div>
         </div>
       </section>

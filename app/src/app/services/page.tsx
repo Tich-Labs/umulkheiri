@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ServicesPage() {
-  const { data } = await supabaseAdmin.from("content").select("data").single();
-  const c = data?.data ?? {};
+  const { data: rows } = await supabaseAdmin.from("content").select("data").limit(1);
+  const c = rows?.[0]?.data ?? {};
   return (
     <ServicesClient
       services={c.services ?? []}

@@ -70,11 +70,6 @@ export default async function JournalPage() {
             </div>
           )}
 
-          <div className="mt-16 pt-8 border-t border-warm-sand">
-            <Link href="/" className="text-saffron text-sm font-medium hover:text-cinnamon transition-colors">
-              ← Back to Home
-            </Link>
-          </div>
         </div>
       </section>
     </>
