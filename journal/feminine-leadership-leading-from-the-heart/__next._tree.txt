@@ -1,5 +1,5 @@
-:HL["/umulkheiri/_next/static/chunks/03h0z27lcl793.css","style"]
+:HL["/umulkheiri/_next/static/chunks/0.s6mpfcb8e0a.css","style"]
 :HL["/umulkheiri/_next/static/media/24b63db40a97cf97-s.p.0p3a4f87xckmd.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/umulkheiri/_next/static/media/2f19417f17ff8e58-s.p.0o~93sw~c_fqg.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["https://srpiijgniyvlzfktaaie.supabase.co/storage/v1/object/public/uploads/1782476424350.jpeg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"journal","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"feminine-leadership-leading-from-the-heart","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"jV3lqrjHDk0u36OGXz5Pt"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"journal","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"feminine-leadership-leading-from-the-heart","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"nlB9DutL-rUWd-fmGIcwv"}
