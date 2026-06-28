@@ -1173,7 +1173,7 @@ function AdminContent() {
                     <p className="font-medium text-espresso">Custom domain (e.g. umulkheiri.com)</p>
                     <ol className="text-text-mid mt-1 ml-4 list-decimal space-y-0.5">
                       <li>Buy the domain from Namecheap, GoDaddy, or any registrar.</li>
-                      <li>In your domain&apos;s DNS settings, add a CNAME record pointing <code className="bg-cream px-1 rounded">yourdomain.com</code> to <code className="bg-cream px-1 rounded">tich-labs.github.io</code>.</li>
+                      <li>In your domain&apos;s DNS settings, add a CNAME record pointing <code className="bg-cream px-1 rounded">yourdomain.com</code> to <code className="bg-cream px-1 rounded">your-github-username.github.io</code>.</li>
                       <li>Go to your repo on GitHub → Settings → Pages → Custom domain, enter your domain, and save.</li>
                       <li>Wait up to 30 minutes for DNS to propagate. Your site will load at your custom domain.</li>
                     </ol>
