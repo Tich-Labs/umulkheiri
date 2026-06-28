@@ -434,7 +434,7 @@ function AdminContent() {
               <PreviewShell title="Three Pillars — as shown on home page">
                 <div className="bg-warm-sand px-6 py-8">
                   <p className="text-pine text-sm uppercase font-medium mb-2 tracking-widest">The Framework</p>
-                  <h2 className="font-sans text-[22px] font-semibold text-espresso mb-1">Three Pillars of Transformation</h2>
+                  <h2 className="font-display text-[22px] font-semibold text-espresso mb-1">Three Pillars of Transformation</h2>
                   <p className="text-text-dark text-sm mb-6">Ikigai, Ubuntu, and Kihooto — purpose, belonging, and right action.</p>
                   <div className="flex flex-col gap-4">
                     {pillars.length === 0
@@ -484,7 +484,7 @@ function AdminContent() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               <PreviewShell title="Ikigai Elements — as shown on home page">
                 <div className="bg-white px-6 py-8">
-                  <h2 className="font-sans text-[22px] font-semibold text-espresso mb-1">Four Elements of Ikigai</h2>
+                  <h2 className="font-display text-[22px] font-semibold text-espresso mb-1">Four Elements of Ikigai</h2>
                   <p className="text-text-dark text-sm mb-6">Passion, Skills, Service, Livelihood — the four circles.</p>
                   <div className="grid grid-cols-2 gap-4">
                     {elements.length === 0
@@ -536,7 +536,7 @@ function AdminContent() {
                         <span className="text-sm text-espresso/50">All prices in</span>
                         <span className="text-sm font-semibold text-pine bg-pine/10 px-3 py-0.5 rounded-full">{currency}</span>
                       </div>
-                      <h2 className="font-sans text-[22px] font-semibold text-espresso mb-2">Individual Coaching Packages</h2>
+                      <h2 className="font-display text-[22px] font-semibold text-espresso mb-2">Individual Coaching Packages</h2>
                       <p className="text-text-dark text-sm mb-8">Choose the path that resonates with your current season of life.</p>
                       <div className="grid grid-cols-2 gap-4">
                       {services.length === 0
@@ -589,7 +589,7 @@ function AdminContent() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               <PreviewShell title="Add-Ons — as shown on /services">
                 <div className="bg-white px-6 py-8">
-                  <h2 className="font-sans text-[22px] font-semibold text-espresso mb-2">Add-Ons</h2>
+                  <h2 className="font-display text-[22px] font-semibold text-espresso mb-2">Add-Ons</h2>
                   <p className="text-text-dark text-sm mb-6">Deepen your coaching experience with these optional additions.</p>
                   <div className="grid gap-4">
                     {extras.length === 0
@@ -633,7 +633,7 @@ function AdminContent() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               <PreviewShell title="Corporate & Group — as shown on /services">
                 <div className="bg-cream px-6 py-8">
-                  <h2 className="font-sans text-[22px] font-semibold text-espresso mb-2">Corporate &amp; Group</h2>
+                  <h2 className="font-display text-[22px] font-semibold text-espresso mb-2">Corporate &amp; Group</h2>
                   <p className="text-text-dark text-sm mb-6">Bring Ikigai alignment to your team, company, or community.</p>
                   <div className="grid gap-4">
                     {corporate.length === 0
@@ -680,7 +680,7 @@ function AdminContent() {
               <PreviewShell title="Testimonials">
                 <div className="bg-white px-8 py-8">
                   <div style={{ maxWidth: 700, margin: "0 auto" }}>
-                    <h2 className="font-sans text-[22px] font-semibold text-espresso mb-8">What Clients Say</h2>
+                    <h2 className="font-display text-[22px] font-semibold text-espresso mb-8">What Clients Say</h2>
                     {testimonials.length === 0
                       ? <div className="bg-espresso/8 rounded-xl p-8 text-center text-espresso/30 text-sm">No testimonials yet</div>
                       : testimonials.map((t, i) => (
@@ -881,7 +881,7 @@ function AdminContent() {
               <PreviewShell title="Community Programs">
                 <div className="bg-white px-6 py-8">
                   <div style={{ maxWidth: 900, margin: "0 auto" }}>
-                    <h2 className="font-sans text-[22px] font-semibold text-espresso mb-2">Group &amp; Community</h2>
+                    <h2 className="font-display text-[22px] font-semibold text-espresso mb-2">Group &amp; Community</h2>
                     <p className="text-text-dark text-sm mb-6">Workshops for circles, ALX alumni, and community groups.</p>
                     <div className="grid md:grid-cols-2 gap-6 items-start">
                       <div className="rounded-2xl overflow-hidden">

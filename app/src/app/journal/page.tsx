@@ -60,7 +60,7 @@ export default async function JournalPage() {
                       {post.coverImage && (
                         <span className="inline-block bg-saffron text-white text-sm font-semibold px-3 py-1 rounded-full mb-3">{post.tag}</span>
                       )}
-                      <h2 className="font-sans text-[18px] font-medium text-espresso mb-2 leading-snug">{post.title}</h2>
+                      <h2 className="font-display text-[18px] font-medium text-espresso mb-2 leading-snug">{post.title}</h2>
                       <p className="text-[13px] text-text-dark leading-relaxed mb-4">{post.excerpt}</p>
                       <p className="text-sm text-text-muted">{post.date}</p>
                     </div>

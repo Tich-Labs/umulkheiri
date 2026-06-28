@@ -14,7 +14,7 @@ export default function SectionHeading({
           {label}
         </p>
       )}
-      <h2 className="font-sans text-[28px] font-semibold text-espresso leading-snug">
+      <h2 className="font-display text-[28px] font-semibold text-espresso leading-snug">
         {title}
       </h2>
       {description && (

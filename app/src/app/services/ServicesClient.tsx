@@ -176,7 +176,7 @@ export default function ServicesClient({ services, extras, corporate, faq, heroI
       {/* CTA */}
       <section style={{ background: "#1E1208", padding: "80px 40px", textAlign: "center" }}>
         <div className="max-w-225 mx-auto">
-          <h2 className="font-sans text-[28px] font-semibold text-white mb-4">Ready to Align with Your Purpose?</h2>
+          <h2 className="font-display text-[28px] font-semibold text-white mb-4">Ready to Align with Your Purpose?</h2>
           <p className="text-white/80 text-base mb-8">Let&apos;s explore how coaching can serve your transformation.</p>
           <button onClick={() => openModal("")}
             className="bg-saffron text-white text-[15px] font-semibold px-8 py-3.5 rounded-lg hover:bg-[#c97508] transition-colors cursor-pointer">

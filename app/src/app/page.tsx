@@ -126,7 +126,7 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-8">
             <p className="text-pine text-sm uppercase font-medium mb-2" style={{ letterSpacing: "3px" }}>The Framework</p>
-            <h2 className="font-sans text-[28px] font-semibold text-espresso leading-snug mb-2">Three Pillars of Transformation</h2>
+            <h2 className="font-display text-[28px] font-semibold text-espresso leading-snug mb-2">Three Pillars of Transformation</h2>
             <p className="text-text-dark text-base" style={{ lineHeight: "1.7" }}>Ikigai, Ubuntu, and Kihooto form the triangle of wholeness — a complete approach to purpose, belonging, and right action.</p>
           </div>
           <div className="flex flex-col md:flex-row gap-10 md:gap-14 items-stretch">
@@ -272,7 +272,7 @@ export default async function HomePage() {
             <div className="flex flex-col gap-6">
               <div>
                 <p className="text-pine text-sm uppercase font-medium mb-2.5" style={{ letterSpacing: "3px" }}>The Ikigai Journal</p>
-                <h2 className="font-sans text-[28px] font-semibold text-espresso leading-snug mb-3">Latest Wisdom</h2>
+                <h2 className="font-display text-[28px] font-semibold text-espresso leading-snug mb-3">Latest Wisdom</h2>
                 <p className="text-text-dark text-base" style={{ lineHeight: "1.7" }}>Reflections on purpose, leadership, Ubuntu, and living an aligned life.</p>
               </div>
               <div className="flex flex-col gap-3">
