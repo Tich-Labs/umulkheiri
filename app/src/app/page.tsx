@@ -5,7 +5,6 @@ import Button from "@/components/Button";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import TestimonialCard from "@/components/TestimonialCard";
-import NewsletterForm from "@/components/NewsletterForm";
 import { toSlug } from "@/lib/slug";
 import { img } from "@/lib/path";
 
@@ -301,18 +300,6 @@ export default async function HomePage() {
           </div>
           <div className="text-center">
             <Button href="/journal" variant="pine">Read more articles →</Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ── NEWSLETTER ── */}
-      <section className="bg-warm-sand py-16 md:py-20">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <div className="max-w-md mx-auto">
-            <span className="text-3xl mb-4 block">🌿</span>
-            <h2 className="font-display text-2xl font-semibold text-espresso mb-2">{cms.newsletter.heading}</h2>
-            <p className="text-base text-text-muted mb-6">{cms.newsletter.body}</p>
-            <NewsletterForm />
           </div>
         </div>
       </section>
