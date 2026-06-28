@@ -39,7 +39,7 @@ export default function Navbar() {
           )}>
             <div className="flex flex-col md:flex-row md:items-center gap-1 px-6 pb-4 pt-2 md:p-0 md:gap-8 bg-cream md:bg-transparent border-b border-saffron/20 md:border-0">
               {links.map((link) => {
-                const isActive = pathname === link.href;
+                const isActive = pathname.replace(/\/+$/, "") === link.href;
                 return (
                   <Link
                     key={link.href}
