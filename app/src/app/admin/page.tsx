@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, Fragment, Suspense } from "re
 import { useSearchParams, useRouter } from "next/navigation";
 import ServiceCard from "@/components/ServiceCard";
 import { supabaseAdminClient } from "@/lib/supabase-admin-client";
+import { supabase } from "@/lib/supabase";
 import { img } from "@/lib/path";
 
 /* ── types ── */
@@ -197,6 +198,7 @@ function AdminContent() {
   const [activeManualTab, setActiveManualTab] = useState("hero");
   const [saving, setSaving]       = useState(false);
   const [saved, setSaved]         = useState(false);
+  const [loadErr, setLoadErr]     = useState<string | null>(null);
   const activeSection: SectionId  = (searchParams.get("section") as SectionId) || "hero";
 
   function goToSection(id: SectionId) {
@@ -204,8 +206,14 @@ function AdminContent() {
   }
 
   const fetchContent = useCallback(async () => {
-    const { data, error } = await supabaseAdminClient.from("content").select("data").single();
-    if (error) console.error("Failed to load content:", error.message);
+    setLoadErr(null);
+    // Try service-role client first (bypasses RLS); fall back to anon if key not baked in
+    const client = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY ? supabaseAdminClient : supabase;
+    const { data, error } = await client.from("content").select("data").single();
+    if (error) {
+      console.error("Content load error:", error.message);
+      setLoadErr(error.message);
+    }
     if (data?.data) setContent(data.data as Content);
   }, []);
 
@@ -293,6 +301,13 @@ function AdminContent() {
             {saving ? "Saving…" : saved ? "✓ Saved" : "Save Changes"}
           </button>
         </div>
+
+        {/* error banner */}
+        {loadErr && (
+          <div className="mx-6 mt-4 bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-lg">
+            Content load failed: {loadErr}
+          </div>
+        )}
 
         {/* content */}
         <div className="flex-1 overflow-y-auto p-6">
