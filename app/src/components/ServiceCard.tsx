@@ -11,6 +11,7 @@ interface ServiceCardProps {
   cta: string;
   ctaVariant?: "primary" | "ghost" | "teal";
   featured?: boolean;
+  compact?: boolean;
   onSelect?: () => void;
 }
 
@@ -22,6 +23,7 @@ export default function ServiceCard({
   description,
   cta,
   featured,
+  compact,
   onSelect,
 }: ServiceCardProps) {
   return (
@@ -37,26 +39,32 @@ export default function ServiceCard({
       <span className="inline-block bg-saffron/10 text-saffron text-sm font-semibold px-4 py-1.5 rounded-full mb-4 w-fit">
         {featured ? "★ " : ""}{badge}
       </span>
-      <p className={cn("font-display text-[36px] font-semibold mb-0.5", featured ? "text-saffron" : "text-saffron")}>
-        {price}
-      </p>
-      <p className={cn("text-[13px] mb-4", featured ? "text-white/60" : "text-text-muted")}>
-        {priceLabel}
-      </p>
+      {!compact && (
+        <>
+          <p className={cn("font-display text-[36px] font-semibold mb-0.5", featured ? "text-saffron" : "text-saffron")}>
+            {price}
+          </p>
+          <p className={cn("text-[13px] mb-4", featured ? "text-white/60" : "text-text-muted")}>
+            {priceLabel}
+          </p>
+        </>
+      )}
       <h3 className={cn("font-sans text-[18px] font-medium mb-3", featured ? "text-white" : "text-espresso")}>
         {title}
       </h3>
       <p className={cn("text-[14px] leading-relaxed flex-1 mb-6", featured ? "text-white/85" : "text-text-dark")}>
         {description}
       </p>
-      <Button
-        href={onSelect ? undefined : "/services"}
-        variant="primary"
-        className="w-full text-center block cursor-pointer"
-        onClick={onSelect}
-      >
-        {cta}
-      </Button>
+      {!compact && (
+        <Button
+          href={onSelect ? undefined : "/services"}
+          variant="primary"
+          className="w-full text-center block cursor-pointer"
+          onClick={onSelect}
+        >
+          {cta}
+        </Button>
+      )}
     </div>
   );
 }

@@ -198,11 +198,13 @@ export default async function HomePage() {
       <section className="bg-warm-sand py-16 md:py-20">
         <div className="max-w-6xl mx-auto px-6">
           <SectionHeading label="Services" title="Choose Your Path" description="From a free discovery session to a full transformation journey — find the container that fits where you are." />
-          <div className="rounded-2xl overflow-hidden mb-10 max-w-2xl mx-auto">
-            <Image src={img(servicesImage)} alt="Coaching conversation — intimate scene with coach and client" width={1200} height={800} className="w-full h-auto" />
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {cms.services.map((s: Parameters<typeof ServiceCard>[0]) => <ServiceCard key={s.title} {...s} />)}
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="rounded-2xl overflow-hidden">
+              <Image src={img(servicesImage)} alt="Coaching conversation — intimate scene with coach and client" width={1200} height={800} className="w-full h-auto" />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {cms.services.map((s: Parameters<typeof ServiceCard>[0]) => <ServiceCard key={s.title} compact {...s} />)}
+            </div>
           </div>
           <div className="mt-6 text-center">
             <Button href="/services" variant="ghost">View All Packages &amp; Details</Button>
