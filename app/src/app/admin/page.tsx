@@ -207,22 +207,24 @@ function AdminContent() {
 
   const fetchContent = useCallback(async () => {
     setLoadErr(null);
-    // Try service-role client first (bypasses RLS); fall back to anon if key not baked in
     const client = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY ? supabaseAdminClient : supabase;
-    const { data, error } = await client.from("content").select("data").single();
+    const { data: rows, error } = await client.from("content").select("data").limit(1);
     if (error) {
       console.error("Content load error:", error.message);
       setLoadErr(error.message);
     }
-    if (data?.data) setContent(data.data as Content);
+    const row = rows?.[0];
+    if (row?.data) setContent(row.data as Content);
   }, []);
 
   async function saveContent() {
     setSaving(true);
     setSaved(false);
     try {
-      const { data: existing, error: readErr } = await supabaseAdminClient.from("content").select("id").single();
+      const { data: rows, error: readErr } = await supabaseAdminClient.from("content").select("id").limit(1);
       if (readErr) throw readErr;
+      const existing = rows?.[0];
+      if (!existing) throw new Error("No content row found to update");
       const { error } = await supabaseAdminClient.from("content").update({ data: content }).eq("id", existing.id);
       if (error) throw error;
       setSaved(true);

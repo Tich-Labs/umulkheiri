@@ -10,8 +10,8 @@ import { toSlug } from "@/lib/slug";
 import { img } from "@/lib/path";
 
 async function getContent() {
-  const { data } = await supabaseAdmin.from("content").select("data").single();
-  return data?.data ?? {};
+  const { data: rows } = await supabaseAdmin.from("content").select("data").limit(1);
+  return rows?.[0]?.data ?? {};
 }
 
 const pillarStyles: Record<string, { color: string; bg: string }> = {
